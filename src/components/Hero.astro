@@ -814,7 +814,9 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     extractSpinner.classList.toggle('hidden', !loading);
     extractBtnLabel.textContent = loading ? 'Extracting…' : 'Extract';
     progressBar.classList.toggle('hidden', !loading);
-    errorMsg.classList.add('hidden');
+    if (loading) {
+      errorMsg.classList.add('hidden');
+    }
   }
 
   function showError(msg: string) {
