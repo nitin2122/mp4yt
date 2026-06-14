@@ -6,6 +6,10 @@
       "dest": "/api/seo-handler"
     },
     {
+      "src": "/download-stream",
+      "dest": "/api/proxy"
+    },
+    {
       "src": "/api/extract",
       "dest": "/api/extract"
     },

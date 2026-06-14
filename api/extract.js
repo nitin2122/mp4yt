@@ -51,7 +51,7 @@ const YTDLP_DOWNLOAD_URL = isWindows
  * a) Exceed the 30s Vercel serverless timeout
  * b) Require disk space for the output file
  */
-const FORMAT_SELECTOR = 'best[ext=mp4]/best';
+const FORMAT_SELECTOR = 'best[ext=mp4][vcodec!=none][acodec!=none]/best[vcodec!=none][acodec!=none]/best';
 
 /**
  * Maximum execution time (ms) for yt-dlp metadata fetch.
@@ -153,6 +153,25 @@ function sanitizeFilename(title) {
     .replace(/-+/g, '-')               // collapse multiple hyphens
     .slice(0, 120)                     // truncate
     || 'video';
+}
+
+/**
+ * Classify width and height into a standard resolution label.
+ * Handles widescreen and vertical formats.
+ * @param {number} width
+ * @param {number} height
+ * @returns {string}
+ */
+function getResolutionLabel(width, height) {
+  const maxDim = Math.max(width || 0, height || 0);
+  if (maxDim >= 3840 || height >= 2160) return '4K (2160p)';
+  if (maxDim >= 2560 || height >= 1440) return '2K (1440p)';
+  if (maxDim >= 1920 || height >= 1080) return '1080p (FHD)';
+  if (maxDim >= 1280 || height >= 720) return '720p (HD)';
+  if (maxDim >= 854 || height >= 480) return '480p';
+  if (maxDim >= 640 || height >= 360) return '360p';
+  if (maxDim >= 426 || height >= 240) return '240p';
+  return '144p';
 }
 
 /**
@@ -312,6 +331,95 @@ export default async function handler(req, res) {
     const ext = (metadata.ext || 'mp4').replace(/[^a-z0-9]/gi, '').toLowerCase();
     const filename = `${sanitized}.${ext}`;
 
+    // ── Extract and deduplicate resolutions ──
+    const uniqueFormats = [];
+    if (Array.isArray(metadata.formats)) {
+      // Find the best audio-only format first
+      let bestAudioFormat = null;
+      const audioFormats = metadata.formats.filter(f => f.acodec && f.acodec !== 'none' && (!f.vcodec || f.vcodec === 'none'));
+      if (audioFormats.length > 0) {
+        audioFormats.sort((a, b) => {
+          const aBitrate = a.tbr || a.abr || 0;
+          const bBitrate = b.tbr || b.abr || 0;
+          return bBitrate - aBitrate;
+        });
+        bestAudioFormat = audioFormats[0];
+      } else {
+        const anyAudio = metadata.formats.filter(f => f.acodec && f.acodec !== 'none');
+        if (anyAudio.length > 0) {
+          anyAudio.sort((a, b) => {
+            const aBitrate = a.tbr || a.abr || 0;
+            const bBitrate = b.tbr || b.abr || 0;
+            return bBitrate - aBitrate;
+          });
+          bestAudioFormat = anyAudio[0];
+        }
+      }
+
+      // Sort formats to prioritize progressive (video+audio) and then standard mp4 extension
+      const sortedRawFormats = [...metadata.formats].sort((a, b) => {
+        const aProg = (a.vcodec && a.vcodec !== 'none' && a.acodec && a.acodec !== 'none') ? 1 : 0;
+        const bProg = (b.vcodec && b.vcodec !== 'none' && b.acodec && b.acodec !== 'none') ? 1 : 0;
+        if (aProg !== bProg) return bProg - aProg;
+
+        const aMp4 = a.ext === 'mp4' ? 1 : 0;
+        const bMp4 = b.ext === 'mp4' ? 1 : 0;
+        if (aMp4 !== bMp4) return bMp4 - aMp4;
+
+        const aSize = a.filesize || a.filesize_approx || 0;
+        const bSize = b.filesize || b.filesize_approx || 0;
+        return bSize - aSize;
+      });
+
+      const seenLabels = new Set();
+      for (const f of sortedRawFormats) {
+        if (!f.height || !f.url) continue;
+        const hasVideo = f.vcodec && f.vcodec !== 'none';
+        if (!hasVideo) continue;
+
+        const label = getResolutionLabel(f.width, f.height);
+        if (seenLabels.has(label)) continue;
+        seenLabels.add(label);
+
+        const hasAudio = f.acodec && f.acodec !== 'none';
+
+        // Calculate combined size (video + audio if merging is needed)
+        const vSize = f.filesize || f.filesize_approx || 0;
+        const aSize = hasAudio ? 0 : (bestAudioFormat ? (bestAudioFormat.filesize || bestAudioFormat.filesize_approx || 0) : 0);
+        const totalSize = vSize + aSize || null;
+
+        uniqueFormats.push({
+          format_id: f.format_id,
+          ext: f.ext || 'mp4',
+          height: f.height,
+          width: f.width,
+          resolution: label,
+          url: f.url,
+          audio_url: hasAudio ? null : (bestAudioFormat ? bestAudioFormat.url : null),
+          filesize: totalSize,
+          has_audio: true, // will have audio, either progressive or merged
+          fps: f.fps || null,
+        });
+      }
+
+      uniqueFormats.sort((a, b) => b.height - a.height);
+    }
+
+    if (uniqueFormats.length === 0 && streamUrl) {
+      uniqueFormats.push({
+        format_id: metadata.format_id || 'best',
+        ext: ext,
+        height: metadata.height || 720,
+        width: metadata.width || 1280,
+        resolution: getResolutionLabel(metadata.width, metadata.height) || '720p (HD)',
+        url: streamUrl,
+        audio_url: null,
+        filesize: metadata.filesize || metadata.filesize_approx || null,
+        has_audio: true,
+        fps: metadata.fps || null,
+      });
+    }
+
     // ── Build response payload ──
     const payload = {
       title: rawTitle,
@@ -324,6 +432,7 @@ export default async function handler(req, res) {
       filename,
       extractor: metadata.extractor_key || metadata.extractor || 'unknown',
       webpage_url: metadata.webpage_url || targetUrl,
+      formats: uniqueFormats,
     };
 
     // ── Respond ──

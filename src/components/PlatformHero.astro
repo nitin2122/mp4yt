@@ -125,10 +125,35 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
               <span class="body-sm" style="color: var(--color-body);">Best quality MP4</span>
             </div>
           </div>
+          <!-- Advanced Quality / Resolution Dropdown Option Button -->
+          <div class="result-resolutions">
+            <span class="eyebrow">Select Resolution</span>
+            <div class="quality-dropdown-container">
+              <button id="quality-dropdown-trigger" class="quality-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" type="button">
+                <span class="dropdown-trigger-icon">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="12" height="12" rx="2" stroke-width="1.5"/>
+                    <path d="M5 8.5h6M5 11.5h6M5 5.5h6" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span id="quality-trigger-text">Select Quality</span>
+                <span class="dropdown-chevron">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </button>
+              <div id="quality-dropdown-menu" class="quality-dropdown-menu hidden" role="listbox">
+                <!-- Dynamically populated options -->
+              </div>
+            </div>
+          </div>
+
           <div class="result-filename">
             <span class="eyebrow">Filename</span>
             <code id="result-filename-display" class="code filename-code"></code>
           </div>
+
           <div class="result-actions">
             <a
               id="result-download-btn"
@@ -309,6 +334,185 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
     overflow: hidden; background: #000; box-shadow: var(--shadow-3);
   }
   .result-video { width: 100%; max-height: 360px; display: block; }
+  .result-resolutions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    margin-top: var(--sp-xs);
+  }
+
+  /* Quality select dropdown */
+  .quality-dropdown-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .quality-dropdown-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 var(--sp-md);
+    border-radius: var(--rounded-md);
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    color: var(--color-ink);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    box-shadow: var(--shadow-2);
+  }
+
+  .quality-dropdown-trigger:hover,
+  .quality-dropdown-trigger.active {
+    border-color: var(--color-hairline-strong);
+    background-color: var(--color-canvas-soft);
+  }
+
+  .dropdown-trigger-icon {
+    display: flex;
+    align-items: center;
+    color: var(--color-mute);
+  }
+
+  #quality-trigger-text {
+    flex: 1;
+    text-align: left;
+    margin-left: var(--sp-sm);
+  }
+
+  .dropdown-chevron {
+    display: flex;
+    align-items: center;
+    color: var(--color-mute);
+    transition: transform 0.2s ease;
+  }
+
+  .quality-dropdown-trigger.active .dropdown-chevron {
+    transform: rotate(180deg);
+  }
+
+  .quality-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    box-shadow: var(--shadow-4);
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    gap: 2px;
+  }
+
+  /* Support dark-theme style glassmorphism */
+  @media (prefers-color-scheme: dark) {
+    .quality-dropdown-menu {
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(12px);
+    }
+  }
+
+  :root[data-theme="dark"] .quality-dropdown-menu {
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--rounded-sm);
+    border: none;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-sans);
+    transition: background-color 0.1s ease;
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--color-canvas-soft-2);
+  }
+
+  .dropdown-item.active {
+    background-color: var(--color-link-bg-soft);
+    color: var(--color-link-deep);
+    font-weight: 500;
+  }
+
+  .opt-info {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+  }
+
+  .opt-res {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .opt-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background-color: var(--color-canvas-soft-2);
+    border: 1px solid var(--color-hairline-strong);
+    color: var(--color-body);
+    text-transform: uppercase;
+  }
+
+  .dropdown-item.active .opt-badge {
+    background-color: var(--color-link-deep);
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  .opt-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+  }
+
+  .opt-size {
+    font-size: 12px;
+    color: var(--color-mute);
+  }
+
+  .dropdown-item.active .opt-size {
+    color: var(--color-link-deep);
+    opacity: 0.8;
+  }
+
+  .opt-audio {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .opt-audio.has-audio {
+    color: #10b981;
+  }
+
+  .opt-audio.no-audio {
+    color: var(--color-mute);
+  }
+
+  .dropdown-item.active .opt-audio.has-audio {
+    color: var(--color-link-deep);
+  }
+
   .hidden { display: none !important; }
 
   @media (max-width: 768px) {
@@ -339,6 +543,9 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
   const resultDownloadBtn = document.getElementById('result-download-btn') as HTMLAnchorElement;
   const copyUrlBtn = document.getElementById('copy-url-btn') as HTMLButtonElement;
   const resultVideo = document.getElementById('result-video') as HTMLVideoElement;
+  const triggerBtn = document.getElementById('quality-dropdown-trigger') as HTMLButtonElement;
+  const dropdownMenu = document.getElementById('quality-dropdown-menu') as HTMLDivElement;
+  const triggerText = document.getElementById('quality-trigger-text') as HTMLSpanElement;
 
   let currentStreamUrl = '';
   let currentFilename = 'video.mp4';
@@ -393,6 +600,32 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
     return `${m}:${String(s).padStart(2,'0')}`;
   }
 
+  function formatBytes(bytes: number, decimals = 1): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  function sanitizeFilename(title: string): string {
+    if (!title || typeof title !== 'string') return 'video';
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s\-_]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .slice(0, 120) || 'video';
+  }
+
+  function getFilenameWithRes(title: string, res: string, ext: string): string {
+    const cleanRes = res.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const sanitized = sanitizeFilename(title);
+    return `${sanitized}-${cleanRes}.${ext}`;
+  }
+
   async function extractVideo(url: string) {
     setLoading(true);
     try {
@@ -409,10 +642,96 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
       resultThumb.src = data.thumbnail ?? '';
       resultThumb.alt = data.title ?? 'Video thumbnail';
       currentStreamUrl = data.url;
-      const proxyUrl = `/api/proxy?url=${encodeURIComponent(data.url)}&filename=${encodeURIComponent(currentFilename)}`;
-      resultDownloadBtn.href = proxyUrl;
+      const downloadUrl = `/download-stream?url=${encodeURIComponent(data.url)}&filename=${encodeURIComponent(currentFilename)}`;
+      resultDownloadBtn.href = downloadUrl;
       resultDownloadBtn.setAttribute('download', currentFilename);
       resultVideo.src = currentStreamUrl;
+
+      // Populate resolution options dropdown
+      dropdownMenu.innerHTML = '';
+      if (Array.isArray(data.formats) && data.formats.length > 0) {
+        let selectedFormat = data.formats[0];
+
+        const updateSelectedFormat = (fmt: any) => {
+          selectedFormat = fmt;
+          const label = fmt.resolution;
+          const sizeStr = fmt.filesize ? formatBytes(fmt.filesize) : 'Unknown size';
+          triggerText.textContent = `${label} (${fmt.ext} · ${sizeStr})`;
+          
+          currentStreamUrl = fmt.url;
+          const specificFilename = getFilenameWithRes(data.title || 'video', fmt.resolution, fmt.ext);
+          let rowDownloadUrl = `/download-stream?url=${encodeURIComponent(fmt.url)}&filename=${encodeURIComponent(specificFilename)}`;
+          if (fmt.audio_url) {
+            rowDownloadUrl += `&audioUrl=${encodeURIComponent(fmt.audio_url)}`;
+          }
+          resultDownloadBtn.href = rowDownloadUrl;
+          resultDownloadBtn.setAttribute('download', specificFilename);
+          currentFilename = specificFilename;
+          resultFilename.textContent = specificFilename;
+
+          // Video preview uses raw stream URL directly (plays inline)
+          resultVideo.src = fmt.url;
+
+          // Modify download button text
+          resultDownloadBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v8M5 7l3 3 3-3M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download ${fmt.resolution}
+          `;
+
+          // Mark active item in dropdown
+          const items = dropdownMenu.querySelectorAll('.dropdown-item');
+          items.forEach((item: any) => {
+            const itemRes = item.getAttribute('data-res');
+            if (itemRes === fmt.resolution) {
+              item.classList.add('active');
+              item.setAttribute('aria-selected', 'true');
+            } else {
+              item.classList.remove('active');
+              item.setAttribute('aria-selected', 'false');
+            }
+          });
+        };
+
+        data.formats.forEach((fmt: any) => {
+          const item = document.createElement('button');
+          item.className = 'dropdown-item';
+          item.type = 'button';
+          item.role = 'option';
+          item.setAttribute('data-res', fmt.resolution);
+          item.setAttribute('data-ext', fmt.ext);
+
+          const sizeLabel = fmt.filesize ? formatBytes(fmt.filesize) : 'Unknown size';
+          const audioIcon = fmt.has_audio
+            ? `<span class="opt-audio has-audio" title="Contains Audio"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M8 2a.75.75 0 01.19.46v10.58a.75.75 0 01-1.28.53L3.69 10.5H1.75A.75.75 0 011 9.75V6.25A.75.75 0 011.75 5.5h1.94l3.22-3.28A.75.75 0 018 2zm3.3 3.2a.75.75 0 111.1 1.02 3.5 3.5 0 010 4.56.75.75 0 11-1.1 1.02 5 5 0 000-6.6zM13.8 2.7a.75.75 0 111.1 1.02 8 8 0 010 9.56.75.75 0 11-1.1 1.02 9.5 9.5 0 000-11.6z"/></svg>Video + Audio</span>`
+            : `<span class="opt-audio no-audio" title="No Audio (Muted)"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M6.5 1.75a.75.75 0 01.19.46v11.58a.75.75 0 01-1.28.53L2.19 11H.75A.75.75 0 010 10.25V5.75A.75.75 0 01.75 5h1.44l3.22-3.28a.75.75 0 01.59-.22zM12.44 8l1.78-1.78a.75.75 0 00-1.06-1.06L11.38 6.94l-1.78-1.78a.75.75 0 00-1.06 1.06L10.32 8l-1.78 1.78a.75.75 0 001.06 1.06l1.78-1.78 1.78 1.78a.75.75 0 001.06-1.06L12.44 8z"/></svg>Video Only</span>`;
+
+          item.innerHTML = `
+            <div class="opt-info">
+              <span class="opt-res">${fmt.resolution}</span>
+              <span class="opt-badge">${fmt.ext}</span>
+            </div>
+            <div class="opt-meta">
+              <span class="opt-size">${sizeLabel}</span>
+              ${audioIcon}
+            </div>
+          `;
+
+          item.addEventListener('click', () => {
+            updateSelectedFormat(fmt);
+            dropdownMenu.classList.add('hidden');
+            triggerBtn.classList.remove('active');
+            triggerBtn.setAttribute('aria-expanded', 'false');
+          });
+
+          dropdownMenu.appendChild(item);
+        });
+
+        // Initialize with default selection
+        updateSelectedFormat(selectedFormat);
+      }
+
       resultSection.classList.remove('hidden');
       resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch {
@@ -422,35 +741,49 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
     }
   }
 
-  // Download button — use fetch+blob to avoid navigating away from the page
-  resultDownloadBtn.addEventListener('click', async (e: Event) => {
+  // Toggle quality select dropdown
+  if (triggerBtn && dropdownMenu) {
+    triggerBtn.addEventListener('click', (e: Event) => {
+      e.stopPropagation();
+      const isHidden = dropdownMenu.classList.contains('hidden');
+      dropdownMenu.classList.toggle('hidden', !isHidden);
+      triggerBtn.classList.toggle('active', isHidden);
+      triggerBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e: Event) => {
+      if (!triggerBtn.contains(e.target as Node) && !dropdownMenu.contains(e.target as Node)) {
+        dropdownMenu.classList.add('hidden');
+        triggerBtn.classList.remove('active');
+        triggerBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Native streaming download button — triggers Service Worker interception or direct browser proxy stream
+  resultDownloadBtn.addEventListener('click', (e: Event) => {
     e.preventDefault();
     const downloadUrl = resultDownloadBtn.href;
     if (!downloadUrl || downloadUrl === '#') return;
 
+    // Trigger download natively
+    window.location.href = downloadUrl;
+
+    // Provide immediate visual feedback on the button
     const origHTML = resultDownloadBtn.innerHTML;
-    resultDownloadBtn.innerHTML = `<svg class="animate-spin" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg> Downloading…`;
+    resultDownloadBtn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline-block;vertical-align:middle;margin-right:6px;">
+        <path d="M2 8l4 4L14 3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Download Started
+    `;
     (resultDownloadBtn as any).style.pointerEvents = 'none';
 
-    try {
-      const resp = await fetch(downloadUrl);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const blob = await resp.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = currentFilename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
-    } catch (err) {
-      // Fallback: open proxy URL directly in new tab if blob download fails
-      window.open(downloadUrl, '_blank', 'noopener,noreferrer');
-    } finally {
+    setTimeout(() => {
       resultDownloadBtn.innerHTML = origHTML;
       (resultDownloadBtn as any).style.pointerEvents = '';
-    }
+    }, 4000);
   });
 
   copyUrlBtn.addEventListener('click', async () => {

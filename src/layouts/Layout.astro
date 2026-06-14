@@ -92,5 +92,19 @@ const {
   </head>
   <body>
     <slot />
+
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(reg) {
+              console.log('[mp4yt] Service Worker registered with scope:', reg.scope);
+            })
+            .catch(function(err) {
+              console.error('[mp4yt] Service Worker registration failed:', err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
