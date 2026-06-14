@@ -1,5 +1,6 @@
 ---
 // Hero section — mesh gradient backdrop, URL input, auto-paste detection, hash URL autofill
+import PlatformSwitcher from './PlatformSwitcher.astro';
 ---
 
 <section id="hero" class="hero-band" aria-labelledby="hero-headline">
@@ -33,6 +34,7 @@
 
     <!-- URL Input Form -->
     <div class="hero-input-wrapper">
+      <PlatformSwitcher currentPlatform="General" />
       <form id="extract-form" class="input-row" aria-label="Video URL extractor" novalidate>
         <div class="input-group">
           <span class="input-icon" aria-hidden="true">

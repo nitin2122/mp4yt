@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/watch",
-      "dest": "/api/seo-handler"
+      "dest": "/api/seo_handler.py"
     },
     {
       "src": "/download-stream",
@@ -11,7 +11,7 @@
     },
     {
       "src": "/api/extract",
-      "dest": "/api/extract"
+      "dest": "/api/extract.py"
     },
     {
       "src": "/(.*)",
@@ -39,10 +39,10 @@
     }
   ],
   "functions": {
-    "api/extract.js": {
-      "maxDuration": 30
+    "api/extract.py": {
+      "maxDuration": 15
     },
-    "api/seo-handler.js": {
+    "api/seo_handler.py": {
       "maxDuration": 15
     },
     "api/proxy.js": {

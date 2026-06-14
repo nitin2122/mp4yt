@@ -1,0 +1,427 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Contact Us — mp4yt"
+  description="Contact the mp4yt team. Get support, submit feedback, or make business inquiries. We are here to help with any video downloader questions."
+  canonicalUrl="https://mp4yt.com/contact-us"
+>
+  <Navbar />
+  <main id="main-content">
+    <section class="contact-hero">
+      <div class="mesh-bg" aria-hidden="true"></div>
+      <div class="noise-overlay" aria-hidden="true"></div>
+      <div class="page-container contact-hero-content">
+        <span class="eyebrow">Get in touch</span>
+        <h1 class="display-xl contact-title">Contact Us</h1>
+        <p class="body-lg contact-subtitle">
+          Have a suggestion, support request, or just want to say hello?
+          Drop us a line and we'll get back to you as soon as possible.
+        </p>
+      </div>
+    </section>
+
+    <section class="contact-body">
+      <div class="page-container contact-container">
+        
+        <!-- Support channels cards -->
+        <div class="channels-grid">
+          <div class="channel-card card">
+            <div class="channel-icon channel-icon-blue" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M18 4H2c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 6l-8 5-8-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="display-sm">General Support</h3>
+            <p class="body-sm text-muted">
+              Need help downloading a video? Having trouble with a specific URL? Check our FAQ or drop us an email.
+            </p>
+            <a href="mailto:support@mp4yt.com" class="channel-link">support@mp4yt.com &rarr;</a>
+          </div>
+
+          <div class="channel-card card">
+            <div class="channel-icon channel-icon-violet" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M17 18a5 5 0 00-10 0M12 2a4 4 0 110 8 4 4 0 010-8zM3 18a4 4 0 018 0M7 6a3 3 0 110 6 3 3 0 010-6z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="display-sm">Partnerships & Business</h3>
+            <p class="body-sm text-muted">
+              For commercial API usage, business inquiries, or distribution requests, contact our partnership desk.
+            </p>
+            <a href="mailto:business@mp4yt.com" class="channel-link">business@mp4yt.com &rarr;</a>
+          </div>
+
+          <div class="channel-card card">
+            <div class="channel-icon channel-icon-red" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="display-sm">DMCA & Legal</h3>
+            <p class="body-sm text-muted">
+              If you wish to report copyright infringement or have legal queries, please read our DMCA guidelines first.
+            </p>
+            <a href="mailto:dmca@mp4yt.com" class="channel-link">dmca@mp4yt.com &rarr;</a>
+          </div>
+        </div>
+
+        <div class="contact-split">
+          <!-- Contact Form UI -->
+          <div class="contact-form-container card-lg">
+            <h2 class="display-md form-heading">Send us a message</h2>
+            <p class="body-sm text-muted form-description">
+              Use the form below to send an encrypted message directly to our support queue.
+            </p>
+            
+            <form id="contact-form" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name" class="body-sm-strong">Name</label>
+                  <input type="text" id="name" name="name" required placeholder="John Doe" class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label for="email" class="body-sm-strong">Email address</label>
+                  <input type="email" id="email" name="email" required placeholder="john@example.com" class="form-input" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="subject" class="body-sm-strong">Subject</label>
+                <select id="subject" name="subject" class="form-input form-select">
+                  <option value="support">Technical Support</option>
+                  <option value="feedback">Feedback / Feature Request</option>
+                  <option value="business">Business Partnership</option>
+                  <option value="legal">DMCA & Legal</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="body-sm-strong">Message</label>
+                <textarea id="message" name="message" required rows="5" placeholder="How can we help you?" class="form-input form-textarea"></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary btn-primary-lg submit-btn">
+                <span>Send message</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="submit-icon">
+                  <path d="M1.5 8h13M9.5 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <!-- Quick FAQ / Info sidebar -->
+          <div class="info-sidebar">
+            <div class="sidebar-block card">
+              <h3 class="display-sm">Response Time</h3>
+              <p class="body-md">
+                We are a small, developer-led team. We typically respond to support tickets within <strong>24 to 48 hours</strong> during weekdays.
+              </p>
+            </div>
+            
+            <div class="sidebar-block card">
+              <h3 class="display-sm">Looking for the FAQ?</h3>
+              <p class="body-md">
+                We might have answered your question already. Check out our detailed FAQ section on the home page.
+              </p>
+              <a href="/#faq" class="sidebar-cta-link">View FAQs &rarr;</a>
+            </div>
+            
+            <div class="sidebar-block card">
+              <h3 class="display-sm">Open Source</h3>
+              <p class="body-md">
+                This project relies heavily on the open-source community. If you have code fixes, feel free to contribute.
+              </p>
+              <a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noopener noreferrer" class="sidebar-cta-link">yt-dlp on GitHub &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .contact-hero {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-canvas);
+    padding: var(--sp-section) var(--sp-lg) var(--sp-4xl);
+    text-align: center;
+  }
+  .noise-overlay {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.4;
+  }
+  .contact-hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+  }
+  .contact-title {
+    margin: 0;
+    max-width: 720px;
+    color: var(--color-ink);
+  }
+  .contact-subtitle {
+    margin: 0;
+    max-width: 560px;
+    color: var(--color-body);
+  }
+
+  .contact-body {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-4xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+  .contact-container {
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3xl);
+  }
+
+  /* Channels grid */
+  .channels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-lg);
+  }
+  .channel-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    background-color: var(--color-canvas);
+  }
+  .channel-card h3 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .channel-card p {
+    margin: 0;
+    color: var(--color-body);
+    flex-grow: 1;
+  }
+  .text-muted {
+    color: var(--color-mute);
+  }
+  .channel-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--rounded-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .channel-icon-blue   { background-color: #dbeafe; color: #1d4ed8; }
+  .channel-icon-violet  { background-color: #ede9fe; color: #7c3aed; }
+  .channel-icon-red     { background-color: #fee2e2; color: #dc2626; }
+
+  :root[data-theme="dark"] .channel-icon-blue   { background-color: rgba(29, 78, 216, 0.2); color: #60a5fa; }
+  :root[data-theme="dark"] .channel-icon-violet  { background-color: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+  :root[data-theme="dark"] .channel-icon-red     { background-color: rgba(220, 38, 38, 0.2); color: #f87171; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .channel-icon-blue   { background-color: rgba(29, 78, 216, 0.2); color: #60a5fa; }
+    :root:not([data-theme="light"]) .channel-icon-violet  { background-color: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+    :root:not([data-theme="light"]) .channel-icon-red     { background-color: rgba(220, 38, 38, 0.2); color: #f87171; }
+  }
+
+  .channel-link {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s ease, transform 0.15s ease;
+    align-self: flex-start;
+  }
+  .channel-link:hover {
+    color: var(--color-link-deep);
+    transform: translateX(2px);
+  }
+
+  /* Form & Sidebar Split */
+  .contact-split {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--sp-2xl);
+    align-items: start;
+  }
+
+  .contact-form-container {
+    background-color: var(--color-canvas);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+  .form-heading {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .form-description {
+    margin: 0 0 var(--sp-sm);
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-md);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+  }
+  .form-group label {
+    color: var(--color-ink);
+  }
+
+  .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--sp-md) center;
+    padding-right: var(--sp-2xl) !important;
+  }
+
+  .form-textarea {
+    height: auto !important;
+    padding-top: var(--sp-sm) !important;
+    resize: vertical;
+  }
+
+  .submit-btn {
+    align-self: flex-start;
+    margin-top: var(--sp-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-sm);
+  }
+  .submit-icon {
+    transition: transform 0.2s ease;
+  }
+  .submit-btn:hover .submit-icon {
+    transform: translateX(3px);
+  }
+
+  /* Form Feedback styles */
+  .form-feedback {
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: var(--rounded-md);
+    transition: all 0.2s ease;
+  }
+  .form-feedback.success {
+    padding: var(--sp-sm) var(--sp-md);
+    background-color: var(--color-link-bg-soft);
+    color: var(--color-link-deep);
+    border: 1px solid var(--color-link);
+  }
+  .form-feedback.error {
+    padding: var(--sp-sm) var(--sp-md);
+    background-color: var(--color-error-soft);
+    color: var(--color-error-deep);
+    border: 1px solid var(--color-error);
+  }
+
+  /* Sidebar */
+  .info-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+  }
+  .sidebar-block {
+    background-color: var(--color-canvas);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
+  .sidebar-block h3 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .sidebar-block p {
+    margin: 0;
+    color: var(--color-body);
+  }
+  .sidebar-cta-link {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    align-self: flex-start;
+    transition: color 0.15s ease;
+  }
+  .sidebar-cta-link:hover {
+    color: var(--color-link-deep);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 960px) {
+    .contact-split {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-hero { padding: var(--sp-5xl) var(--sp-md) var(--sp-3xl); }
+    .channels-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Simple form submission mockup logic
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const feedback = document.getElementById('form-feedback')!;
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const submitBtn = form.querySelector('.submit-btn') as HTMLButtonElement;
+      const originalText = submitBtn.querySelector('span')?.textContent || 'Send message';
+      
+      // Visual loading state
+      submitBtn.disabled = true;
+      if (submitBtn.querySelector('span')) {
+        submitBtn.querySelector('span')!.textContent = 'Sending...';
+      }
+      
+      // Simulate form submission
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        if (submitBtn.querySelector('span')) {
+          submitBtn.querySelector('span')!.textContent = originalText;
+        }
+
+        // Output success feedback
+        feedback.className = 'form-feedback success animate-fade-in-up';
+        feedback.innerHTML = '<strong>Message sent successfully!</strong> Thank you for reaching out, we will get back to you shortly.';
+        
+        // Reset form
+        form.reset();
+      }, 1000);
+    });
+  }
+</script>

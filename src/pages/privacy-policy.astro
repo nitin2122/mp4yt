@@ -1,0 +1,172 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Privacy Policy — mp4yt"
+  description="mp4yt privacy policy. We don't store videos, track users, or use cookies. Learn how mp4yt protects your privacy."
+  canonicalUrl="https://mp4yt.com/privacy-policy"
+>
+  <Navbar />
+  <main id="main-content">
+    <section class="legal-hero">
+      <div class="page-container">
+        <span class="eyebrow">Legal</span>
+        <h1 class="display-xl legal-title">Privacy Policy</h1>
+        <p class="body-lg legal-subtitle">Last updated: June 2026</p>
+      </div>
+    </section>
+
+    <section class="legal-body">
+      <div class="page-container legal-container">
+        <div class="legal-content">
+
+          <h2 class="display-sm">Overview</h2>
+          <p>
+            mp4yt is committed to protecting your privacy. This Privacy Policy explains what information
+            we collect (hint: almost nothing), how we use it, and your rights regarding your data.
+          </p>
+          <p>
+            <strong>TL;DR:</strong> We don't store your videos, we don't track you across the web,
+            and we don't use cookies. Period.
+          </p>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Information We Don't Collect</h2>
+          <ul>
+            <li><strong>No video storage:</strong> We never download, store, or cache any video content. Our servers act as a metadata proxy — we extract the direct CDN URL and pass it to your browser.</li>
+            <li><strong>No user accounts:</strong> We don't require registration, so we have no usernames, emails, or passwords to store.</li>
+            <li><strong>No cookies:</strong> We don't set any tracking cookies. Your theme preference (light/dark) is stored in your browser's <code>localStorage</code> — this never leaves your device.</li>
+            <li><strong>No analytics tracking:</strong> We don't use Google Analytics, Facebook Pixel, or any third-party tracking scripts.</li>
+          </ul>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Information We Process Temporarily</h2>
+          <p>When you submit a video URL for extraction, our serverless backend:</p>
+          <ol>
+            <li>Receives the URL you provide</li>
+            <li>Passes it to yt-dlp for metadata extraction</li>
+            <li>Returns the title, thumbnail, duration, and direct stream URL to your browser</li>
+            <li>Discards all data — nothing is logged or stored</li>
+          </ol>
+          <p>
+            Standard server logs (IP address, user-agent, timestamp) may be retained by our hosting
+            provider (Vercel) for up to 30 days for infrastructure monitoring. We do not access or
+            process these logs for any other purpose.
+          </p>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Third-Party Services</h2>
+          <ul>
+            <li><strong>Vercel:</strong> Our hosting provider. Subject to <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Vercel's Privacy Policy</a>.</li>
+            <li><strong>Google Fonts:</strong> We load Inter and JetBrains Mono typefaces from Google Fonts. Subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</li>
+            <li><strong>yt-dlp:</strong> Open-source video extraction library. Runs entirely on our serverless functions — no data is sent to any third party by yt-dlp.</li>
+          </ul>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Your Rights</h2>
+          <p>
+            Since we don't collect personal data, there's nothing to request, modify, or delete.
+            If you have questions about your privacy, contact us at
+            <a href="mailto:contact@mp4yt.com">contact@mp4yt.com</a>.
+          </p>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Changes to This Policy</h2>
+          <p>
+            We may update this Privacy Policy from time to time. Any changes will be posted on this page
+            with an updated "Last updated" date. Continued use of the service constitutes acceptance
+            of any changes.
+          </p>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-hero {
+    background-color: var(--color-canvas);
+    padding: var(--sp-5xl) var(--sp-lg) var(--sp-3xl);
+    text-align: center;
+  }
+  .legal-title {
+    margin: var(--sp-sm) 0 0;
+    color: var(--color-ink);
+  }
+  .legal-subtitle {
+    margin: var(--sp-xs) 0 0;
+    color: var(--color-mute);
+  }
+  .legal-body {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-4xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+  .legal-container {
+    max-width: 720px;
+  }
+  .legal-content {
+    background-color: var(--color-canvas);
+    border-radius: var(--rounded-lg);
+    padding: var(--sp-xl) var(--sp-xl);
+    box-shadow: var(--shadow-3);
+  }
+  .legal-content h2 {
+    margin: var(--sp-xl) 0 var(--sp-md);
+    color: var(--color-ink);
+  }
+  .legal-content h2:first-child {
+    margin-top: 0;
+  }
+  .legal-content p,
+  .legal-content li {
+    color: var(--color-body);
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 var(--sp-sm);
+  }
+  .legal-content ul,
+  .legal-content ol {
+    padding-left: var(--sp-lg);
+    margin: 0 0 var(--sp-md);
+  }
+  .legal-content li {
+    margin-bottom: var(--sp-xs);
+  }
+  .legal-content a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .legal-content a:hover {
+    color: var(--color-link-deep);
+    text-decoration: underline;
+  }
+  .legal-content code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background-color: var(--color-canvas-soft-2);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--color-body);
+  }
+  .legal-divider {
+    border: none;
+    border-top: 1px solid var(--color-hairline);
+    margin: var(--sp-xl) 0;
+  }
+  @media (max-width: 768px) {
+    .legal-hero { padding: var(--sp-4xl) var(--sp-md) var(--sp-xl); }
+    .legal-content { padding: var(--sp-lg); }
+  }
+</style>

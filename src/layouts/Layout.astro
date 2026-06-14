@@ -7,6 +7,7 @@ interface Props {
   ogImage?: string;
   ogTitle?: string;
   canonicalUrl?: string;
+  keywords?: string;
 }
 
 const {
@@ -15,12 +16,23 @@ const {
   ogImage = '/og-default.png',
   ogTitle = title,
   canonicalUrl = 'https://mp4yt.com',
+  keywords = 'video downloader, download video, online video downloader, free video downloader, mp4 video downloader, download youtube videos, download tiktok videos, download instagram reels, save videos online',
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNH5RT5R2G" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LNH5RT5R2G');
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
@@ -28,6 +40,7 @@ const {
     <!-- Primary Meta -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <link rel="canonical" href={canonicalUrl} />
 
     <!-- Favicon -->

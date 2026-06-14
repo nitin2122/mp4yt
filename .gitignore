@@ -26,3 +26,16 @@ pnpm-debug.log*
 # local binaries
 bin/
 
+
+.vercel
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# scratch
+scratch/
+
+# wrangler
+.wrangler/
+

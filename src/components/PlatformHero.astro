@@ -1,6 +1,7 @@
 ---
 // PlatformHero.astro — Reusable hero for platform-specific landing pages
 // Props: platform name, emoji, color, description, example URL placeholder
+import PlatformSwitcher from './PlatformSwitcher.astro';
 
 interface Props {
   platform: string;
@@ -37,6 +38,7 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
 
     <!-- URL Input Form -->
     <div class="hero-input-wrapper">
+      <PlatformSwitcher currentPlatform={platform} />
       <form id="extract-form" class="input-row" aria-label={`${platform} URL extractor`} novalidate>
         <div class="input-group">
           <span class="input-icon" aria-hidden="true">

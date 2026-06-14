@@ -1,0 +1,320 @@
+---
+// PlatformSwitcher.astro — Sleek horizontal switcher for platform pages
+
+interface Props {
+  currentPlatform?: string;
+}
+
+const { currentPlatform = 'General' } = Astro.props;
+
+const platforms = [
+  {
+    name: 'General',
+    displayName: 'All Sites',
+    href: '/',
+    accentColor: '#0070f3',
+    iconType: 'globe'
+  },
+  {
+    name: 'YouTube',
+    displayName: 'YouTube',
+    href: '/youtube',
+    accentColor: '#FF0000',
+    iconType: 'youtube'
+  },
+  {
+    name: 'Instagram',
+    displayName: 'Instagram',
+    href: '/instagram',
+    accentColor: '#c13584',
+    iconType: 'instagram'
+  },
+  {
+    name: 'TikTok',
+    displayName: 'TikTok',
+    href: '/tiktok',
+    accentColor: '#010101',
+    iconType: 'tiktok'
+  },
+  {
+    name: 'Twitter / X',
+    displayName: 'Twitter/X',
+    href: '/twitter',
+    accentColor: '#1DA1F2',
+    iconType: 'twitter'
+  },
+  {
+    name: 'Facebook',
+    displayName: 'Facebook',
+    href: '/facebook',
+    accentColor: '#1877F2',
+    iconType: 'facebook'
+  },
+  {
+    name: 'Reddit',
+    displayName: 'Reddit',
+    href: '/reddit',
+    accentColor: '#FF4500',
+    iconType: 'reddit'
+  },
+  {
+    name: 'SoundCloud',
+    displayName: 'SoundCloud',
+    href: '/soundcloud',
+    accentColor: '#FF5500',
+    iconType: 'soundcloud'
+  },
+  {
+    name: 'Twitch',
+    displayName: 'Twitch',
+    href: '/twitch',
+    accentColor: '#9146FF',
+    iconType: 'twitch'
+  },
+  {
+    name: 'Vimeo',
+    displayName: 'Vimeo',
+    href: '/vimeo',
+    accentColor: '#1AB7EA',
+    iconType: 'vimeo'
+  },
+  {
+    name: 'Dailymotion',
+    displayName: 'Dailymotion',
+    href: '/dailymotion',
+    accentColor: '#003BD8',
+    iconType: 'dailymotion'
+  },
+  {
+    name: 'LinkedIn',
+    displayName: 'LinkedIn',
+    href: '/linkedin',
+    accentColor: '#0A66C2',
+    iconType: 'linkedin'
+  },
+  {
+    name: 'Pinterest',
+    displayName: 'Pinterest',
+    href: '/pinterest',
+    accentColor: '#E60023',
+    iconType: 'pinterest'
+  }
+];
+
+// Determine if the current platform matches
+const isActive = (name: string) => {
+  return currentPlatform.toLowerCase() === name.toLowerCase();
+};
+---
+
+<div class="platform-switcher-container" aria-label="Platform select">
+  <div class="platform-switcher-track">
+    {platforms.map((p) => {
+      const active = isActive(p.name);
+      return (
+        <a
+          href={p.href}
+          class={`platform-tab ${active ? 'active' : ''}`}
+          style={`--brand-color: ${p.accentColor}`}
+          aria-selected={active ? 'true' : 'false'}
+          role="tab"
+        >
+          {p.iconType === 'globe' && (
+            <svg class="tab-icon globe-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="8" r="7"/>
+              <path d="M1 8h14M8 1a14.7 14.7 0 0 0 0 14 14.7 14.7 0 0 0 0-14"/>
+            </svg>
+          )}
+
+          {p.iconType === 'youtube' && (
+            <svg class="tab-icon" width="16" height="11" viewBox="0 0 20 14" fill="none">
+              <rect width="20" height="14" rx="3" fill="#FF0000"/>
+              <path d="M8 4l5.5 3L8 10V4z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'instagram' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="4" fill="url(#ig-grad-switcher)"/>
+              <circle cx="8" cy="8" r="3" stroke="white" stroke-width="1.3"/>
+              <circle cx="11.5" cy="4.5" r="0.8" fill="white"/>
+              <defs>
+                <radialGradient id="ig-grad-switcher" cx="30%" cy="100%" r="120%">
+                  <stop offset="0%" stop-color="#ffd600"/>
+                  <stop offset="50%" stop-color="#ff6530"/>
+                  <stop offset="100%" stop-color="#c13584"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          )}
+
+          {p.iconType === 'tiktok' && (
+            <svg class="tab-icon" width="12" height="14" viewBox="0 0 14 16" fill="none">
+              <rect width="14" height="16" rx="3" fill="#010101"/>
+              <path d="M9.5 1.5c.2 1.5 1 2.3 2 2.5v2c-1.1-.1-1.8-.5-2.5-1.2V9.5a3 3 0 1 1-2-2.8V9a1 1 0 1 0 1 1V1.5h1.5z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'twitter' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#000"/>
+              <path d="M9.2 7.1L12.9 3h-.9L8.8 6.5 6.3 3H3.5l3.9 5.6L3.5 13h.9l3.4-3.9 2.7 3.9h2.8L9.2 7.1zm-1.2 1.4l-.4-.5-3-4.3h1.3l2.4 3.5.4.5 3.1 4.4h-1.3l-2.5-3.6z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'facebook' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#1877F2"/>
+              <path d="M10.5 8H9v5.5H7V8H5.5V6H7V4.8C7 3.3 7.8 2.5 9.2 2.5l1.3.1v2H9.8c-.5 0-.8.2-.8.8V6H10.5L10.5 8z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'reddit' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#FF4500"/>
+              <circle cx="8" cy="9" r="3.5" stroke="white" stroke-width="1.2"/>
+              <circle cx="5.5" cy="8" r="0.7" fill="white"/>
+              <circle cx="10.5" cy="8" r="0.7" fill="white"/>
+              <path d="M6 10.5c.6.5 1.6.7 2 0" stroke="white" stroke-width="0.8" stroke-linecap="round"/>
+              <circle cx="10.5" cy="4" r="1" fill="white"/>
+              <path d="M8 4c.6-.5 1.8-.5 2.5 0" stroke="white" stroke-width="0.8"/>
+            </svg>
+          )}
+
+          {p.iconType === 'soundcloud' && (
+            <svg class="tab-icon" width="18" height="10" viewBox="0 0 22 12" fill="none">
+              <rect width="22" height="12" rx="3" fill="#FF5500"/>
+              <path d="M1 8c0 1.1.9 2 2 2s2-.9 2-2V6c0-1.1-.9-2-2-2S1 4.9 1 6v2zM5 9.5V5c0-1.7 1.3-3 3-3 1 0 1.9.5 2.5 1.2C11 3.1 11.5 3 12 3c2.2 0 4 1.8 4 4s-1.8 4-4 4H6c-.6 0-1-.4-1-1.5z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'twitch' && (
+            <svg class="tab-icon" width="12" height="14" viewBox="0 0 14 16" fill="none">
+              <rect width="14" height="16" rx="3" fill="#9146FF"/>
+              <path d="M2.5 1L1 3v10h3.5v2L6 13.5H8.5l2-2V1H2.5z" stroke="white" stroke-width="1.2"/>
+              <path d="M6.5 5v3.5M9.5 5v3.5" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          )}
+
+          {p.iconType === 'vimeo' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#1AB7EA"/>
+              <path d="M13 5.5c-.1 1.8-1.3 4.3-3.8 7.4C6.6 16 4.5 16 3.7 14.7c-.5-.9-1.3-3-1.7-5 0 0-.3-1 .5-1 .7 0 1.2 1 1.2 1l.5 1.5C4.5 12.9 5.5 13 6 12.5c.8-.7 1.5-2 1.5-2L7 6C6.8 4 4.8 4.3 4.8 4.3V3.7c1.2-.5 2.8-.7 3.5-.7C11 3 13.2 3.5 13 5.5z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'dailymotion' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#003BD8"/>
+              <circle cx="8" cy="8" r="3" stroke="white" stroke-width="1.3"/>
+              <path d="M6.5 6.5L10 8 6.5 9.5V6.5z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'linkedin' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#0A66C2"/>
+              <path d="M3.5 6H5.5v7H3.5V6zM4.5 5c-.6 0-1-.5-1-1s.4-1 1-1 1 .5 1 1-.4 1-1 1zM6.5 6h2v1c.3-.5 1-1 2-1 2 0 2.5 1.3 2.5 3v4H11V9.5c0-1-.4-1.5-1.2-1.5-.9 0-1.3.6-1.3 1.5V13H6.5V6z" fill="white"/>
+            </svg>
+          )}
+
+          {p.iconType === 'pinterest' && (
+            <svg class="tab-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <rect width="16" height="16" rx="3" fill="#E60023"/>
+              <path d="M8 2C4.7 2 2 4.7 2 8c0 2.5 1.5 4.6 3.6 5.6-.1-.4-.1-.9 0-1.4l.8-3.4s-.2-.4-.2-1c0-1 .6-1.7 1.3-1.7.6 0 .9.5.9 1 0 .6-.4 1.5-.6 2.4-.2.7.3 1.3 1 1.3 1.2 0 2.1-1.3 2.1-3.1 0-1.6-1.2-2.8-2.8-2.8-2 0-3.1 1.5-3.1 3.1 0 .6.2 1.2.5 1.5.1.1.1.1 0 .3l-.2.7c0 .1-.1.2-.2.1C3.7 10.9 3 9.6 3 8c0-2.8 2-5 5-5 2.6 0 4.6 1.9 4.6 4.4 0 2.6-1.6 4.7-3.9 4.7-.8 0-1.5-.4-1.7-.9l-.5 1.8c-.2.7-.6 1.5-.9 2-.7.2-1.4.3-2.1.3.3-.3.7-1.1 1-1.8l.4-1.6c-.1-.2-.1-.3-.1-.4C4 11 3 9.7 3 8.2 3 5.5 5.3 3 8.5 3c3 0 5.3 2.1 5.3 4.9 0 2.9-1.8 5.2-4.3 5.2-1.9 0-2.8-1.8-2.4-3.7l.5-2c.2-.8.3-1.6.3-2.1.1-.7-.4-1.2-1-1.2-.9 0-1.7.9-1.7 2.3 0 .8.3 1.4.3 1.4L4.5 11" fill="white"/>
+            </svg>
+          )}
+
+          <span>{p.displayName}</span>
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .platform-switcher-container {
+    width: 100%;
+    margin-bottom: var(--sp-md);
+    position: relative;
+  }
+
+  .platform-switcher-track {
+    display: flex;
+    gap: var(--sp-xs);
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    padding: 4px 2px;
+    margin: 0 -2px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .platform-switcher-track::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  .platform-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-canvas-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-full);
+    padding: 7px 14px;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-body);
+    text-decoration: none;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    box-shadow: var(--shadow-1);
+  }
+
+  .platform-tab:hover {
+    background-color: var(--color-canvas-soft-2);
+    color: var(--color-ink);
+    border-color: var(--color-hairline-strong);
+    transform: translateY(-1px);
+  }
+
+  /* Active State styling */
+  .platform-tab.active {
+    background-color: color-mix(in srgb, var(--brand-color) 12%, var(--color-canvas));
+    border-color: var(--brand-color);
+    color: var(--color-ink);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--brand-color) 20%, transparent);
+    font-weight: 600;
+  }
+
+  /* Theme adjustments */
+  :root[data-theme="dark"] .platform-tab.active {
+    background-color: color-mix(in srgb, var(--brand-color) 20%, var(--color-canvas));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .platform-tab.active {
+      background-color: color-mix(in srgb, var(--brand-color) 20%, var(--color-canvas));
+    }
+  }
+
+  /* Icon transitions */
+  .tab-icon {
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+  }
+  
+  .platform-tab:hover .tab-icon {
+    transform: scale(1.08);
+  }
+
+  .globe-icon {
+    color: var(--color-mute);
+  }
+
+  .platform-tab.active .globe-icon {
+    color: var(--brand-color);
+  }
+</style>
