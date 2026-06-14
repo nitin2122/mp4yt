@@ -14,6 +14,7 @@ function localApiPlugin() {
         if (
           pathname === '/api/extract' ||
           pathname === '/api/proxy' ||
+          pathname === '/download-stream' ||
           pathname === '/api/seo-handler' ||
           pathname === '/watch'
         ) {
@@ -25,14 +26,14 @@ function localApiPlugin() {
             let handlerPath = '';
             if (pathname === '/api/extract') {
               handlerPath = './api/extract.js';
-            } else if (pathname === '/api/proxy') {
+            } else if (pathname === '/api/proxy' || pathname === '/download-stream') {
               handlerPath = './api/proxy.js';
             } else {
               handlerPath = './api/seo-handler.js';
             }
 
-            // Dynamically import the Vercel handler
-            const { default: handler } = await import(handlerPath);
+            // Dynamically import the Vercel handler with a cache-buster for local development HMR
+            const { default: handler } = await import(`${handlerPath}?t=${Date.now()}`);
             await handler(req, res);
           } catch (err) {
             console.error(`Error in local API route ${pathname}:`, err);

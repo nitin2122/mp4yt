@@ -15,12 +15,29 @@
 
 import https from 'https';
 import http from 'http';
+import { spawn } from 'child_process';
+import { promises as fs, createWriteStream } from 'fs';
+import path from 'path';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Range',
+  'Access-Control-Allow-Headers': 'Content-Type, Range, audioUrl',
 };
+
+const isVercel = !!process.env.VERCEL;
+const isWindows = process.platform === 'win32';
+
+const FFMPEG_BIN_PATH = isVercel
+  ? '/tmp/ffmpeg'
+  : (isWindows
+      ? path.join(process.cwd(), 'bin', 'ffmpeg.exe')
+      : path.join(process.cwd(), 'bin', 'ffmpeg'));
+
+const FFMPEG_DOWNLOAD_URL = isWindows
+  ? 'https://github.com/eugeneware/ffmpeg-static/releases/download/b5.0.1/win32-x64'
+  : 'https://github.com/eugeneware/ffmpeg-static/releases/download/b5.0.1/linux-x64';
+
 
 /**
  * Validate that a URL is safe to proxy (HTTP/HTTPS, no private ranges).
@@ -60,9 +77,10 @@ export default async function handler(req, res) {
   }
 
   const rawUrl = req.query?.url ?? '';
+  const audioUrl = req.query?.audioUrl ?? '';
   const filename = safeFilename(req.query?.filename ?? 'video.mp4');
 
-  if (!validateProxyUrl(rawUrl)) {
+  if (!validateProxyUrl(rawUrl) || (audioUrl && !validateProxyUrl(audioUrl))) {
     res.writeHead(400, { ...CORS, 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'Invalid or unsafe URL.' }));
     return;
@@ -71,7 +89,21 @@ export default async function handler(req, res) {
   const targetUrl = rawUrl.trim();
 
   try {
-    await streamDownload(targetUrl, filename, req, res);
+    if (audioUrl) {
+      // Ensure ffmpeg is present
+      const exists = await ffmpegExists();
+      if (!exists) {
+        console.log('[proxy] ffmpeg not found — downloading static binary…');
+        await fs.mkdir(path.dirname(FFMPEG_BIN_PATH), { recursive: true });
+        await downloadFfmpeg();
+        console.log('[proxy] ffmpeg downloaded and initialized.');
+      }
+      
+      // Merge streams on the fly using ffmpeg
+      await mergeAndStream(targetUrl, audioUrl.trim(), filename, res);
+    } else {
+      await streamDownload(targetUrl, filename, req, res);
+    }
   } catch (err) {
     console.error('[proxy] Stream error:', err?.message ?? err);
     if (!res.headersSent) {
@@ -146,10 +178,139 @@ function streamDownload(url, filename, req, res, redirectDepth = 0) {
       });
     });
 
-    request.on('error', reject);
-    request.setTimeout(25000, () => {
-      request.destroy();
-      reject(new Error('Upstream connection timed out.'));
+  });
+}
+
+/**
+ * Check whether the ffmpeg binary already exists in /tmp or bin directory.
+ * @returns {Promise<boolean>}
+ */
+async function ffmpegExists() {
+  try {
+    await fs.access(FFMPEG_BIN_PATH, fs.constants.X_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Download static ffmpeg binary from GitHub releases.
+ * @returns {Promise<void>}
+ */
+async function downloadFfmpeg() {
+  return new Promise((resolve, reject) => {
+    const downloadToPath = FFMPEG_BIN_PATH;
+    let fileStream;
+
+    const followRedirects = (url, maxRedirects = 5) => {
+      if (maxRedirects === 0) {
+        reject(new Error('Too many redirects while downloading ffmpeg'));
+        return;
+      }
+
+      const protocol = url.startsWith('https') ? https : http;
+
+      protocol.get(url, (res) => {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          followRedirects(res.headers.location, maxRedirects - 1);
+          return;
+        }
+
+        if (res.statusCode !== 200) {
+          reject(new Error(`Failed to download ffmpeg: HTTP ${res.statusCode}`));
+          return;
+        }
+
+        fileStream = createWriteStream(downloadToPath, { mode: 0o755 });
+
+        fileStream.on('error', (err) => {
+          reject(new Error(`File write error during ffmpeg download: ${err.message}`));
+        });
+
+        fileStream.on('finish', () => {
+          fileStream.close(async () => {
+            try {
+              if (process.platform !== 'win32') {
+                await fs.chmod(downloadToPath, 0o755);
+              }
+              resolve();
+            } catch (chmodErr) {
+              reject(new Error(`chmod failed: ${chmodErr.message}`));
+            }
+          });
+        });
+
+        res.pipe(fileStream);
+
+      }).on('error', (err) => {
+        reject(new Error(`Network error downloading ffmpeg: ${err.message}`));
+      });
+    };
+
+    followRedirects(FFMPEG_DOWNLOAD_URL);
+  });
+}
+
+/**
+ * Stream and merge video and audio tracks on the fly to response.
+ */
+function mergeAndStream(videoUrl, audioUrl, filename, res) {
+  return new Promise((resolve, reject) => {
+    res.writeHead(200, {
+      ...CORS,
+      'Content-Type': 'video/mp4',
+      'Content-Disposition': `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
+      'Cache-Control': 'no-store',
+    });
+
+    console.log(`[proxy] Spawning ffmpeg to merge on the fly:`);
+    console.log(`- Video: ${videoUrl.substring(0, 60)}...`);
+    console.log(`- Audio: ${audioUrl.substring(0, 60)}...`);
+
+    const args = [
+      '-y',
+      '-loglevel', 'error',
+      '-i', videoUrl,
+      '-i', audioUrl,
+      '-c:v', 'copy',
+      '-c:a', 'aac',
+      '-map', '0:v:0',
+      '-map', '1:a:0',
+      '-f', 'mp4',
+      '-movflags', 'frag_keyframe+empty_moov+default_base_moof',
+      'pipe:1'
+    ];
+
+    const ffmpegProcess = spawn(FFMPEG_BIN_PATH, args);
+
+    ffmpegProcess.stdout.pipe(res);
+
+    let stderrData = '';
+    ffmpegProcess.stderr.on('data', (chunk) => {
+      stderrData += chunk.toString();
+    });
+
+    ffmpegProcess.on('close', (code) => {
+      if (code !== 0) {
+        console.error(`[proxy] ffmpeg exited with code ${code}. Stderr: ${stderrData}`);
+        reject(new Error(`ffmpeg exited with code ${code}: ${stderrData}`));
+      } else {
+        console.log(`[proxy] ffmpeg merged and streamed successfully.`);
+        resolve();
+      }
+    });
+
+    ffmpegProcess.on('error', (err) => {
+      console.error(`[proxy] ffmpeg spawn error:`, err);
+      reject(err);
+    });
+
+    res.on('close', () => {
+      if (!ffmpegProcess.killed) {
+        ffmpegProcess.kill('SIGKILL');
+      }
+      resolve();
     });
   });
 }
