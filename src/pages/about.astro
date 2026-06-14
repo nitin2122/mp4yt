@@ -1,0 +1,351 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="About mp4yt — Free Video Downloader for YouTube, TikTok, Instagram & 1000+ Sites"
+  description="Learn about mp4yt, the free video downloader powered by yt-dlp. How it works, the technology behind it, and why it's the fastest way to download videos."
+  canonicalUrl="https://mp4yt.com/about"
+>
+  <Navbar />
+  <main id="main-content">
+    <section class="about-hero">
+      <div class="mesh-bg" aria-hidden="true"></div>
+      <div class="noise-overlay" aria-hidden="true"></div>
+      <div class="page-container about-hero-content">
+        <span class="eyebrow">About</span>
+        <h1 class="display-xl about-title">
+          The fastest way to<br class="headline-break" /> download any video.
+        </h1>
+        <p class="body-lg about-subtitle">
+          mp4yt is a free, open-architecture video download tool that extracts direct stream URLs
+          from 1000+ platforms — instantly, privately, and without any storage.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-body">
+      <div class="page-container about-container">
+
+        <!-- How It Works -->
+        <div class="about-section">
+          <div class="about-section-header">
+            <div class="section-icon section-icon-blue" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 3v3M10 14v3M3 10h3M14 10h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.4"/>
+              </svg>
+            </div>
+            <h2 class="display-md">How mp4yt works</h2>
+          </div>
+          <div class="about-cards-grid">
+            <div class="about-card card">
+              <span class="about-card-number">01</span>
+              <h3 class="display-sm">Paste a URL</h3>
+              <p class="body-md">
+                Copy a video link from YouTube, Instagram, TikTok, Twitter/X, Reddit, Vimeo,
+                or any of 1000+ supported platforms and paste it into the input field.
+              </p>
+            </div>
+            <div class="about-card card">
+              <span class="about-card-number">02</span>
+              <h3 class="display-sm">Metadata extraction</h3>
+              <p class="body-md">
+                Our serverless backend uses yt-dlp to fetch video metadata — title, thumbnail,
+                duration, and the direct CDN stream URL — in seconds.
+              </p>
+            </div>
+            <div class="about-card card">
+              <span class="about-card-number">03</span>
+              <h3 class="display-sm">Direct download</h3>
+              <p class="body-md">
+                Click "Download MP4" and your browser downloads the video directly from the
+                platform's CDN. No file ever touches our servers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technology -->
+        <div class="about-section">
+          <div class="about-section-header">
+            <div class="section-icon section-icon-violet" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M7 8l2.5 2.5L14 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h2 class="display-md">Technology stack</h2>
+          </div>
+          <div class="tech-grid">
+            <div class="tech-item">
+              <h3 class="body-sm-strong">Frontend</h3>
+              <p class="body-sm" style="color: var(--color-body);">
+                Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> for
+                zero-JavaScript static rendering. Lightning-fast page loads with island architecture.
+              </p>
+            </div>
+            <div class="tech-item">
+              <h3 class="body-sm-strong">Backend</h3>
+              <p class="body-sm" style="color: var(--color-body);">
+                Serverless functions on <a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a>.
+                No persistent server, no database, no file storage. Each request is stateless.
+              </p>
+            </div>
+            <div class="tech-item">
+              <h3 class="body-sm-strong">Video Extraction</h3>
+              <p class="body-sm" style="color: var(--color-body);">
+                Powered by <a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noopener">yt-dlp</a>,
+                the world's most comprehensive video extraction library with 1000+ supported sites.
+              </p>
+            </div>
+            <div class="tech-item">
+              <h3 class="body-sm-strong">Download Proxy</h3>
+              <p class="body-sm" style="color: var(--color-body);">
+                A lightweight streaming proxy solves the cross-origin download issue. Your browser
+                gets a proper download dialog with the correct filename.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ-style about content for SEO -->
+        <div class="about-section">
+          <div class="about-section-header">
+            <div class="section-icon section-icon-green" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M10 7v4M10 13h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h2 class="display-md">Frequently asked questions</h2>
+          </div>
+          <div class="about-faq">
+            <div class="about-faq-item">
+              <h3 class="display-sm">Is mp4yt free?</h3>
+              <p class="body-md">
+                Yes, completely free. No subscriptions, no premium tiers, no hidden costs.
+                We don't even have user accounts.
+              </p>
+            </div>
+            <div class="about-faq-item">
+              <h3 class="display-sm">Is it safe to use?</h3>
+              <p class="body-md">
+                We don't store any data, use any cookies, or run any tracking scripts.
+                The video is downloaded directly from the platform's own CDN to your device.
+                We never see or touch the actual video file.
+              </p>
+            </div>
+            <div class="about-faq-item">
+              <h3 class="display-sm">What platforms are supported?</h3>
+              <p class="body-md">
+                YouTube, Instagram, TikTok, Twitter/X, Reddit, Vimeo, Twitch, Dailymotion,
+                Facebook, SoundCloud, and 1000+ more. If yt-dlp supports it, mp4yt supports it.
+              </p>
+            </div>
+            <div class="about-faq-item">
+              <h3 class="display-sm">Why not just use a browser extension?</h3>
+              <p class="body-md">
+                Browser extensions require installation, can access your browsing data, and often
+                inject ads. mp4yt works in any browser, requires nothing to install, and has zero
+                tracking or advertising.
+              </p>
+            </div>
+            <div class="about-faq-item">
+              <h3 class="display-sm">Does mp4yt work on mobile?</h3>
+              <p class="body-md">
+                Yes. The interface is fully responsive and works on iOS Safari, Android Chrome,
+                and all modern mobile browsers. On some mobile browsers, videos will open in a
+                new tab for playback instead of downloading.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .about-hero {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-canvas);
+    padding: var(--sp-section) var(--sp-lg) var(--sp-4xl);
+    text-align: center;
+  }
+  .noise-overlay {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.4;
+  }
+  .about-hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+  }
+  .about-title {
+    margin: 0;
+    max-width: 720px;
+    color: var(--color-ink);
+  }
+  .about-subtitle {
+    margin: 0;
+    max-width: 560px;
+    color: var(--color-body);
+  }
+
+  .about-body {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-4xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+  .about-container {
+    max-width: 960px;
+  }
+
+  .about-section {
+    margin-bottom: var(--sp-5xl);
+  }
+  .about-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    margin-bottom: var(--sp-xl);
+  }
+  .about-section-header h2 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--rounded-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-icon-blue   { background-color: #dbeafe; color: #1d4ed8; }
+  .section-icon-violet  { background-color: #ede9fe; color: #7c3aed; }
+  .section-icon-green   { background-color: #dcfce7; color: #16a34a; }
+
+  :root[data-theme="dark"] .section-icon-blue   { background-color: rgba(29, 78, 216, 0.2); color: #60a5fa; }
+  :root[data-theme="dark"] .section-icon-violet  { background-color: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+  :root[data-theme="dark"] .section-icon-green   { background-color: rgba(22, 163, 74, 0.2); color: #4ade80; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .section-icon-blue   { background-color: rgba(29, 78, 216, 0.2); color: #60a5fa; }
+    :root:not([data-theme="light"]) .section-icon-violet  { background-color: rgba(124, 58, 237, 0.2); color: #a78bfa; }
+    :root:not([data-theme="light"]) .section-icon-green   { background-color: rgba(22, 163, 74, 0.2); color: #4ade80; }
+  }
+
+  /* Cards grid */
+  .about-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-lg);
+  }
+
+  .about-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
+  .about-card h3 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .about-card p {
+    margin: 0;
+    color: var(--color-body);
+  }
+  .about-card-number {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-link);
+    letter-spacing: 0.05em;
+  }
+
+  /* Tech grid */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-lg);
+  }
+  .tech-item {
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .tech-item:hover {
+    box-shadow: var(--shadow-3);
+    transform: translateY(-2px);
+  }
+  .tech-item h3 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .tech-item a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .tech-item a:hover {
+    color: var(--color-link-deep);
+    text-decoration: underline;
+  }
+
+  /* About FAQ */
+  .about-faq {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+  }
+  .about-faq-item {
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    transition: box-shadow 0.2s ease;
+  }
+  .about-faq-item:hover {
+    box-shadow: var(--shadow-3);
+  }
+  .about-faq-item h3 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  .about-faq-item p {
+    margin: 0;
+    color: var(--color-body);
+  }
+
+  @media (max-width: 768px) {
+    .about-hero { padding: var(--sp-5xl) var(--sp-md) var(--sp-3xl); }
+    .headline-break { display: none; }
+    .about-cards-grid { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: 1fr; }
+  }
+</style>

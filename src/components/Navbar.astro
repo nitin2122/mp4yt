@@ -1,0 +1,381 @@
+---
+// Navbar component — Vercel-style sticky nav with dark mode toggle
+---
+
+<nav id="main-nav" class="navbar" aria-label="Main navigation">
+  <div class="page-container navbar-inner">
+    <!-- Logo -->
+    <a href="/" class="navbar-logo" aria-label="mp4yt home">
+      <div class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="22" height="22" rx="6" fill="currentColor"/>
+          <path d="M7 7.5L15 11L7 14.5V7.5Z" fill="var(--color-canvas)"/>
+        </svg>
+      </div>
+      <span class="logo-text">mp4yt</span>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <ul class="navbar-links" role="list">
+      <li><a href="/#features" class="nav-link">Features</a></li>
+      <li><a href="/#how-it-works" class="nav-link">How it works</a></li>
+      <li><a href="/#platforms" class="nav-link">Platforms</a></li>
+      <li><a href="/about" class="nav-link">About</a></li>
+      <li><a href="/#faq" class="nav-link">FAQ</a></li>
+    </ul>
+
+    <!-- CTA cluster -->
+    <div class="navbar-cta">
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        class="theme-toggle-btn"
+        aria-label="Toggle dark mode"
+        title="Toggle dark mode"
+      >
+        <!-- Sun icon (shown in dark mode) -->
+        <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13.5 9.5a5.5 5.5 0 0 1-7-7A5.5 5.5 0 1 0 13.5 9.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <a href="/#hero-input" class="btn-nav" id="nav-download-cta">
+        Download now
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="mobile-menu-btn"
+      class="hamburger"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="mobile-overlay" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <div class="mobile-overlay-inner">
+    <ul class="mobile-links" role="list">
+      <li><a href="/#features" class="mobile-link">Features</a></li>
+      <li><a href="/#how-it-works" class="mobile-link">How it works</a></li>
+      <li><a href="/#platforms" class="mobile-link">Platforms</a></li>
+      <li><a href="/about" class="mobile-link">About</a></li>
+      <li><a href="/#faq" class="mobile-link">FAQ</a></li>
+    </ul>
+    <div class="mobile-actions">
+      <button id="theme-toggle-mobile" class="theme-toggle-btn-mobile" aria-label="Toggle dark mode">
+        <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M8 1.5V3M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13.5 9.5a5.5 5.5 0 0 1-7-7A5.5 5.5 0 1 0 13.5 9.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="theme-toggle-label">Toggle theme</span>
+      </button>
+      <a href="/#hero-input" class="btn-primary" style="width: 100%; justify-content: center;">
+        Download now
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: color-mix(in srgb, var(--color-canvas) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-hairline);
+    height: 64px;
+  }
+
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: var(--sp-lg);
+  }
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-ink);
+  }
+
+  .logo-text {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.5px;
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-body);
+    text-decoration: none;
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--rounded-full);
+    transition: background-color 0.15s ease, color 0.15s ease;
+    letter-spacing: -0.28px;
+  }
+
+  .nav-link:hover {
+    background-color: var(--color-canvas-soft-2);
+    color: var(--color-ink);
+  }
+
+  .navbar-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    flex-shrink: 0;
+  }
+
+  /* ── Theme Toggle ── */
+  .theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-full);
+    background: transparent;
+    color: var(--color-body);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .theme-toggle-btn:hover {
+    background-color: var(--color-canvas-soft-2);
+    color: var(--color-ink);
+    border-color: var(--color-hairline-strong);
+  }
+
+  /* Show/hide sun/moon based on current theme */
+  .theme-icon-sun { display: none; }
+  .theme-icon-moon { display: block; }
+
+  :root[data-theme="dark"] .theme-icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-icon-moon { display: none; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-icon-sun { display: block; }
+    :root:not([data-theme="light"]) .theme-icon-moon { display: none; }
+  }
+
+  /* Mobile theme toggle */
+  .theme-toggle-btn-mobile {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    width: 100%;
+    padding: var(--sp-sm) var(--sp-md);
+    background: transparent;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .theme-toggle-btn-mobile:hover {
+    background-color: var(--color-canvas-soft);
+  }
+
+  .mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    margin-top: var(--sp-lg);
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--rounded-sm);
+  }
+
+  .hamburger-bar {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background-color: var(--color-ink);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile overlay */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 64px 0 0 0;
+    z-index: 99;
+    background-color: var(--color-canvas);
+    border-top: 1px solid var(--color-hairline);
+    padding: var(--sp-lg);
+    overflow-y: auto;
+  }
+
+  .mobile-overlay[aria-hidden="false"] {
+    display: block;
+  }
+
+  .mobile-overlay-inner {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .mobile-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mobile-link {
+    display: block;
+    padding: var(--sp-sm) var(--sp-md);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-ink);
+    text-decoration: none;
+    border-radius: var(--rounded-md);
+    transition: background-color 0.15s ease;
+  }
+
+  .mobile-link:hover {
+    background-color: var(--color-canvas-soft);
+  }
+
+  @media (max-width: 768px) {
+    .navbar-links { display: none; }
+    .hamburger { display: flex; }
+    .navbar-cta { display: none; }
+  }
+</style>
+
+<script>
+  // ── Mobile Menu ──
+  const btn = document.getElementById('mobile-menu-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const mobileLinks = menu.querySelectorAll('.mobile-link, .btn-primary');
+
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    menu.setAttribute('aria-hidden', String(isOpen));
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+  });
+
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      btn.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ── Navbar shadow on scroll ──
+  const nav = document.getElementById('main-nav')!;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 8) {
+      nav.style.boxShadow = 'var(--shadow-2)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  }, { passive: true });
+
+  // ── Theme Toggle ──
+  function getEffectiveTheme(): 'dark' | 'light' {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function setTheme(theme: 'dark' | 'light' | 'system') {
+    if (theme === 'system') {
+      localStorage.removeItem('theme');
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      localStorage.setItem('theme', theme);
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }
+
+  function toggleTheme() {
+    const current = getEffectiveTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  }
+
+  // Desktop toggle
+  const themeBtn = document.getElementById('theme-toggle');
+  themeBtn?.addEventListener('click', toggleTheme);
+
+  // Mobile toggle
+  const themeBtnMobile = document.getElementById('theme-toggle-mobile');
+  themeBtnMobile?.addEventListener('click', toggleTheme);
+</script>

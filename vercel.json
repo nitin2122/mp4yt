@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/watch",
+      "dest": "/api/seo-handler"
+    },
+    {
+      "src": "/api/extract",
+      "dest": "/api/extract"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
+  ],
+  "functions": {
+    "api/extract.js": {
+      "maxDuration": 30
+    },
+    "api/seo-handler.js": {
+      "maxDuration": 15
+    },
+    "api/proxy.js": {
+      "maxDuration": 30
+    }
+  }
+}

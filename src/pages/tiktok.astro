@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="TikTok Video Downloader — Download TikTok Videos Without Watermark | mp4yt"
+  description="Download TikTok videos as MP4 instantly. Paste the TikTok URL and get a clean download — no watermark via yt-dlp, no registration needed."
+  canonicalUrl="https://mp4yt.com/tiktok"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="TikTok"
+      emoji="🎵"
+      accentColor="#69C9D0"
+      tagline="Download TikTok videos. No watermark."
+      description="Paste any TikTok video link and extract the direct MP4. yt-dlp fetches the watermark-free source stream when available."
+      placeholder="https://www.tiktok.com/@user/video/..."
+      features={[
+        "No watermark (when available)",
+        "HD quality MP4",
+        "No TikTok login",
+        "Zero storage",
+        "Instant extraction",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download TikTok videos</h2>
+          <ol class="seo-steps">
+            <li>Open TikTok on your phone or browser and find the video.</li>
+            <li>Tap <strong>Share → Copy link</strong> or copy the URL from your browser.</li>
+            <li>Paste the link in the field above.</li>
+            <li>Hit <strong>Extract</strong>, then <strong>Download MP4</strong>.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Supported TikTok links</h2>
+          <ul class="seo-list">
+            <li>Standard TikTok videos</li>
+            <li>TikTok short links (vm.tiktok.com)</li>
+            <li>TikTok slideshow/photo posts</li>
+            <li>Public profile videos</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">About watermarks</h2>
+          <ul class="seo-list">
+            <li>yt-dlp requests the API stream which is often watermark-free</li>
+            <li>Results vary by account and region</li>
+            <li>Always give credit to the original creator</li>
+            <li>For personal use only</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Dailymotion Video Downloader — Download Dailymotion Videos | mp4yt"
+  description="Download Dailymotion videos in high quality MP4 instantly. Paste the Dailymotion URL — no registration, no storage, no limits."
+  canonicalUrl="https://mp4yt.com/dailymotion"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="Dailymotion"
+      emoji="📺"
+      accentColor="#003BD8"
+      tagline="Download Dailymotion videos. Instantly."
+      description="Paste any Dailymotion video link and download the highest quality MP4 directly. Works on all web browsers."
+      placeholder="https://www.dailymotion.com/video/x..."
+      features={[
+        "HQ & Full HD quality",
+        "No registration required",
+        "Direct CDN streaming",
+        "Zero server storage",
+        "Works on mobile & desktop",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download Dailymotion videos</h2>
+          <ol class="seo-steps">
+            <li>Find the video on Dailymotion you want to save.</li>
+            <li>Copy the URL from the browser bar or copy the link from the share options.</li>
+            <li>Paste the URL in the text box above.</li>
+            <li>Click <strong>Extract</strong> and choose <strong>Download MP4</strong>.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Dailymotion features</h2>
+          <ul class="seo-list">
+            <li>Works with standard Dailymotion URLs (dailymotion.com/video/...)</li>
+            <li>Supports short links (dai.ly/...)</li>
+            <li>High resolution video extraction</li>
+            <li>Completely free, no hidden costs</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Important note</h2>
+          <ul class="seo-list">
+            <li>Private and password-protected videos are not supported</li>
+            <li>For personal, offline archives only</li>
+            <li>Zero analytics, no tracking pixels</li>
+            <li>Powered by yt-dlp</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

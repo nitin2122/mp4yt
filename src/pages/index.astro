@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import SupportedSites from '../components/SupportedSites.astro';
+import Features from '../components/Features.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="mp4yt — Download Any Video Instantly | YouTube, TikTok, Instagram"
+  description="Download videos from YouTube, TikTok, Instagram, Twitter/X and 1000+ platforms instantly. Direct CDN MP4 stream — no storage, no tracking, no registration."
+  canonicalUrl="https://mp4yt.com"
+>
+  <Navbar />
+  <main id="main-content">
+    <Hero />
+    <SupportedSites />
+    <Features />
+    <HowItWorks />
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>

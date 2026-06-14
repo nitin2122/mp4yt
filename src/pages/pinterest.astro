@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Pinterest Video Downloader — Download Pinterest Videos | mp4yt"
+  description="Download Pinterest videos in high quality MP4 instantly. Paste the Pinterest pin URL — no login, no storage, no limits."
+  canonicalUrl="https://mp4yt.com/pinterest"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="Pinterest"
+      emoji="📌"
+      accentColor="#E60023"
+      tagline="Download Pinterest videos. Instantly."
+      description="Paste any Pinterest video pin URL and download the high quality MP4 directly. No registration or login needed."
+      placeholder="https://www.pinterest.com/pin/..."
+      features={[
+        "Pinterest video pins",
+        "No login required",
+        "Direct CDN download",
+        "Zero server storage",
+        "Mobile friendly",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download Pinterest videos</h2>
+          <ol class="seo-steps">
+            <li>Open Pinterest and open the video pin you want to save.</li>
+            <li>Click the share icon and select <strong>Copy Link</strong>.</li>
+            <li>Paste the URL in the downloader box above.</li>
+            <li>Click <strong>Extract</strong>, review preview, and select <strong>Download MP4</strong>.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Supported formats</h2>
+          <ul class="seo-list">
+            <li>Standard Pinterest video pins (pinterest.com/pin/...)</li>
+            <li>Short link / share URLs (pin.it/...)</li>
+            <li>High resolution MP4 downloads</li>
+            <li>Direct fast CDNs</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Disclaimer</h2>
+          <ul class="seo-list">
+            <li>Private boards and pins are not supported</li>
+            <li>Personal archival use only</li>
+            <li>Zero analytics, no tracking pixels</li>
+            <li>Bypass browser restrictions with our proxy</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

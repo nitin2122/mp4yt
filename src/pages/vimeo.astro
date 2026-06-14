@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Vimeo Video Downloader — Download Vimeo Videos as MP4 | mp4yt"
+  description="Download Vimeo videos as MP4 instantly. Paste the Vimeo URL and get the direct high-quality stream — no login, no storage."
+  canonicalUrl="https://mp4yt.com/vimeo"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="Vimeo"
+      emoji="🎬"
+      accentColor="#1AB7EA"
+      tagline="Download Vimeo videos in high quality."
+      description="Paste any public Vimeo video link and extract the direct MP4 — full HD, no registration, zero file storage on our end."
+      placeholder="https://vimeo.com/..."
+      features={[
+        "Full HD & 4K",
+        "Public videos only",
+        "No Vimeo login",
+        "Zero storage",
+        "Instant stream",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download Vimeo videos</h2>
+          <ol class="seo-steps">
+            <li>Open the Vimeo video in your browser.</li>
+            <li>Copy the URL from the address bar (e.g., vimeo.com/123456789).</li>
+            <li>Paste it in the input field above.</li>
+            <li>Click <strong>Extract</strong> then <strong>Download MP4</strong>.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Supported Vimeo links</h2>
+          <ul class="seo-list">
+            <li>Standard vimeo.com/ID links</li>
+            <li>Vimeo showcase/portfolio videos</li>
+            <li>Unlisted videos (with direct URL)</li>
+            <li>High-quality source files when available</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Limitations</h2>
+          <ul class="seo-list">
+            <li>Password-protected videos are not supported</li>
+            <li>Private "only me" videos cannot be downloaded</li>
+            <li>Domain-locked embeds may not work</li>
+            <li>For personal use only — respect creator rights</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

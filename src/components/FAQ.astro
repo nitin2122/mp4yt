@@ -1,0 +1,186 @@
+---
+// FAQ section — accordion using native <details> element with smooth JS animation
+
+const faqs = [
+  {
+    q: "Is mp4yt free to use?",
+    a: "Yes, completely free. No subscription, no premium tier, no sign-up required. Paste a URL, download the video — that's it."
+  },
+  {
+    q: "How does the download work — are files saved on your servers?",
+    a: "Never. Our serverless API fetches the direct CDN streaming URL from the platform (e.g. YouTube's googlevideo.com CDN) and returns it to your browser. Your browser then downloads directly from that CDN. No file ever touches our disk."
+  },
+  {
+    q: "What video formats and qualities are available?",
+    a: "We filter for the best available progressive MP4 container so your browser can stream and download immediately without any re-encoding. Progressive MP4 means the file plays as it downloads — no waiting for the full file."
+  },
+  {
+    q: "Which platforms are supported?",
+    a: "mp4yt is powered by yt-dlp, the most comprehensive open-source video extraction library. It supports 1000+ sites including YouTube, Instagram, TikTok, Twitter/X, Facebook, Reddit, Vimeo, Twitch, SoundCloud, Dailymotion, Bilibili, and many more."
+  },
+  {
+    q: "Is it legal to download videos?",
+    a: "Downloading videos for personal, offline viewing is generally permissible in most jurisdictions for content you have legitimate access to. However, redistributing downloaded content, using it commercially, or downloading content behind a paywall without authorization may violate platform terms of service and applicable copyright law. Always respect content creators' rights."
+  },
+  {
+    q: "Why is the download link a googlevideo.com / CDN URL?",
+    a: "That is expected behavior. It is the actual streaming URL the platform uses to deliver video to your browser. It is time-limited (typically expires in a few hours) so download immediately after extraction."
+  },
+  {
+    q: "Can I share a link that pre-fills the video URL?",
+    a: "Yes! Share a link in the format https://mp4yt.com/watch?url=VIDEO_URL. Human visitors will be instantly redirected to the app with the URL pre-filled. Social bots (Discord, WhatsApp, Twitter) will see a rich OpenGraph preview with the real video title and thumbnail."
+  },
+  {
+    q: "Does it work on mobile?",
+    a: "Yes. The site is fully responsive. On iOS, you may need to use the Share then Save to Files option after tapping the download link, as Safari handles video links differently from desktop browsers."
+  }
+];
+---
+
+<section id="faq" class="faq-band" aria-labelledby="faq-headline">
+  <div class="page-container faq-inner">
+    <div class="faq-header">
+      <span class="eyebrow">FAQ</span>
+      <h2 id="faq-headline" class="display-lg faq-title">
+        Common questions.
+      </h2>
+    </div>
+
+    <div class="faq-list" role="list">
+      {faqs.map((faq) => (
+        <details class="faq-item" role="listitem">
+          <summary>
+            <span class="body-md-strong">{faq.q}</span>
+            <svg class="faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </summary>
+          <div class="faq-body">
+            <p class="body-md" style="color: var(--color-body); margin: 0;">{faq.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-band {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-5xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--sp-4xl);
+    align-items: start;
+  }
+
+  .faq-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    position: sticky;
+    top: 80px;
+  }
+
+  .faq-title {
+    margin: 0;
+    max-width: 200px;
+  }
+
+  .faq-list {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  details.faq-item {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  details.faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-md);
+    padding: var(--sp-lg) 0;
+    color: var(--color-ink);
+    transition: color 0.15s ease;
+    user-select: none;
+  }
+
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::marker { display: none; }
+
+  details.faq-item summary:hover { color: var(--color-body); }
+
+  details.faq-item .faq-body {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+  }
+
+  details.faq-item[open] .faq-body {
+    height: auto;
+    padding-bottom: var(--sp-lg);
+  }
+
+  .faq-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--color-mute);
+    transition: transform 0.3s ease, color 0.15s ease;
+  }
+
+  details.faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    color: var(--color-hairline-strong);
+  }
+
+  @media (max-width: 768px) {
+    .faq-inner { grid-template-columns: 1fr; gap: var(--sp-xl); }
+    .faq-header { position: static; }
+    .faq-title { max-width: none; }
+    .faq-band { padding: var(--sp-4xl) var(--sp-md); }
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll('details.faq-item');
+
+  items.forEach((detail) => {
+    const summary = detail.querySelector('summary');
+    const body = detail.querySelector('.faq-body');
+
+    if (!summary || !body) return;
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isOpen = detail.hasAttribute('open');
+
+      if (!isOpen) {
+        detail.setAttribute('open', '');
+        const h = body.scrollHeight;
+        body.style.height = '0px';
+        requestAnimationFrame(() => {
+          body.style.height = h + 'px';
+          body.addEventListener('transitionend', () => {
+            body.style.height = 'auto';
+          }, { once: true });
+        });
+      } else {
+        body.style.height = body.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          body.style.height = '0px';
+          body.addEventListener('transitionend', () => {
+            detail.removeAttribute('open');
+          }, { once: true });
+        });
+      }
+    });
+  });
+</script>

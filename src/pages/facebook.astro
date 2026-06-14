@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Facebook Video Downloader — Download FB Videos | mp4yt"
+  description="Download Facebook videos and Reels in high quality MP4 instantly. Paste the Facebook link — no registration, no storage, no limits."
+  canonicalUrl="https://mp4yt.com/facebook"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="Facebook"
+      emoji="👥"
+      accentColor="#1877F2"
+      tagline="Download Facebook videos. Fast."
+      description="Paste any Facebook video or Reel link and download the MP4 directly. Works on mobile, desktop, and tablets."
+      placeholder="https://www.facebook.com/watch/?v=..."
+      features={[
+        "Videos & Reels",
+        "No registration",
+        "Direct CDN stream",
+        "Zero file storage",
+        "Mobile friendly",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download Facebook videos</h2>
+          <ol class="seo-steps">
+            <li>Find the Facebook video or Reel you want to download.</li>
+            <li>Click <strong>Share</strong> and then <strong>Copy link</strong>.</li>
+            <li>Paste the URL into the input box above.</li>
+            <li>Click <strong>Extract</strong>, wait for preview, and click <strong>Download MP4</strong>.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Facebook features</h2>
+          <ul class="seo-list">
+            <li>Facebook Reels support</li>
+            <li>Watch/Page videos</li>
+            <li>Group video links (public)</li>
+            <li>Mobile and desktop access</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Limitations</h2>
+          <ul class="seo-list">
+            <li>Only public Facebook videos are supported</li>
+            <li>Private groups/profiles cannot be downloaded</li>
+            <li>We do not store your download history</li>
+            <li>Ensure respect for creator copyright</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

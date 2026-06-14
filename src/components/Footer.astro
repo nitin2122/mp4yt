@@ -1,0 +1,225 @@
+---
+// Footer — 4-column nav, Vercel-style caption-mono headers
+
+const year = new Date().getFullYear();
+---
+
+
+<footer class="site-footer" aria-labelledby="footer-label">
+  <div class="page-container footer-inner">
+    <!-- Col 1: Brand -->
+    <div class="footer-brand">
+      <a href="/" class="footer-logo" aria-label="mp4yt home">
+        <div class="footer-logo-mark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="20" height="20" rx="5" fill="currentColor"/>
+            <path d="M6.5 6.5L13.5 10L6.5 13.5V6.5Z" fill="var(--color-canvas)"/>
+          </svg>
+        </div>
+        <span class="footer-logo-text">mp4yt</span>
+      </a>
+      <p class="body-sm footer-tagline">
+        The fastest way to download videos from YouTube and 1000+ platforms.
+        Zero storage. Zero tracking.
+      </p>
+      <div class="footer-legal-note caption" style="color: var(--color-mute); margin-top: var(--sp-sm);">
+        For personal, non-commercial use only.
+      </div>
+    </div>
+
+    <!-- Col 2: Product -->
+    <div class="footer-col">
+      <h3 class="eyebrow footer-col-head" id="footer-label">Product</h3>
+      <ul class="footer-links" role="list">
+        <li><a href="#features" class="footer-link">Features</a></li>
+        <li><a href="#how-it-works" class="footer-link">How it works</a></li>
+        <li><a href="#platforms" class="footer-link">Platforms</a></li>
+        <li><a href="#faq" class="footer-link">FAQ</a></li>
+        <li><a href="/api/extract" class="footer-link">API</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 3: Platforms -->
+    <div class="footer-col">
+      <h3 class="eyebrow footer-col-head">Platforms</h3>
+      <ul class="footer-links" role="list">
+        <li><a href="/youtube" class="footer-link">YouTube</a></li>
+        <li><a href="/instagram" class="footer-link">Instagram</a></li>
+        <li><a href="/tiktok" class="footer-link">TikTok</a></li>
+        <li><a href="/twitter" class="footer-link">Twitter/X</a></li>
+        <li><a href="/facebook" class="footer-link">Facebook</a></li>
+        <li><a href="/reddit" class="footer-link">Reddit</a></li>
+        <li><a href="/vimeo" class="footer-link">Vimeo</a></li>
+        <li><a href="/twitch" class="footer-link">Twitch</a></li>
+        <li><a href="/soundcloud" class="footer-link">SoundCloud</a></li>
+        <li><a href="/dailymotion" class="footer-link">Dailymotion</a></li>
+        <li><a href="/pinterest" class="footer-link">Pinterest</a></li>
+        <li><a href="/linkedin" class="footer-link">LinkedIn</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 4: Legal & Resources -->
+    <div class="footer-col">
+      <h3 class="eyebrow footer-col-head">Legal</h3>
+      <ul class="footer-links" role="list">
+        <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
+        <li><a href="/terms" class="footer-link">Terms of Use</a></li>
+        <li><a href="/dmca" class="footer-link">DMCA</a></li>
+        <li><a href="/about" class="footer-link">About</a></li>
+        <li><a href="mailto:contact@mp4yt.com" class="footer-link">Contact</a></li>
+        <li>
+          <a
+            href="https://github.com/yt-dlp/yt-dlp"
+            class="footer-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            yt-dlp on GitHub ↗
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="page-container footer-bottom-inner">
+      <span class="caption" style="color: var(--color-mute);">
+        &copy; {year} mp4yt.com — All rights reserved.
+      </span>
+      <span class="caption" style="color: var(--color-mute);">
+        Built with
+        <a href="https://astro.build" class="footer-link-subtle" target="_blank" rel="noopener">Astro</a>
+        &amp;
+        <a href="https://github.com/yt-dlp/yt-dlp" class="footer-link-subtle" target="_blank" rel="noopener">yt-dlp</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-canvas);
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--sp-4xl);
+    padding-top: var(--sp-4xl);
+    padding-bottom: var(--sp-4xl);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    text-decoration: none;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.3px;
+  }
+
+  .footer-tagline {
+    margin: 0;
+    color: var(--color-body);
+    max-width: 280px;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .footer-col-head {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+  }
+
+  .footer-link {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-body);
+    text-decoration: none;
+    line-height: 20px;
+    letter-spacing: -0.28px;
+    transition: color 0.15s ease;
+  }
+
+  .footer-link:hover {
+    color: var(--color-ink);
+  }
+
+  .footer-link-subtle {
+    color: var(--color-mute);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-link-subtle:hover {
+    color: var(--color-body);
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--sp-md);
+    padding-bottom: var(--sp-md);
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+  }
+
+  @media (max-width: 960px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-xl);
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-lg);
+      padding-top: var(--sp-xl);
+      padding-bottom: var(--sp-xl);
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+    .footer-bottom-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
