@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Page Not Found (404) — mp4yt"
+  description="The page you are looking for does not exist or has been moved. Return to mp4yt homepage to download videos from YouTube, TikTok, Instagram & more."
+  canonicalUrl="https://mp4yt.com/404"
+>
+  <Navbar />
+  <main id="main-content">
+    <section class="error-section">
+      <div class="mesh-bg" aria-hidden="true"></div>
+      <div class="noise-overlay" aria-hidden="true"></div>
+      <div class="page-container error-content">
+        <span class="eyebrow error-eyebrow">404 Error</span>
+        <h1 class="display-xl error-title">
+          Lost in transit.
+        </h1>
+        <p class="body-lg error-subtitle">
+          We couldn't find the page you were looking for. The link might be broken, or the page has moved.
+        </p>
+        <div class="error-actions">
+          <a href="/" class="btn-primary btn-primary-lg">
+            Back to homepage
+          </a>
+          <a href="/contact-us" class="btn-secondary" style="height: 48px; padding: 0 var(--sp-lg); font-size: 16px;">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .error-section {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-canvas);
+    min-height: calc(100vh - 64px - 280px); /* Adjust based on navbar + footer height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-section) var(--sp-lg);
+    text-align: center;
+  }
+  
+  .noise-overlay {
+    position: absolute; 
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; 
+    opacity: 0.4;
+  }
+  
+  .error-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+    max-width: 600px;
+  }
+  
+  .error-eyebrow {
+    color: var(--color-error-deep);
+    background-color: var(--color-error-soft);
+    padding: var(--sp-xxs) var(--sp-sm);
+    border-radius: var(--rounded-full);
+    font-weight: 600;
+  }
+  
+  .error-title {
+    margin: 0;
+    color: var(--color-ink);
+  }
+  
+  .error-subtitle {
+    margin: 0;
+    color: var(--color-body);
+    line-height: 28px;
+  }
+  
+  .error-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-md);
+    margin-top: var(--sp-lg);
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .error-section {
+      min-height: calc(100vh - 64px - 400px);
+      padding: var(--sp-4xl) var(--sp-md);
+    }
+    .error-actions {
+      flex-direction: column;
+      gap: var(--sp-sm);
+    }
+    .error-actions a {
+      width: 100%;
+    }
+  }
+</style>
