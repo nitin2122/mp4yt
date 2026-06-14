@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="SoundCloud Downloader — Download SoundCloud Tracks to MP3/MP4 | mp4yt"
+  description="Download SoundCloud tracks and audio files instantly. Paste the SoundCloud URL — no registration, no storage, no limitations."
+  canonicalUrl="https://mp4yt.com/soundcloud"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="SoundCloud"
+      emoji="🎵"
+      accentColor="#FF5500"
+      tagline="Download SoundCloud music. Offline."
+      description="Paste any SoundCloud song or track URL and download the audio stream directly. Keep your library offline, free."
+      placeholder="https://soundcloud.com/username/track-name"
+      features={[
+        "HQ Audio extraction",
+        "No registration required",
+        "Fast metadata lookup",
+        "Direct CDN stream URL",
+        "Zero server storage",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download SoundCloud songs</h2>
+          <ol class="seo-steps">
+            <li>Find the track on SoundCloud you want to download.</li>
+            <li>Copy the track's URL from your address bar or click the share button.</li>
+            <li>Paste the track link into the input bar above.</li>
+            <li>Click <strong>Extract</strong> and download your audio file.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">SoundCloud extraction details</h2>
+          <ul class="seo-list">
+            <li>Extracts original streaming quality</li>
+            <li>Works for individual tracks</li>
+            <li>No browser extensions required</li>
+            <li>Works on mobile phones and tablets</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Important note</h2>
+          <ul class="seo-list">
+            <li>Copyrighted files should only be saved for personal/offline listening</li>
+            <li>Private playlists and sets are not supported</li>
+            <li>We do not store or mirror SoundCloud audio</li>
+            <li>Free to use, always</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Twitch Video Downloader — Download Twitch VODs & Clips | mp4yt"
+  description="Download Twitch clips and VOD streams as high quality MP4 files instantly. Paste the Twitch link — no registration, no storage, no limitations."
+  canonicalUrl="https://mp4yt.com/twitch"
+>
+  <Navbar />
+  <main id="main-content">
+    <PlatformHero
+      platform="Twitch"
+      emoji="🎮"
+      accentColor="#9146FF"
+      tagline="Download Twitch clips & VODs. Instantly."
+      description="Paste any Twitch clip or full VOD (video) URL and download the best quality MP4 directly. No registration needed."
+      placeholder="https://clips.twitch.tv/..."
+      features={[
+        "Clips & VOD streams",
+        "No login required",
+        "Fast metadata fetch",
+        "Direct CDN download",
+        "Zero server storage",
+      ]}
+    />
+
+    <section class="seo-section page-container">
+      <div class="seo-grid">
+        <div class="seo-block">
+          <h2 class="display-sm">How to download Twitch clips & VODs</h2>
+          <ol class="seo-steps">
+            <li>Find the Twitch clip or recorded video (VOD) you want to download.</li>
+            <li>Copy the URL from the browser's address bar or share icon.</li>
+            <li>Paste the URL into the input field above.</li>
+            <li>Click <strong>Extract</strong> and download the direct MP4 file.</li>
+          </ol>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Twitch features</h2>
+          <ul class="seo-list">
+            <li>Download short Twitch Clips</li>
+            <li>Download full stream broadcasts (VODs)</li>
+            <li>Instant CDN streaming bypasses speed limits</li>
+            <li>Works on desktop and mobile</li>
+          </ul>
+        </div>
+        <div class="seo-block">
+          <h2 class="display-sm">Important notes</h2>
+          <ul class="seo-list">
+            <li>Subscribers-only VODs are not supported</li>
+            <li>Only publicly accessible videos can be extracted</li>
+            <li>Large VODs might take longer to initialize</li>
+            <li>Use downloads for personal archives only</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .seo-section { padding: var(--sp-4xl) var(--sp-lg); }
+  .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-xl); }
+  .seo-block { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .seo-block h2 { margin: 0; color: var(--color-ink); }
+  .seo-steps, .seo-list {
+    margin: 0; padding-left: var(--sp-lg);
+    display: flex; flex-direction: column; gap: var(--sp-xs);
+    color: var(--color-body); font-size: 14px; line-height: 1.7;
+  }
+</style>

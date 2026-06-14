@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="DMCA Policy — mp4yt"
+  description="DMCA takedown policy for mp4yt.com. Learn how to submit a DMCA notice if you believe your copyrighted content is being accessed through our service."
+  canonicalUrl="https://mp4yt.com/dmca"
+>
+  <Navbar />
+  <main id="main-content">
+    <section class="legal-hero">
+      <div class="page-container">
+        <span class="eyebrow">Legal</span>
+        <h1 class="display-xl legal-title">DMCA Policy</h1>
+        <p class="body-lg legal-subtitle">Digital Millennium Copyright Act Notice</p>
+      </div>
+    </section>
+
+    <section class="legal-body">
+      <div class="page-container legal-container">
+        <div class="legal-content">
+
+          <h2 class="display-sm">Our Commitment</h2>
+          <p>
+            mp4yt respects the intellectual property rights of content creators and copyright holders.
+            We comply with the Digital Millennium Copyright Act (DMCA) and will respond promptly to
+            valid takedown notices.
+          </p>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Important Context</h2>
+          <p>
+            mp4yt does <strong>not</strong> host, store, or redistribute any video content. Our service
+            extracts metadata (title, thumbnail, duration) and provides the direct CDN stream URL
+            from the original hosting platform. The actual video content is served directly from the
+            platform's own content delivery network (e.g., YouTube's, Instagram's, TikTok's CDN).
+          </p>
+          <p>
+            If your content is hosted on a platform like YouTube or Instagram, the most effective
+            approach is to submit a DMCA notice directly to that platform, which has the ability
+            to remove the content at its source.
+          </p>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Filing a DMCA Takedown Notice</h2>
+          <p>
+            If you believe your copyrighted work is being accessed through our Service in a way
+            that constitutes copyright infringement, please send a DMCA takedown notice to our
+            designated agent with the following information:
+          </p>
+          <ol>
+            <li>
+              <strong>Identification of the copyrighted work:</strong> Describe the copyrighted
+              work you claim has been infringed.
+            </li>
+            <li>
+              <strong>Identification of the infringing material:</strong> Provide the specific URL(s)
+              on mp4yt.com that you believe are infringing, or the original video URL being accessed.
+            </li>
+            <li>
+              <strong>Your contact information:</strong> Include your full name, mailing address,
+              telephone number, and email address.
+            </li>
+            <li>
+              <strong>Good faith statement:</strong> A statement that you have a good faith belief
+              that use of the material is not authorized by the copyright owner, its agent, or the law.
+            </li>
+            <li>
+              <strong>Accuracy statement:</strong> A statement, under penalty of perjury, that the
+              information in your notice is accurate and that you are the copyright owner or authorized
+              to act on the owner's behalf.
+            </li>
+            <li>
+              <strong>Signature:</strong> Your physical or electronic signature.
+            </li>
+          </ol>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Where to Send Notices</h2>
+          <div class="contact-card">
+            <p><strong>DMCA Agent</strong></p>
+            <p>
+              Email: <a href="mailto:dmca@mp4yt.com">dmca@mp4yt.com</a><br/>
+              Subject line: <code>DMCA Takedown Notice</code>
+            </p>
+          </div>
+          <p>
+            We will respond to valid DMCA notices within 48 hours. Please note that we may forward
+            your notice to the user who submitted the URL for extraction.
+          </p>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Counter-Notification</h2>
+          <p>
+            If you believe your content was wrongly taken down, you may submit a counter-notification
+            to our DMCA Agent. The counter-notification must include:
+          </p>
+          <ul>
+            <li>Your physical or electronic signature</li>
+            <li>Identification of the material that was removed</li>
+            <li>A statement under penalty of perjury that the material was removed by mistake</li>
+            <li>Your name, address, and telephone number</li>
+            <li>Consent to jurisdiction of the federal court in your district</li>
+          </ul>
+
+          <hr class="legal-divider" />
+
+          <h2 class="display-sm">Repeat Infringers</h2>
+          <p>
+            In appropriate circumstances, we will terminate access for users who are repeat
+            infringers. Since we don't require user accounts, this is implemented through
+            rate-limiting and URL-level blocking.
+          </p>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-hero {
+    background-color: var(--color-canvas);
+    padding: var(--sp-5xl) var(--sp-lg) var(--sp-3xl);
+    text-align: center;
+  }
+  .legal-title {
+    margin: var(--sp-sm) 0 0;
+    color: var(--color-ink);
+  }
+  .legal-subtitle {
+    margin: var(--sp-xs) 0 0;
+    color: var(--color-mute);
+  }
+  .legal-body {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-4xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+  .legal-container {
+    max-width: 720px;
+  }
+  .legal-content {
+    background-color: var(--color-canvas);
+    border-radius: var(--rounded-lg);
+    padding: var(--sp-xl) var(--sp-xl);
+    box-shadow: var(--shadow-3);
+  }
+  .legal-content h2 {
+    margin: var(--sp-xl) 0 var(--sp-md);
+    color: var(--color-ink);
+  }
+  .legal-content h2:first-child {
+    margin-top: 0;
+  }
+  .legal-content p,
+  .legal-content li {
+    color: var(--color-body);
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 var(--sp-sm);
+  }
+  .legal-content ul,
+  .legal-content ol {
+    padding-left: var(--sp-lg);
+    margin: 0 0 var(--sp-md);
+  }
+  .legal-content li {
+    margin-bottom: var(--sp-xs);
+  }
+  .legal-content a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .legal-content a:hover {
+    color: var(--color-link-deep);
+    text-decoration: underline;
+  }
+  .legal-content code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background-color: var(--color-canvas-soft-2);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--color-body);
+  }
+  .contact-card {
+    background-color: var(--color-canvas-soft);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    padding: var(--sp-md) var(--sp-lg);
+    margin: var(--sp-md) 0;
+  }
+  .contact-card p {
+    margin: 0 0 var(--sp-xs);
+  }
+  .contact-card p:last-child {
+    margin: 0;
+  }
+  .legal-divider {
+    border: none;
+    border-top: 1px solid var(--color-hairline);
+    margin: var(--sp-xl) 0;
+  }
+  @media (max-width: 768px) {
+    .legal-hero { padding: var(--sp-4xl) var(--sp-md) var(--sp-xl); }
+    .legal-content { padding: var(--sp-lg); }
+  }
+</style>

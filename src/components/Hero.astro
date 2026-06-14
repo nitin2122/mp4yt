@@ -1,0 +1,734 @@
+---
+// Hero section — mesh gradient backdrop, URL input, auto-paste detection, hash URL autofill
+---
+
+<section id="hero" class="hero-band" aria-labelledby="hero-headline">
+  <!-- Mesh gradient backdrop -->
+  <div class="mesh-bg" aria-hidden="true"></div>
+
+  <!-- Noise texture overlay for depth -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div class="page-container hero-content">
+    <!-- Eyebrow badge -->
+    <div class="hero-eyebrow">
+      <span class="badge badge-new">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
+          <circle cx="4" cy="4" r="4" fill="#0070f3"/>
+        </svg>
+        Powered by yt-dlp · 1000+ sites
+      </span>
+    </div>
+
+    <!-- Headline -->
+    <h1 id="hero-headline" class="display-xl hero-headline">
+      Download any video.<br class="headline-break" /> Instantly.
+    </h1>
+
+    <!-- Subhead -->
+    <p class="body-lg hero-subhead">
+      Paste a link from YouTube, Instagram, TikTok, Twitter/X, or 1000+ other platforms.
+      Get the direct MP4 stream URL — zero storage, zero waiting.
+    </p>
+
+    <!-- URL Input Form -->
+    <div class="hero-input-wrapper">
+      <form id="extract-form" class="input-row" aria-label="Video URL extractor" novalidate>
+        <div class="input-group">
+          <span class="input-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 3.5H4.5A2.5 2.5 0 0 0 2 6v.5M10 3.5h1.5A2.5 2.5 0 0 1 14 6v.5M6 12.5H4.5A2.5 2.5 0 0 1 2 10v-.5M10 12.5h1.5A2.5 2.5 0 0 0 14 10v-.5M6 8h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input
+            id="hero-input"
+            type="url"
+            class="hero-url-input"
+            placeholder="Paste video URL here..."
+            aria-label="Video URL"
+            autocomplete="off"
+            spellcheck="false"
+            enterkeyhint="go"
+          />
+          <button
+            id="extract-btn"
+            type="submit"
+            class="btn-primary extract-btn"
+            aria-label="Extract video"
+          >
+            <svg id="extract-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg id="extract-spinner" class="animate-spin hidden" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+              <path d="M7 2a5 5 0 0 1 5 5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span id="extract-btn-label">Extract</span>
+          </button>
+        </div>
+
+        <!-- Loading progress bar -->
+        <div id="progress-bar" class="progress-bar-track hidden" role="progressbar" aria-label="Loading…">
+          <div class="progress-bar-fill"></div>
+        </div>
+
+        <!-- Error message -->
+        <div id="error-msg" class="error-msg hidden" role="alert" aria-live="assertive"></div>
+      </form>
+
+      <!-- Paste hint -->
+      <p class="paste-hint body-sm" aria-live="polite" id="paste-hint">
+        <kbd class="kbd">Ctrl+V</kbd> to paste — we'll auto-detect
+      </p>
+    </div>
+
+    <!-- Trust signals -->
+    <div class="hero-trust" role="list" aria-label="Key features">
+      <div class="trust-item" role="listitem">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7l3.5 3.5L12 3" stroke="#0070f3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>No registration</span>
+      </div>
+      <div class="trust-sep" aria-hidden="true">·</div>
+      <div class="trust-item" role="listitem">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7l3.5 3.5L12 3" stroke="#0070f3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>No file storage</span>
+      </div>
+      <div class="trust-sep" aria-hidden="true">·</div>
+      <div class="trust-item" role="listitem">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7l3.5 3.5L12 3" stroke="#0070f3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Instant CDN stream</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Result Card Section (hidden until response) -->
+<div id="result-section" class="result-section hidden" aria-live="polite" aria-label="Video extraction result">
+  <div class="page-container">
+    <div id="result-card" class="result-card card-lg animate-fade-in-up">
+      <div class="result-inner">
+        <!-- Thumbnail + Preview -->
+        <div class="result-media">
+          <div class="thumbnail-wrapper">
+            <img id="result-thumb" src="" alt="" class="result-thumb" loading="lazy" />
+            <div class="thumb-overlay" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="20" fill="rgba(0,0,0,0.5)"/>
+                <path d="M16 13l14 7-14 7V13z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadata + Actions -->
+        <div class="result-meta">
+          <div class="result-header">
+            <span class="eyebrow" id="result-platform">YouTube</span>
+            <h2 id="result-title" class="display-sm result-title"></h2>
+          </div>
+
+          <div class="result-stats">
+            <div class="stat-item">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="5" stroke="var(--color-mute)" stroke-width="1.3"/>
+                <path d="M7 4.5V7l2 1.5" stroke="var(--color-mute)" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+              <span id="result-duration" class="body-sm" style="color: var(--color-body);"></span>
+            </div>
+            <div class="stat-item">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 9.5L7 4.5l4.5 5" stroke="var(--color-mute)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="body-sm" style="color: var(--color-body);">Best quality MP4</span>
+            </div>
+          </div>
+
+          <div class="result-filename">
+            <span class="eyebrow">Filename</span>
+            <code id="result-filename-display" class="code filename-code"></code>
+          </div>
+
+          <div class="result-actions">
+            <a
+              id="result-download-btn"
+              href="#"
+              class="btn-primary btn-primary-lg"
+              download
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 2v8M5 7l3 3 3-3M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Download MP4
+            </a>
+            <button class="btn-secondary" id="copy-url-btn" aria-label="Copy direct URL">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M11 5V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+              Copy URL
+            </button>
+          </div>
+
+          <!-- Inline video preview -->
+          <details class="video-preview-toggle">
+            <summary class="body-sm-strong preview-summary">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 3.5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-7z" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M5.5 5.5L8.5 7l-3 1.5v-3z" fill="currentColor"/>
+              </svg>
+              Preview video in browser
+            </summary>
+            <div class="video-preview-wrapper">
+              <video id="result-video" controls preload="metadata" class="result-video">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Hero Band */
+  .hero-band {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-canvas);
+    padding: var(--sp-section) var(--sp-lg) var(--sp-5xl);
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .noise-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--sp-lg);
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-headline {
+    margin: 0;
+    max-width: 720px;
+    color: var(--color-ink);
+  }
+
+  .hero-subhead {
+    margin: 0;
+    max-width: 500px;
+    color: var(--color-body);
+  }
+
+  /* Input Form */
+  .hero-input-wrapper {
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    margin-top: var(--sp-xs);
+  }
+
+  .input-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-3);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .input-group:focus-within {
+    border-color: var(--color-hairline-strong);
+    box-shadow: var(--shadow-4), 0 0 0 3px rgba(0, 112, 243, 0.1);
+  }
+
+  .input-icon {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sp-sm);
+    color: var(--color-mute);
+    flex-shrink: 0;
+  }
+
+  .hero-url-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--color-ink);
+    padding: var(--sp-md) var(--sp-sm) var(--sp-md) 0;
+    min-width: 0;
+  }
+
+  .hero-url-input::placeholder {
+    color: var(--color-mute);
+  }
+
+  .extract-btn {
+    border-radius: 0 var(--rounded-md) var(--rounded-md) 0 !important;
+    height: 54px;
+    padding: 0 var(--sp-lg);
+    font-size: 15px;
+    flex-shrink: 0;
+    gap: var(--sp-xs);
+  }
+
+  /* Progress bar */
+  .progress-bar-track {
+    margin-top: 4px;
+  }
+
+  /* Error */
+  .error-msg {
+    padding: var(--sp-xs) var(--sp-sm);
+    background-color: var(--color-error-soft);
+    border: 1px solid var(--color-error-border, #f9c8c8);
+    border-radius: var(--rounded-sm);
+    color: var(--color-error-deep);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  /* Paste hint */
+  .paste-hint {
+    margin: 0;
+    color: var(--color-mute);
+    text-align: center;
+  }
+
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--color-canvas-soft-2);
+    border: 1px solid var(--color-hairline);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0 5px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-body);
+  }
+
+  /* Trust signals */
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--sp-xs);
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--color-body);
+  }
+
+  .trust-sep {
+    color: var(--color-hairline-strong);
+    font-size: 16px;
+  }
+
+  /* Result Section */
+  .result-section {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-4xl) 0;
+    border-top: 1px solid var(--color-hairline);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  .result-card {
+    overflow: hidden;
+  }
+
+  .result-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--sp-xl);
+    align-items: start;
+  }
+
+  .result-media {
+    position: relative;
+  }
+
+  .thumbnail-wrapper {
+    position: relative;
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background-color: var(--color-canvas-soft-2);
+    box-shadow: var(--shadow-3);
+  }
+
+  .result-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .thumb-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.1);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .thumbnail-wrapper:hover .thumb-overlay {
+    opacity: 1;
+  }
+
+  .result-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+  }
+
+  .result-header { display: flex; flex-direction: column; gap: var(--sp-xs); }
+
+  .result-title {
+    margin: 0;
+    color: var(--color-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .result-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .result-filename {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .filename-code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-body);
+    background-color: var(--color-canvas-soft-2);
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--rounded-sm);
+    word-break: break-all;
+    display: block;
+  }
+
+  .result-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+  }
+
+  /* Video preview toggle */
+  .video-preview-toggle {
+    border: none;
+  }
+
+  .preview-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    cursor: pointer;
+    color: var(--color-link);
+    list-style: none;
+    padding: var(--sp-xs) 0;
+    transition: color 0.15s ease;
+  }
+
+  .preview-summary:hover { color: var(--color-link-deep); }
+  .preview-summary::-webkit-details-marker { display: none; }
+
+  .video-preview-wrapper {
+    margin-top: var(--sp-sm);
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    background: #000;
+    box-shadow: var(--shadow-3);
+  }
+
+  .result-video {
+    width: 100%;
+    max-height: 360px;
+    display: block;
+  }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 768px) {
+    .hero-band {
+      padding: var(--sp-5xl) var(--sp-md) var(--sp-4xl);
+      min-height: auto;
+    }
+    .headline-break { display: none; }
+    .result-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .extract-btn { padding: 0 var(--sp-md); }
+    .hero-trust { gap: var(--sp-xs); }
+    .trust-sep { display: none; }
+    .trust-item { font-size: 12px; }
+    .result-actions { flex-direction: column; }
+    .result-actions .btn-primary, .result-actions .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('extract-form') as HTMLFormElement;
+  const input = document.getElementById('hero-input') as HTMLInputElement;
+  const extractBtn = document.getElementById('extract-btn') as HTMLButtonElement;
+  const extractIcon = document.getElementById('extract-icon') as SVGElement;
+  const extractSpinner = document.getElementById('extract-spinner') as SVGElement;
+  const extractBtnLabel = document.getElementById('extract-btn-label') as HTMLSpanElement;
+  const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
+  const errorMsg = document.getElementById('error-msg') as HTMLDivElement;
+  const pasteHint = document.getElementById('paste-hint') as HTMLParagraphElement;
+
+  const resultSection = document.getElementById('result-section') as HTMLDivElement;
+  const resultThumb = document.getElementById('result-thumb') as HTMLImageElement;
+  const resultTitle = document.getElementById('result-title') as HTMLHeadingElement;
+  const resultDuration = document.getElementById('result-duration') as HTMLSpanElement;
+  const resultFilename = document.getElementById('result-filename-display') as HTMLElement;
+  const resultDownloadBtn = document.getElementById('result-download-btn') as HTMLAnchorElement;
+  const copyUrlBtn = document.getElementById('copy-url-btn') as HTMLButtonElement;
+  const resultVideo = document.getElementById('result-video') as HTMLVideoElement;
+  const resultPlatform = document.getElementById('result-platform') as HTMLSpanElement;
+
+  // ── Hash URL autofill (from seo-handler redirect: /#url=...) ──
+  function checkHashUrl() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#url=')) {
+      const encodedUrl = hash.slice(5);
+      try {
+        const url = decodeURIComponent(encodedUrl);
+        input.value = url;
+        // Clean the hash from the URL bar
+        history.replaceState(null, '', window.location.pathname);
+        // Auto-trigger extraction
+        setTimeout(() => extractVideo(url), 300);
+      } catch (e) { /* invalid encoding, ignore */ }
+    }
+  }
+
+  // ── Auto-paste detection ──
+  document.addEventListener('paste', (e: ClipboardEvent) => {
+    const text = e.clipboardData?.getData('text/plain')?.trim() ?? '';
+    if (text && isValidUrl(text) && document.activeElement !== input) {
+      input.value = text;
+      extractVideo(text);
+    }
+  });
+
+  // ── Form submission ──
+  form.addEventListener('submit', (e: Event) => {
+    e.preventDefault();
+    const url = input.value.trim();
+    if (!url) return;
+    if (!isValidUrl(url)) {
+      showError('Please paste a valid video URL (e.g. https://youtube.com/watch?v=...)');
+      return;
+    }
+    extractVideo(url);
+  });
+
+  function isValidUrl(url: string): boolean {
+    try {
+      const u = new URL(url);
+      return u.protocol === 'http:' || u.protocol === 'https:';
+    } catch { return false; }
+  }
+
+  function setLoading(loading: boolean) {
+    extractBtn.disabled = loading;
+    extractIcon.classList.toggle('hidden', loading);
+    extractSpinner.classList.toggle('hidden', !loading);
+    extractBtnLabel.textContent = loading ? 'Extracting…' : 'Extract';
+    progressBar.classList.toggle('hidden', !loading);
+    errorMsg.classList.add('hidden');
+  }
+
+  function showError(msg: string) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.remove('hidden');
+    resultSection.classList.add('hidden');
+  }
+
+  function formatDuration(seconds: number): string {
+    if (!seconds || isNaN(seconds)) return 'Unknown duration';
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    return `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function getPlatformName(url: string): string {
+    try {
+      const host = new URL(url).hostname.replace('www.', '');
+      const map: Record<string, string> = {
+        'youtube.com': 'YouTube', 'youtu.be': 'YouTube',
+        'instagram.com': 'Instagram', 'tiktok.com': 'TikTok',
+        'twitter.com': 'Twitter/X', 'x.com': 'Twitter/X',
+        'facebook.com': 'Facebook', 'fb.com': 'Facebook',
+        'reddit.com': 'Reddit', 'vimeo.com': 'Vimeo',
+        'twitch.tv': 'Twitch', 'soundcloud.com': 'SoundCloud',
+        'dailymotion.com': 'Dailymotion',
+      };
+      return map[host] ?? host;
+    } catch { return 'Video'; }
+  }
+
+  // Store the raw CDN stream URL separately for the video preview player
+  let currentStreamUrl = '';
+  let currentFilename = 'video.mp4';
+
+  async function extractVideo(url: string) {
+    setLoading(true);
+    try {
+      const resp = await fetch(`/api/extract?url=${encodeURIComponent(url)}`);
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        showError(data.error ?? 'Failed to extract video. Please check the URL and try again.');
+        return;
+      }
+
+      // Populate result card
+      resultPlatform.textContent = getPlatformName(url);
+      resultTitle.textContent = data.title ?? 'Untitled video';
+      resultDuration.textContent = formatDuration(data.duration);
+      currentFilename = data.filename ?? 'video.mp4';
+      resultFilename.textContent = currentFilename;
+      resultThumb.src = data.thumbnail ?? '';
+      resultThumb.alt = data.title ?? 'Video thumbnail';
+
+      // Store the CDN stream URL and build proxy URL
+      currentStreamUrl = data.url;
+      const proxyUrl = `/api/proxy?url=${encodeURIComponent(data.url)}&filename=${encodeURIComponent(currentFilename)}`;
+      resultDownloadBtn.href = proxyUrl;
+      resultDownloadBtn.setAttribute('download', currentFilename);
+
+      // Video preview uses raw stream URL directly (plays inline)
+      resultVideo.src = currentStreamUrl;
+
+      // Show result
+      resultSection.classList.remove('hidden');
+      resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Clear hash if any
+      history.replaceState(null, '', window.location.pathname);
+
+    } catch (err) {
+      showError('Network error — please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Download button — use fetch+blob to avoid navigating away from the page
+  resultDownloadBtn.addEventListener('click', async (e: Event) => {
+    e.preventDefault();
+    const downloadUrl = resultDownloadBtn.href;
+    if (!downloadUrl || downloadUrl === '#') return;
+
+    const origHTML = resultDownloadBtn.innerHTML;
+    resultDownloadBtn.innerHTML = `<svg class="animate-spin" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg> Downloading…`;
+    (resultDownloadBtn as any).style.pointerEvents = 'none';
+
+    try {
+      const resp = await fetch(downloadUrl);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const blob = await resp.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = currentFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    } catch (err) {
+      // Fallback: open proxy URL directly in new tab if blob download fails
+      window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+    } finally {
+      resultDownloadBtn.innerHTML = origHTML;
+      (resultDownloadBtn as any).style.pointerEvents = '';
+    }
+  });
+
+  // Copy URL button — copies the raw CDN stream URL
+  copyUrlBtn.addEventListener('click', async () => {
+    if (!currentStreamUrl) return;
+    try {
+      await navigator.clipboard.writeText(currentStreamUrl);
+      const prev = copyUrlBtn.innerHTML;
+      copyUrlBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4L14 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!`;
+      setTimeout(() => { copyUrlBtn.innerHTML = prev; }, 2000);
+    } catch { /* fallback */ }
+  });
+
+  // Init on load
+  checkHashUrl();
+</script>

@@ -1,0 +1,262 @@
+---
+// HowItWorks — dark polarity-flipped band with 3-step flow + code mockup
+---
+
+<section id="how-it-works" class="how-band" aria-labelledby="how-headline">
+  <div class="page-container how-inner">
+    <!-- Left: copy -->
+    <div class="how-copy">
+      <span class="eyebrow" style="color: rgba(255,255,255,0.4);">How it works</span>
+      <h2 id="how-headline" class="display-lg how-title">
+        Three steps.<br />Zero friction.
+      </h2>
+      <p class="body-lg how-subtitle">
+        No browser extensions, no desktop apps, no account required.
+        Just a URL and a single click.
+      </p>
+
+      <ol class="steps-list" aria-label="Download steps">
+        <li class="step-item">
+          <div class="step-num" aria-label="Step 1">01</div>
+          <div class="step-content">
+            <h3 class="display-sm step-title">Paste the link.</h3>
+            <p class="body-md step-desc">
+              Copy any video URL from YouTube, TikTok, Instagram, or 1000+ sites.
+              Paste it into the input — or just press <kbd class="kbd-dark">Ctrl+V</kbd> anywhere on the page.
+            </p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num" aria-label="Step 2">02</div>
+          <div class="step-content">
+            <h3 class="display-sm step-title">We extract the stream.</h3>
+            <p class="body-md step-desc">
+              Our serverless function runs yt-dlp on a Vercel Edge Node, fetches
+              the direct CDN streaming URL in milliseconds, and returns a clean JSON payload.
+            </p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num" aria-label="Step 3">03</div>
+          <div class="step-content">
+            <h3 class="display-sm step-title">Download instantly.</h3>
+            <p class="body-md step-desc">
+              Your browser downloads directly from the platform's CDN.
+              No file touches our servers. No rate limits. Maximum speed.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Right: code editor mockup -->
+    <div class="how-mockup" aria-hidden="true">
+      <div class="editor-chrome">
+        <div class="editor-dots">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <span class="editor-filename caption-mono">api/extract.js response</span>
+      </div>
+      <div class="editor-body">
+        <pre class="editor-code"><code><span class="tok-brace">{`{`}</span>
+  <span class="tok-key">"title"</span><span class="tok-colon">:</span> <span class="tok-string">"Never Gonna Give You Up"</span><span class="tok-comma">,</span>
+  <span class="tok-key">"duration"</span><span class="tok-colon">:</span> <span class="tok-num">212</span><span class="tok-comma">,</span>
+  <span class="tok-key">"thumbnail"</span><span class="tok-colon">:</span> <span class="tok-string">"https://i.ytimg.com/vi/..."</span><span class="tok-comma">,</span>
+  <span class="tok-key">"url"</span><span class="tok-colon">:</span> <span class="tok-string">"https://rr3---sn-...googlevideo.com/..."</span><span class="tok-comma">,</span>
+  <span class="tok-key">"filename"</span><span class="tok-colon">:</span> <span class="tok-string">"never-gonna-give-you-up.mp4"</span>
+<span class="tok-brace">}</span></code></pre>
+        <div class="editor-status">
+          <span class="status-dot"></span>
+          <span class="caption-mono" style="color: rgba(255,255,255,0.35);">200 OK · ~180ms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-band {
+    background-color: var(--color-primary);
+    padding: var(--sp-5xl) var(--sp-lg);
+  }
+
+  .how-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4xl);
+    align-items: center;
+  }
+
+  .how-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xl);
+  }
+
+  .how-title {
+    margin: 0;
+    color: var(--color-on-primary);
+  }
+
+  .how-subtitle {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* Steps */
+  .steps-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xl);
+  }
+
+  .step-item {
+    display: flex;
+    gap: var(--sp-lg);
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    padding-top: 6px;
+    min-width: 24px;
+  }
+
+  .step-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+  }
+
+  .step-title {
+    margin: 0;
+    color: var(--color-on-primary);
+  }
+
+  .step-desc {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .kbd-dark {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0 5px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* Editor Mockup */
+  .how-mockup {
+    border-radius: var(--rounded-lg);
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.4), 0px 24px 48px rgba(0,0,0,0.5);
+  }
+
+  .editor-chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    background-color: #0a0a0a;
+    padding: var(--sp-sm) var(--sp-md);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .editor-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--rounded-full);
+  }
+
+  .dot-red    { background-color: #ff5f57; }
+  .dot-yellow { background-color: #febc2e; }
+  .dot-green  { background-color: #28c840; }
+
+  .editor-filename {
+    color: rgba(255,255,255,0.3);
+    margin-left: auto;
+    font-size: 11px;
+  }
+
+  .editor-body {
+    background-color: #111111;
+    padding: var(--sp-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+  }
+
+  .editor-code {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 22px;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Syntax tokens */
+  .tok-brace  { color: rgba(255,255,255,0.5); }
+  .tok-key    { color: #79b8ff; }
+  .tok-colon  { color: rgba(255,255,255,0.3); }
+  .tok-string { color: #9ecbff; }
+  .tok-num    { color: #f9cb28; }
+  .tok-comma  { color: rgba(255,255,255,0.3); }
+
+  .editor-status {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    padding-top: var(--sp-sm);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--rounded-full);
+    background-color: #28c840;
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @media (max-width: 960px) {
+    .how-inner {
+      grid-template-columns: 1fr;
+    }
+    .how-mockup {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .how-band { padding: var(--sp-4xl) var(--sp-md); }
+    .editor-body { padding: var(--sp-md); }
+    .editor-code { font-size: 11px; }
+  }
+</style>
