@@ -259,6 +259,8 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
   .extract-btn {
     border-radius: 0 var(--rounded-md) var(--rounded-md) 0 !important;
     height: 54px; padding: 0 var(--sp-lg); font-size: 15px; flex-shrink: 0; gap: var(--sp-xs);
+    background-color: var(--color-primary) !important;
+    color: var(--color-on-primary) !important;
   }
   .progress-bar-track { margin-top: 4px; }
   .error-msg {
@@ -561,7 +563,18 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
       justify-content: center;
       box-shadow: var(--shadow-3);
       padding: 0 var(--sp-md);
-      height: 48px;
+      height: 50px;
+      min-height: 50px;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      letter-spacing: -0.01em;
+      background-color: var(--color-primary) !important;
+      color: var(--color-on-primary) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+    .extract-btn:active {
+      transform: scale(0.98);
     }
     .result-actions { flex-direction: column; }
     .result-actions .btn-primary, .result-actions .btn-secondary {
