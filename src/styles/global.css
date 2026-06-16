@@ -160,7 +160,8 @@
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     overflow-x: hidden;
-    max-width: 100%;
+    max-width: 100vw;
+    width: 100%;
   }
 
   body {
@@ -173,10 +174,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    max-width: 100%;
+    max-width: 100vw;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
+  /* Prevent overflow from any element */
+  main, section, footer, nav, header, article, aside {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
 
+  /* Prevent images and videos from overflowing */
+  img, video, iframe, embed, object, svg {
+    max-width: 100%;
+    height: auto;
+  }
 
   ::selection {
     background-color: var(--color-primary);
@@ -474,24 +488,49 @@
 }
 
 /* ─── Mesh Gradient Animation ─── */
-@keyframes meshDrift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes meshDriftTransform {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33%  { transform: translate(4%, 6%) scale(1.08) rotate(120deg); }
+  66%  { transform: translate(-3%, 3%) scale(0.95) rotate(240deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(360deg); }
 }
 
 .mesh-bg {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mesh-bg::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
   background: 
     radial-gradient(ellipse 80% 60% at 20% 30%, rgba(0, 124, 240, 0.35) 0%, transparent 60%),
     radial-gradient(ellipse 60% 80% at 80% 20%, rgba(121, 40, 202, 0.3) 0%, transparent 60%),
     radial-gradient(ellipse 70% 60% at 60% 80%, rgba(255, 0, 128, 0.25) 0%, transparent 60%),
     radial-gradient(ellipse 90% 40% at 40% 60%, rgba(0, 223, 216, 0.2) 0%, transparent 60%),
     radial-gradient(ellipse 50% 50% at 90% 70%, rgba(249, 203, 40, 0.15) 0%, transparent 60%);
-  background-size: 200% 200%;
-  animation: meshDrift 12s ease-in-out infinite;
-  pointer-events: none;
+  animation: meshDriftTransform 25s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Disable expensive mesh animation on mobile to prevent lag */
+@media (max-width: 768px) {
+  .mesh-bg::before {
+    animation: none;
+    inset: -20%;
+    will-change: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-bg::before {
+    animation: none;
+    will-change: auto;
+  }
 }
 
 /* ─── Loading / Spinner ─── */
@@ -548,13 +587,32 @@
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
-  .display-xl { font-size: 32px; line-height: 36px; letter-spacing: -1.28px; }
-  .display-lg { font-size: 24px; line-height: 30px; }
+  .display-xl { font-size: 28px; line-height: 34px; letter-spacing: -1.28px; }
+  .display-lg { font-size: 22px; line-height: 28px; }
+  .display-md { font-size: 20px; line-height: 26px; }
+  .display-sm { font-size: 17px; line-height: 24px; }
+  .body-lg { font-size: 16px; line-height: 24px; }
   .page-container { padding-inline: var(--sp-md); }
+
+  /* Reduce section spacing on mobile */
+  :root {
+    --sp-section: 80px;
+    --sp-5xl: 56px;
+    --sp-4xl: 40px;
+  }
 }
 
 @media (max-width: 480px) {
-  .display-xl { font-size: 26px; line-height: 30px; letter-spacing: -0.8px; }
+  .display-xl { font-size: 24px; line-height: 30px; letter-spacing: -0.8px; }
+  .display-lg { font-size: 20px; line-height: 26px; }
+  .page-container { padding-inline: var(--sp-sm); }
+
+  :root {
+    --sp-section: 60px;
+    --sp-5xl: 40px;
+    --sp-4xl: 32px;
+    --sp-3xl: 28px;
+  }
 }
 
 /* ─── Scroll-driven logo marquee ─── */
@@ -571,6 +629,13 @@
 
 .marquee-track:hover {
   animation-play-state: paused;
+}
+
+/* Slow down marquee on mobile to reduce GPU usage */
+@media (max-width: 768px) {
+  .marquee-track {
+    animation-duration: 45s;
+  }
 }
 
 /* ─── Accordion animation ─── */

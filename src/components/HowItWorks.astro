@@ -21,7 +21,7 @@
           <div class="step-content">
             <h3 class="display-sm step-title">Paste the link.</h3>
             <p class="body-md step-desc">
-              Copy any video URL from YouTube, TikTok, Instagram, or 1000+ sites.
+              Copy any video URL from TikTok, Instagram, Reddit, or 1000+ sites.
               Paste it into the input — or just press <kbd class="kbd-dark">Ctrl+V</kbd> anywhere on the page.
             </p>
           </div>
@@ -260,7 +260,14 @@
 
   @media (max-width: 600px) {
     .how-band { padding: var(--sp-4xl) var(--sp-md); }
-    .editor-body { padding: var(--sp-md); }
-    .editor-code { font-size: 11px; }
+    .editor-body { padding: var(--sp-sm); }
+    .editor-code { font-size: 10px; line-height: 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .step-item { gap: var(--sp-md); }
+    .step-num { min-width: 20px; font-size: 10px; }
+    .how-copy { gap: var(--sp-md); }
+  }
+
+  @media (max-width: 380px) {
+    .editor-code { font-size: 9px; line-height: 16px; }
   }
 </style>

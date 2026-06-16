@@ -5,12 +5,12 @@
  *
  * Intercepts requests to `/download-stream?url=<remote_url>&filename=<name>`
  * and streams the remote URL directly to the browser's download manager using
- * standard streams. This bypasses Vercel serverless timeouts completely, requires
+ * standard streams. This bypasses server timeouts completely, requires
  * zero server CPU/bandwidth, and provides standard browser progress indicators.
  *
  * If the remote URL does not support CORS (e.g. some platforms), the service worker
  * catches the fetch error and redirects the browser to `/api/proxy?url=...` which
- * falls back to our serverless Node.js proxy.
+ * falls back to the Cloudflare Worker server-side proxy.
  */
 
 self.addEventListener('install', (event) => {
@@ -32,7 +32,7 @@ self.addEventListener('fetch', (event) => {
     const filename = url.searchParams.get('filename') || 'video.mp4';
     const audioUrl = url.searchParams.get('audioUrl');
 
-    // If an audioUrl is present, server-side FFmpeg merging is required. Bypass SW.
+    // If an audioUrl is present, server-side merging is required. Bypass SW.
     if (audioUrl) return;
 
     if (!targetUrl) return;
@@ -41,7 +41,7 @@ self.addEventListener('fetch', (event) => {
       try {
         console.log(`[sw] Intercepted download for: ${filename}. Direct streaming from CDN…`);
 
-        // Perform client-side fetch. YouTube CDN supports CORS, so this will succeed.
+        // Perform client-side fetch. Many CDNs support CORS, so this will succeed.
         const response = await fetch(targetUrl, {
           mode: 'cors',
           credentials: 'omit' // Omit credentials to avoid origin mismatch issues
@@ -76,9 +76,9 @@ self.addEventListener('fetch', (event) => {
         });
 
       } catch (err) {
-        console.warn(`[sw] Direct CDN stream failed (CORS or network). Redirecting to server-side proxy fallback... Error:`, err);
+        console.warn(`[sw] Direct CDN stream failed (CORS or network). Redirecting to Cloudflare Worker proxy fallback... Error:`, err);
         
-        // Fallback: Redirect browser to /api/proxy which handles downloading via serverless backend
+        // Fallback: Redirect browser to /api/proxy which handles downloading via the Cloudflare Worker backend
         const fallbackUrl = `/api/proxy?url=${encodeURIComponent(targetUrl)}&filename=${encodeURIComponent(filename)}`;
         
         return Response.redirect(fallbackUrl, 302);

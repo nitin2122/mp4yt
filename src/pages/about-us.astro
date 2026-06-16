@@ -348,4 +348,15 @@ import Footer from '../components/Footer.astro';
     .about-cards-grid { grid-template-columns: 1fr; }
     .tech-grid { grid-template-columns: 1fr; }
   }
+
+  @media (max-width: 480px) {
+    .about-hero { padding: var(--sp-4xl) var(--sp-sm) var(--sp-xl); }
+    .about-body { padding: var(--sp-xl) var(--sp-sm); }
+    .about-card, .tech-item, .about-faq-item {
+      padding: var(--sp-md);
+    }
+    .about-section {
+      margin-bottom: var(--sp-3xl);
+    }
+  }
 </style>

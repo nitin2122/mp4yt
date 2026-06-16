@@ -67,7 +67,7 @@
         <h3 id="feat-3-title" class="display-sm feat-title">1000+ platforms.</h3>
         <p class="body-md feat-desc">
           Powered by yt-dlp, the world's most comprehensive video extraction library.
-          YouTube, Instagram, TikTok, Twitter/X, Reddit, Vimeo, Twitch — paste any URL.
+          Instagram, TikTok, Twitter/X, Reddit, Vimeo, Twitch — paste any URL.
         </p>
         <div class="feat-tag">
           <span class="caption-mono" style="color: var(--color-mute);">yt-dlp powered</span>
@@ -234,6 +234,13 @@
   @media (max-width: 600px) {
     .features-grid { grid-template-columns: 1fr; }
     .features-band { padding: var(--sp-4xl) var(--sp-md); }
+    .features-header { margin-bottom: var(--sp-xl); }
+  }
+
+  @media (max-width: 480px) {
+    .features-band { padding: var(--sp-3xl) var(--sp-sm); }
+    .feature-card { padding: var(--sp-md); }
+    .feat-desc { font-size: 14px; line-height: 22px; }
   }
 
   /* Dark mode icon tints */

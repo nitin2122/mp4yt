@@ -11,7 +11,8 @@ binding = "ASSETS"
 run_worker_first = true
 
 [vars]
-# Point this to your Vercel deployment URL (e.g., mp4yt.vercel.app)
-# Do NOT point it to the final custom domain if that domain points to Cloudflare,
-# otherwise it will create an infinite routing loop.
-BACKEND_API_HOST = "mp4yt.vercel.app"
+COBALT_API_URL = "https://my-cobalt-api-ttc2.onrender.com/"
+COBALT_FALLBACK_INSTANCES = "https://nuko-c.meowing.de/,https://apicobalt.mgytr.top/,https://api.cobalt.blackcat.sweeux.org/,https://melon.clxxped.lol/,https://dog.kittycat.boo/,https://subito-c.meowing.de/,https://api.qwkuns.me/"
+
+[triggers]
+crons = ["*/5 * * * *"]

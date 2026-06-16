@@ -17,7 +17,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
         <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
           <circle cx="4" cy="4" r="4" fill="#0070f3"/>
         </svg>
-        Powered by yt-dlp · 1000+ sites
+        Powered by Cobalt · 1000+ sites
       </span>
     </div>
 
@@ -28,7 +28,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
 
     <!-- Subhead -->
     <p class="body-lg hero-subhead">
-      Paste a link from YouTube, Instagram, TikTok, Twitter/X, or 1000+ other platforms.
+      Paste a link from Instagram, TikTok, Twitter/X, or 1000+ other platforms.
       Get the direct MP4 stream URL — zero storage, zero waiting.
     </p>
 
@@ -80,7 +80,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
 
       <!-- Paste hint -->
       <p class="paste-hint body-sm" aria-live="polite" id="paste-hint">
-        <kbd class="kbd">Ctrl+V</kbd> to paste — we'll auto-detect
+        <span class="paste-desktop"><kbd class="kbd">Ctrl+V</kbd> to paste — we'll auto-detect</span>
+        <span class="paste-mobile">Tap the input and paste your URL</span>
       </p>
     </div>
 
@@ -131,7 +132,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
         <!-- Metadata + Actions -->
         <div class="result-meta">
           <div class="result-header">
-            <span class="eyebrow" id="result-platform">YouTube</span>
+            <span class="eyebrow" id="result-platform">Instagram</span>
             <h2 id="result-title" class="display-sm result-title"></h2>
           </div>
 
@@ -316,7 +317,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     outline: none;
     background: transparent;
     font-family: var(--font-sans);
-    font-size: 16px;
+    font-size: 16px; /* Must be 16px to prevent iOS auto-zoom on focus */
     color: var(--color-ink);
     padding: var(--sp-md) var(--sp-sm) var(--sp-md) 0;
     min-width: 0;
@@ -356,6 +357,14 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     margin: 0;
     color: var(--color-mute);
     text-align: center;
+  }
+
+  .paste-mobile { display: none; }
+  .paste-desktop { display: inline; }
+
+  @media (max-width: 768px) {
+    .paste-mobile { display: inline; }
+    .paste-desktop { display: none; }
   }
 
   .kbd {
@@ -725,10 +734,86 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     .result-inner {
       grid-template-columns: 1fr;
     }
+    .hero-content {
+      gap: var(--sp-md);
+    }
+    .hero-input-wrapper {
+      max-width: 100%;
+    }
+    .result-section {
+      padding: var(--sp-xl) 0;
+    }
+    /* Ensure filename doesn't overflow */
+    .filename-code {
+      font-size: 11px;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+    /* Improve dropdown on mobile */
+    .quality-dropdown-menu {
+      max-height: 220px;
+    }
+    .quality-dropdown-trigger {
+      height: 44px;
+      font-size: 13px;
+    }
+    .opt-meta {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
   }
 
   @media (max-width: 480px) {
-    .extract-btn { padding: 0 var(--sp-md); }
+    .hero-band {
+      padding: var(--sp-4xl) var(--sp-sm) var(--sp-3xl);
+    }
+    .input-group {
+      flex-direction: column;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      gap: var(--sp-sm);
+    }
+    /* Disable the focus-within glow on the transparent wrapper */
+    .input-group:focus-within {
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .input-icon {
+      display: none;
+    }
+    .hero-url-input {
+      background-color: var(--color-canvas);
+      border: 1px solid var(--color-hairline);
+      border-radius: var(--rounded-md);
+      padding: var(--sp-md) var(--sp-md);
+      width: 100%;
+      height: 50px;
+      box-shadow: var(--shadow-3);
+      font-size: 16px;
+    }
+    /* Proper focus ring on standalone input on mobile */
+    .hero-url-input:focus {
+      border-color: var(--color-link);
+      box-shadow: var(--shadow-3), 0 0 0 3px rgba(0, 112, 243, 0.15);
+    }
+    .extract-btn {
+      width: 100%;
+      border-radius: var(--rounded-md) !important;
+      justify-content: center;
+      box-shadow: var(--shadow-3);
+      padding: 0 var(--sp-md);
+      height: 50px;
+      min-height: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .extract-btn:active {
+      transform: scale(0.98);
+    }
     .hero-trust { gap: var(--sp-xs); }
     .trust-sep { display: none; }
     .trust-item { font-size: 12px; }
@@ -736,6 +821,31 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     .result-actions .btn-primary, .result-actions .btn-secondary {
       width: 100%;
       justify-content: center;
+      min-height: 44px;
+    }
+    .paste-hint {
+      font-size: 12px;
+    }
+    .hero-subhead {
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .result-card {
+      padding: var(--sp-md);
+    }
+    .card-lg {
+      padding: var(--sp-md);
+    }
+    .result-inner {
+      gap: var(--sp-md);
+    }
+    /* Improve dropdown on small mobile */
+    .dropdown-item {
+      padding: var(--sp-sm) var(--sp-sm);
+      min-height: 44px;
+    }
+    .opt-audio {
+      font-size: 11px;
     }
   }
 </style>
@@ -795,7 +905,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     const url = input.value.trim();
     if (!url) return;
     if (!isValidUrl(url)) {
-      showError('Please paste a valid video URL (e.g. https://youtube.com/watch?v=...)');
+      showError('Please paste a valid video URL (e.g. https://instagram.com/p/...)');
       return;
     }
     extractVideo(url);
@@ -838,8 +948,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     try {
       const host = new URL(url).hostname.replace('www.', '');
       const map: Record<string, string> = {
-        'youtube.com': 'YouTube', 'youtu.be': 'YouTube',
-        'instagram.com': 'Instagram', 'tiktok.com': 'TikTok',
+        'instagram.com': 'Instagram',
+        'tiktok.com': 'TikTok',
         'twitter.com': 'Twitter/X', 'x.com': 'Twitter/X',
         'facebook.com': 'Facebook', 'fb.com': 'Facebook',
         'reddit.com': 'Reddit', 'vimeo.com': 'Vimeo',

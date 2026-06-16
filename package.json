@@ -10,6 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "dev:worker": "wrangler dev",
+    "dev:full": "npx concurrently \"astro dev\" \"wrangler dev\"",
     "deploy": "wrangler deploy"
   },
   "dependencies": {
@@ -17,6 +19,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.1",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.1",
+    "wrangler": "^4.100.0"
   }
 }
