@@ -1,11 +1,133 @@
+# ──────────────────────────────────────────────────────
+#  robots.txt — mp4yt.com
+#  Controls search engine crawling for better indexing
+# ──────────────────────────────────────────────────────
+
+# ═══════════════════════════════════════════════════════
+# All well-behaved crawlers
+# ═══════════════════════════════════════════════════════
 User-agent: *
 Allow: /
 
-# Exclude error pages and utility API endpoints
+# Crawlable pages (explicit hints for crawlers)
+Allow: /instagram
+Allow: /tiktok
+Allow: /facebook
+Allow: /twitter
+Allow: /reddit
+Allow: /vimeo
+Allow: /twitch
+Allow: /soundcloud
+Allow: /dailymotion
+Allow: /linkedin
+Allow: /pinterest
+Allow: /about-us
+Allow: /contact-us
+Allow: /privacy-policy
+Allow: /terms-and-conditions
+Allow: /dmca
+
+# Block API endpoints (not for indexing)
+Disallow: /api/
+Disallow: /download-stream
+
+# Block error pages
 Disallow: /404
 Disallow: /500
+
+# Block redirect-only shortcut pages (canonical versions exist)
+Disallow: /about
+Disallow: /contact
+Disallow: /privacy
+Disallow: /terms
+
+
+# ═══════════════════════════════════════════════════════
+# Googlebot — full access to indexable content
+# ═══════════════════════════════════════════════════════
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /download-stream
+Disallow: /404
+Disallow: /500
+Disallow: /about
+Disallow: /contact
+Disallow: /privacy
+Disallow: /terms
+
+# ═══════════════════════════════════════════════════════
+# Bingbot — full access to indexable content
+# ═══════════════════════════════════════════════════════
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /download-stream
+Disallow: /404
+Disallow: /500
+Disallow: /about
+Disallow: /contact
+Disallow: /privacy
+Disallow: /terms
+
+# ═══════════════════════════════════════════════════════
+# Block AI training crawlers (protect original content)
+# ═══════════════════════════════════════════════════════
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# ═══════════════════════════════════════════════════════
+# Block aggressive SEO/scraping bots
+# ═══════════════════════════════════════════════════════
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ═══════════════════════════════════════════════════════
+# Crawl-delay for less-known bots (reduce server load)
+# ═══════════════════════════════════════════════════════
+User-agent: Baiduspider
+Crawl-delay: 5
 Disallow: /api/
 Disallow: /download-stream
 Disallow: /watch
 
+User-agent: YandexBot
+Crawl-delay: 5
+Disallow: /api/
+Disallow: /download-stream
+Disallow: /watch
+
+# ═══════════════════════════════════════════════════════
+# Sitemap location (critical for crawl discovery)
+# ═══════════════════════════════════════════════════════
 Sitemap: https://mp4yt.com/sitemap.xml

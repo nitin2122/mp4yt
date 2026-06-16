@@ -388,6 +388,26 @@ import Footer from '../components/Footer.astro';
     .channels-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
   }
+
+  @media (max-width: 480px) {
+    .contact-hero { padding: var(--sp-4xl) var(--sp-sm) var(--sp-xl); }
+    .contact-body { padding: var(--sp-xl) var(--sp-sm); }
+    .contact-form-container { padding: var(--sp-md); }
+    .channel-card { padding: var(--sp-md); }
+    .sidebar-block { padding: var(--sp-md); }
+    .form-input {
+      height: 44px;
+      font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+    .form-textarea {
+      font-size: 16px;
+    }
+    .submit-btn {
+      width: 100%;
+      justify-content: center;
+      min-height: 44px;
+    }
+  }
 </style>
 
 <script>

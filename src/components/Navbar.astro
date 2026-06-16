@@ -313,6 +313,24 @@
     .navbar-links { display: none; }
     .hamburger { display: flex; }
     .navbar-cta { display: none; }
+
+    /* Reduce expensive blur on mobile for performance */
+    .navbar {
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .navbar-inner {
+      padding-left: env(safe-area-inset-left, 0);
+      padding-right: env(safe-area-inset-right, 0);
+    }
+
+    /* Bigger tap target for hamburger */
+    .hamburger {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 10px;
+    }
   }
 </style>
 

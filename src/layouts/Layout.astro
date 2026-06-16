@@ -16,7 +16,7 @@ const {
   ogImage = '/og-default.png',
   ogTitle = title,
   canonicalUrl = 'https://mp4yt.com',
-  keywords = 'video downloader, download video, online video downloader, free video downloader, mp4 video downloader, download youtube videos, download tiktok videos, download instagram reels, save videos online',
+  keywords = 'video downloader, online video downloader, free video downloader, video downloader online free, mp4 video downloader, download video from any website, download video online, save video from url, best video downloader 2026, video downloader no watermark, video downloader hd, video downloader 4k, video downloader mp3, video downloader for pc, video downloader for iphone, video downloader for android, video downloader app free, fast video downloader, safe video downloader, video downloader no app, social media video downloader, all in one video downloader, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter, video link downloader, paste link download video',
 } = Astro.props;
 ---
 
@@ -34,7 +34,7 @@ const {
     </script>
 
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary Meta -->
@@ -84,22 +84,20 @@ const {
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
     <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "mp4yt",
-        "url": "https://mp4yt.com",
-        "description": description,
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Web",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      })}
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "mp4yt",
+      "url": "https://mp4yt.com",
+      "description": description,
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    })} />
 
 
   </head>

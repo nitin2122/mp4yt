@@ -22,31 +22,31 @@ if (!activePlatform) {
 // Define platform-specific FAQs
 let faqs = [];
 
-if (activePlatform === 'youtube' || activePlatform === 'general') {
+if (activePlatform === 'general') {
   faqs = [
     {
-      q: "What is the best YouTube video downloader?",
-      a: "mp4yt is widely considered the best YouTube video downloader online. It is completely free, runs directly in your web browser, requires no software installation or registration, and delivers maximum download speeds without limitations."
+      q: "What is the best online video downloader?",
+      a: "mp4yt is widely considered the best video downloader online. It is completely free, runs directly in your web browser, requires no software installation or registration, and delivers maximum download speeds without limitations."
     },
     {
-      q: "Is this youtube video downloader safe to use?",
+      q: "Is this video downloader safe to use?",
       a: "Yes, mp4yt is 100% safe. Because it is a web-based service, you do not need to install any potentially unsafe downloader apps or browser extensions. We never store files on our servers or track your download history."
     },
     {
-      q: "Is it legal to use a YouTube Video Downloader?",
-      a: "Downloading YouTube videos for personal, offline viewing of non-copyrighted content or material you own is legal. However, downloading copyrighted content without permission violates YouTube's Terms of Service and may violate copyright laws."
+      q: "Is it legal to use a Video Downloader?",
+      a: "Downloading videos for personal, offline viewing of non-copyrighted content or material you own is legal. However, downloading copyrighted content without permission violates platform Terms of Service and may violate copyright laws."
     },
     {
-      q: "Best YouTube video downloader: Why choose mp4yt?",
-      a: "mp4yt is the ultimate 'Best YouTube video downloader' because it bypasses the typical speed limits and paywalls of other tools. It supports resolutions from 144p to 4K and permits direct high-quality MP3 audio conversions at no charge."
+      q: "Best video downloader: Why choose mp4yt?",
+      a: "mp4yt is the ultimate 'Best video downloader' because it bypasses the typical speed limits and paywalls of other tools. It supports resolutions from 144p to 4K and permits direct high-quality MP3 audio conversions at no charge."
     },
     {
-      q: "Best YouTube Downloader 2026? NO AI!?",
-      a: "Yes! mp4yt is the best YouTube downloader for 2026 with absolutely NO AI bloat. We do not use slow AI interfaces or require AI credits—just paste your link and get a direct, ultra-fast download."
+      q: "Best Video Downloader 2026? NO AI!?",
+      a: "Yes! mp4yt is the best video downloader for 2026 with absolutely NO AI bloat. We do not use slow AI interfaces or require AI credits—just paste your link and get a direct, ultra-fast download."
     },
     {
-      q: "How do I download YouTube videos?",
-      a: "To download YouTube videos, copy the video URL, paste it into the extraction bar at the top of mp4yt, click 'Extract Now', choose your desired resolution (up to 4K) or MP3 audio format, and click the download button."
+      q: "How do I download videos?",
+      a: "To download videos, copy the video URL, paste it into the extraction bar at the top of mp4yt, click 'Extract Now', choose your desired resolution (up to 4K) or MP3 audio format, and click the download button."
     }
   ];
 } else {
@@ -67,7 +67,7 @@ if (activePlatform === 'youtube' || activePlatform === 'general') {
     },
     {
       q: "Which platforms are supported?",
-      a: "mp4yt is powered by yt-dlp, the most comprehensive open-source video extraction library. It supports 1000+ sites including YouTube, Instagram, TikTok, Twitter/X, Facebook, Reddit, Vimeo, Twitch, SoundCloud, Dailymotion, Bilibili, and many more."
+      a: "mp4yt is powered by yt-dlp, the most comprehensive open-source video extraction library. It supports 1000+ sites including Instagram, TikTok, Twitter/X, Facebook, Reddit, Vimeo, Twitch, SoundCloud, Dailymotion, Bilibili, and many more."
     },
     {
       q: "Is it legal to download videos?",
@@ -101,9 +101,7 @@ const faqSchema = {
 
 <section id="faq" class="faq-band" aria-labelledby="faq-headline">
   <!-- JSON-LD for FAQ SEO -->
-  <script type="application/ld+json">
-    {JSON.stringify(faqSchema)}
-  </script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="page-container faq-inner">
     <div class="faq-header">
@@ -213,6 +211,19 @@ const faqSchema = {
     .faq-header { position: static; }
     .faq-title { max-width: none; }
     .faq-band { padding: var(--sp-4xl) var(--sp-md); }
+  }
+
+  @media (max-width: 480px) {
+    .faq-band { padding: var(--sp-3xl) var(--sp-sm); }
+    details.faq-item summary {
+      padding: var(--sp-md) 0;
+      font-size: 14px;
+      min-height: 44px;
+    }
+    details.faq-item .faq-body p {
+      font-size: 14px;
+      line-height: 22px;
+    }
   }
 </style>
 
