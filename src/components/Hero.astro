@@ -334,6 +334,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     font-size: 15px;
     flex-shrink: 0;
     gap: var(--sp-xs);
+    background-color: var(--color-primary) !important;
+    color: var(--color-on-primary) !important;
   }
 
   /* Progress bar */
@@ -807,9 +809,13 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       padding: 0 var(--sp-md);
       height: 50px;
       min-height: 50px;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 16px !important;
+      font-weight: 600 !important;
       letter-spacing: -0.01em;
+      background-color: var(--color-primary) !important;
+      color: var(--color-on-primary) !important;
+      display: inline-flex !important;
+      align-items: center !important;
     }
     .extract-btn:active {
       transform: scale(0.98);

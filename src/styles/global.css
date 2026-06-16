@@ -324,8 +324,8 @@
     align-items: center;
     justify-content: center;
     gap: var(--sp-xs);
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
+    background-color: var(--color-primary) !important;
+    color: var(--color-on-primary) !important;
     border: none;
     border-radius: var(--rounded-pill);
     padding: 0 var(--sp-sm);
