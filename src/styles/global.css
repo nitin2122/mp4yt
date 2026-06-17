@@ -314,8 +314,11 @@
   /* Container */
   .page-container {
     max-width: 1400px;
+    width: 100%;
     margin-inline: auto;
     padding-inline: var(--sp-lg);
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   /* ── Buttons ── */
@@ -602,10 +605,10 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .display-xl { font-size: 24px; line-height: 30px; letter-spacing: -0.8px; }
   .display-lg { font-size: 20px; line-height: 26px; }
-  .page-container { padding-inline: var(--sp-sm); }
+  .page-container { padding-inline: var(--sp-sm); min-width: 0; }
 
   :root {
     --sp-section: 60px;

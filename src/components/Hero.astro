@@ -228,12 +228,15 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   .hero-band {
     position: relative;
     overflow: hidden;
+    overflow-x: clip;
     background-color: var(--color-canvas);
     padding: var(--sp-section) var(--sp-lg) var(--sp-5xl);
     min-height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    max-width: 100vw;
   }
 
   .noise-overlay {
@@ -279,6 +282,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     flex-direction: column;
     gap: var(--sp-sm);
     margin-top: var(--sp-xs);
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .input-row {
@@ -296,6 +301,9 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     overflow: hidden;
     box-shadow: var(--shadow-3);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .input-group:focus-within {
@@ -738,9 +746,12 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     }
     .hero-content {
       gap: var(--sp-md);
+      min-width: 0;
+      max-width: 100%;
     }
     .hero-input-wrapper {
       max-width: 100%;
+      min-width: 0;
     }
     .result-section {
       padding: var(--sp-xl) 0;
@@ -766,9 +777,10 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     }
   }
 
-  @media (max-width: 480px) {
+  /* ── Stacked mobile layout for all phones (≤640px) ── */
+  @media (max-width: 640px) {
     .hero-band {
-      padding: var(--sp-4xl) var(--sp-sm) var(--sp-3xl);
+      padding: var(--sp-4xl) var(--sp-md) var(--sp-3xl);
     }
     .input-group {
       flex-direction: column;
@@ -777,6 +789,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       box-shadow: none;
       border-radius: 0;
       gap: var(--sp-sm);
+      overflow: visible;
+      max-width: 100%;
     }
     /* Disable the focus-within glow on the transparent wrapper */
     .input-group:focus-within {
@@ -792,9 +806,11 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       border-radius: var(--rounded-md);
       padding: var(--sp-md) var(--sp-md);
       width: 100%;
+      max-width: 100%;
       height: 50px;
       box-shadow: var(--shadow-3);
       font-size: 16px;
+      box-sizing: border-box;
     }
     /* Proper focus ring on standalone input on mobile */
     .hero-url-input:focus {
@@ -803,6 +819,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     }
     .extract-btn {
       width: 100%;
+      max-width: 100%;
       border-radius: var(--rounded-md) !important;
       justify-content: center;
       box-shadow: var(--shadow-3);
@@ -816,6 +833,7 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       color: var(--color-on-primary) !important;
       display: inline-flex !important;
       align-items: center !important;
+      box-sizing: border-box;
     }
     .extract-btn:active {
       transform: scale(0.98);
@@ -845,13 +863,20 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     .result-inner {
       gap: var(--sp-md);
     }
-    /* Improve dropdown on small mobile */
+    /* Improve dropdown on mobile */
     .dropdown-item {
       padding: var(--sp-sm) var(--sp-sm);
       min-height: 44px;
     }
     .opt-audio {
       font-size: 11px;
+    }
+  }
+
+  /* ── Extra-small phone refinements (≤400px) ── */
+  @media (max-width: 400px) {
+    .hero-band {
+      padding: var(--sp-3xl) var(--sp-sm) var(--sp-2xl);
     }
   }
 </style>

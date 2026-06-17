@@ -49,7 +49,7 @@ import Footer from '../components/Footer.astro';
           <p>When you submit a video URL for extraction, our serverless backend:</p>
           <ol>
             <li>Receives the URL you provide</li>
-            <li>Passes it to yt-dlp for metadata extraction</li>
+            <li>Passes it to the Cobalt API for metadata extraction</li>
             <li>Returns the title, thumbnail, duration, and direct stream URL to your browser</li>
             <li>Discards all data — nothing is logged or stored</li>
           </ol>
@@ -65,7 +65,7 @@ import Footer from '../components/Footer.astro';
           <ul>
             <li><strong>Vercel:</strong> Our hosting provider. Subject to <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Vercel's Privacy Policy</a>.</li>
             <li><strong>Google Fonts:</strong> We load Inter and JetBrains Mono typefaces from Google Fonts. Subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</li>
-            <li><strong>yt-dlp:</strong> Open-source video extraction library. Runs entirely on our serverless functions — no data is sent to any third party by yt-dlp.</li>
+            <li><strong>Cobalt:</strong> Open-source media downloader engine. Runs on serverless edge nodes or trusted public instances — no personal data is logged or stored by Cobalt.</li>
           </ul>
 
           <hr class="legal-divider" />

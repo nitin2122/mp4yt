@@ -59,6 +59,18 @@
       <span class="hamburger-bar"></span>
     </button>
   </div>
+
+  <!-- Mobile-only scrollable nav strip -->
+  <div class="mobile-nav-strip" aria-label="Quick navigation">
+    <div class="mobile-nav-strip-track">
+      <a href="/#features" class="mobile-strip-link">Features</a>
+      <a href="/#how-it-works" class="mobile-strip-link">How it works</a>
+      <a href="/#platforms" class="mobile-strip-link">Platforms</a>
+      <a href="/about-us" class="mobile-strip-link">About Us</a>
+      <a href="/contact-us" class="mobile-strip-link">Contact</a>
+      <a href="/#faq" class="mobile-strip-link">FAQ</a>
+    </div>
+  </div>
 </nav>
 
 <!-- Mobile Menu Overlay -->
@@ -100,6 +112,11 @@
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-hairline);
     height: 64px;
+  }
+
+  /* ── Mobile Nav Strip (hidden on desktop) ── */
+  .mobile-nav-strip {
+    display: none;
   }
 
   .navbar-inner {
@@ -316,6 +333,7 @@
 
     /* Reduce expensive blur on mobile for performance */
     .navbar {
+      height: auto;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
@@ -330,6 +348,54 @@
       min-width: 44px;
       min-height: 44px;
       padding: 10px;
+    }
+
+    /* Show mobile nav strip */
+    .mobile-nav-strip {
+      display: block;
+      border-top: 1px solid var(--color-hairline);
+      padding: 0 var(--sp-sm);
+      overflow: hidden;
+    }
+
+    .mobile-nav-strip-track {
+      display: flex;
+      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      padding: var(--sp-xs) 0;
+    }
+
+    .mobile-nav-strip-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mobile-strip-link {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-body);
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: var(--rounded-full);
+      transition: background-color 0.15s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .mobile-strip-link:hover,
+    .mobile-strip-link:active {
+      background-color: var(--color-canvas-soft-2);
+      color: var(--color-ink);
+    }
+
+    /* Adjust mobile overlay position to account for taller navbar */
+    .mobile-overlay {
+      top: 100px;
     }
   }
 </style>
