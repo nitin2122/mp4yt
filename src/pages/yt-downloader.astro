@@ -1,0 +1,524 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import PlatformHero from '../components/PlatformHero.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+
+// YT-specific FAQs for this landing page
+const ytFaqs = [
+  {
+    q: "What is a YT downloader?",
+    a: "A YT downloader is a tool that lets you download videos from YouTube (YT) directly to your device. mp4yt is the best free yt downloader online — just paste any YouTube video URL, click Extract, and save your video as MP4 in up to 4K quality or convert to MP3. No app or sign-up needed."
+  },
+  {
+    q: "How do I download YT videos with mp4yt?",
+    a: "To download yt videos: 1) Copy the YouTube video URL from your browser or app. 2) Visit mp4yt.com/yt-downloader. 3) Paste the URL into the extraction bar above. 4) Click 'Extract' and wait a few seconds. 5) Select your quality (up to 4K) or choose MP3. 6) Click the download button. Done!"
+  },
+  {
+    q: "Is mp4yt the best YT video downloader?",
+    a: "mp4yt is widely considered the best yt video downloader for 2026. It's completely free, works in any browser, requires no installation, supports resolutions up to 4K Ultra HD, offers yt to mp3 conversion, and works on every device — iPhone, Android, PC, Mac, and Linux."
+  },
+  {
+    q: "Can I use this YT downloader on my iPhone?",
+    a: "Yes! This yt downloader works on iPhone, iPad, Android, and all devices. Since it's a web-based yt video downloader, just open mp4yt.com in Safari or Chrome, paste your YouTube link, extract, then tap the download button. On iOS, use 'Save to Files' to save the video."
+  },
+  {
+    q: "Does this YT downloader convert videos to MP3?",
+    a: "Absolutely. mp4yt works as both a yt to mp4 and yt to mp3 converter. After pasting your YouTube link, select the audio-only option to download the audio as a high-quality MP3 file. Perfect for music, podcasts, audiobooks, and lectures."
+  },
+  {
+    q: "Is this YT video downloader free?",
+    a: "Yes, mp4yt is a 100% free yt downloader — no subscription, no premium tier, no hidden costs, and no account required. We believe everyone should have access to a fast, reliable yt video downloader without paywalls."
+  },
+  {
+    q: "Is this YT downloader safe and legal?",
+    a: "mp4yt is completely safe — it's a web-based yt video downloader with no downloads, no malware, and no tracking. Downloading YT videos for personal, offline use of non-copyrighted content is generally permissible. Always respect content creators' rights."
+  },
+  {
+    q: "What quality options does this YT downloader support?",
+    a: "This yt video downloader supports every quality option available on YouTube: 360p, 480p, 720p HD, 1080p Full HD, 1440p 2K, and 2160p 4K Ultra HD. The exact options depend on what the original uploader provided. We deliver the direct CDN stream for maximum quality."
+  }
+];
+
+// Generate FAQ JSON-LD Schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": ytFaqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
+// HowTo Schema for step-by-step
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Download YT Videos with mp4yt",
+  "description": "Step-by-step guide to download YT videos using the mp4yt yt video downloader online tool.",
+  "totalTime": "PT1M",
+  "tool": {
+    "@type": "HowToTool",
+    "name": "mp4yt YT Downloader"
+  },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Copy the YouTube video URL",
+      "text": "Open YouTube in your browser or app, find the video you want to download, and copy the URL from the address bar or share button."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Paste the URL into mp4yt",
+      "text": "Go to mp4yt.com/yt-downloader and paste the copied YouTube URL into the extraction bar."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Click Extract",
+      "text": "Click the 'Extract' button and wait a few seconds for mp4yt to fetch the direct download links."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Download your video or audio",
+      "text": "Choose your preferred quality (up to 4K) or select MP3 for audio-only, then click the download button to save the file."
+    }
+  ]
+};
+
+// BreadcrumbList Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "mp4yt",
+      "item": "https://mp4yt.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "YT Downloader",
+      "item": "https://mp4yt.com/yt-downloader"
+    }
+  ]
+};
+---
+
+<Layout
+  title="YT Downloader — Free YT Video Downloader Online | mp4yt"
+  description="Free YT downloader online. Download YT videos in 4K MP4 or convert YT to MP3. Best yt video downloader 2026 — works on iPhone, Android & PC. No app needed, no sign-up."
+  canonicalUrl="https://mp4yt.com/yt-downloader"
+  keywords="yt downloader, yt video downloader, download yt video, yt to mp4, yt to mp3, yt downloader online, yt downloader free, best yt downloader 2026, yt mp4 downloader, yt mp3 downloader, yt video downloader online free, download yt videos free, yt downloader no app, yt downloader for iphone, yt downloader for android, yt video downloader 4k, yt video downloader hd, youtube video downloader, youtube downloader, youtube to mp4, youtube to mp3, free yt downloader, yt downloader 2026, yt video download, download yt video online, best yt video downloader"
+>
+  <Navbar />
+  <main id="main-content">
+    <!-- JSON-LD Schemas -->
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+    <PlatformHero
+      platform="YouTube"
+      emoji="▶️"
+      accentColor="#FF0000"
+      tagline="YT Downloader — Download YT Videos Free"
+      description="The best free YT video downloader online. Paste any YouTube video URL and download as MP4 in 4K or convert to MP3 instantly. No app, no sign-up, no limits."
+      placeholder="https://www.youtube.com/watch?v=..."
+      features={[
+        "Download YT videos in 4K",
+        "YT to MP3 converter",
+        "No app needed",
+        "100% free",
+        "Works on all devices",
+      ]}
+    />
+
+    <!-- Long-form SEO Content -->
+    <section class="seo-section page-container">
+      <div class="seo-long-form">
+        <article class="seo-article">
+          <h2 class="display-md">What is a YT Downloader?</h2>
+          <p class="body-md">
+            A <strong>YT downloader</strong> is an online tool that allows you to download videos from YouTube (commonly abbreviated as "YT") directly to your computer, phone, or tablet. Instead of streaming videos online and using your data every time, a <strong>yt video downloader</strong> lets you save videos permanently for offline viewing. mp4yt is the <strong>best yt downloader</strong> available in 2026 — it's completely free, works in any web browser, and requires zero software installation. Whether you want to save tutorials, music videos, documentaries, lectures, or vlogs, this <strong>yt downloader online</strong> tool makes it effortless.
+          </p>
+        </article>
+
+        <article class="seo-article">
+          <h2 class="display-md">How to Download YT Videos</h2>
+          <p class="body-md">
+            Using our <strong>YT video downloader</strong> is incredibly simple. Here's how to <strong>download yt videos</strong> in four easy steps:
+          </p>
+          <ol class="seo-steps">
+            <li><strong>Copy the YouTube URL</strong> — Open YouTube in your browser or app, find the video you want, and copy the URL from the address bar or the share button.</li>
+            <li><strong>Paste into mp4yt</strong> — Come to this page and paste the YouTube video URL into the extraction bar above.</li>
+            <li><strong>Click Extract</strong> — Hit the "Extract" button and wait just a few seconds while our <strong>yt downloader</strong> fetches the direct download links.</li>
+            <li><strong>Download</strong> — Choose your preferred quality (360p to 4K) or select MP3 for audio-only, then click download. That's it!</li>
+          </ol>
+          <p class="body-md">
+            This entire process takes less than 30 seconds. No sign-up, no app installation, no limits — just a fast, free <strong>yt downloader</strong> that works.
+          </p>
+        </article>
+
+        <article class="seo-article">
+          <h2 class="display-md">YT to MP4 Converter</h2>
+          <p class="body-md">
+            Looking for a reliable <strong>yt to mp4</strong> converter? mp4yt delivers direct MP4 streams from YouTube's CDN, ensuring you get the highest possible quality without any re-encoding or compression. Our <strong>yt to mp4</strong> tool supports every resolution available on YouTube — from 360p standard definition all the way up to 2160p 4K Ultra HD. The downloaded MP4 files play on every device and media player, including VLC, Windows Media Player, QuickTime, and all mobile video players. Unlike other <strong>yt downloaders</strong> that re-encode and degrade quality, mp4yt preserves the original source quality.
+          </p>
+        </article>
+
+        <article class="seo-article">
+          <h2 class="display-md">YT to MP3 Converter</h2>
+          <p class="body-md">
+            Need just the audio? mp4yt doubles as a powerful <strong>yt to mp3</strong> converter. Extract high-quality audio from any YouTube video and save it as an MP3 file. Perfect for downloading music, podcasts, audiobooks, ASMR, nature sounds, lectures, and more. Our <strong>yt mp3 downloader</strong> preserves the original audio bitrate for crystal-clear playback. No separate app needed — this <strong>yt downloader</strong> handles both video and audio conversions in one place.
+          </p>
+        </article>
+
+        <article class="seo-article">
+          <h2 class="display-md">YT Downloader for iPhone & Android</h2>
+          <p class="body-md">
+            Searching for a <strong>yt downloader</strong> that works on your phone? mp4yt is fully optimized for mobile devices. Unlike traditional downloader apps that require installation and often contain ads or malware, our web-based <strong>yt video downloader</strong> runs entirely in your browser — Safari, Chrome, Firefox, or any mobile browser. On <strong>iPhone</strong>, after extracting the video, tap the download link and select "Save to Files" to store it locally. On <strong>Android</strong>, downloads start automatically. No app installation needed, no storage wasted on bloated software.
+          </p>
+        </article>
+
+        <article class="seo-article">
+          <h2 class="display-md">Best YT Downloader 2026</h2>
+          <p class="body-md">
+            Why is mp4yt considered the <strong>best yt downloader 2026</strong>? Because we built it with one goal: give users the fastest, simplest, and most reliable way to <strong>download yt videos</strong>. No AI bloat, no countdown timers, no CAPTCHAs, no speed limits, and no premium paywalls. Just paste your link and download. Our backend uses advanced stream extraction technology to fetch direct CDN links in milliseconds. And because we never store your files on our servers, your privacy is always protected. It's the <strong>yt video downloader</strong> that respects both your time and your privacy.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Dedicated YT FAQ -->
+    <section id="faq" class="faq-band" aria-labelledby="yt-faq-headline">
+      <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+      <div class="page-container faq-inner">
+        <div class="faq-header">
+          <span class="eyebrow">YT Downloader FAQ</span>
+          <h2 id="yt-faq-headline" class="display-lg faq-title">
+            Common questions about our YT downloader.
+          </h2>
+        </div>
+
+        <div class="faq-list" role="list">
+          {ytFaqs.map((faq) => (
+            <details class="faq-item" role="listitem">
+              <summary>
+                <span class="body-md-strong">{faq.q}</span>
+                <svg class="faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </summary>
+              <div class="faq-body">
+                <p class="body-md" style="color: var(--color-body); margin: 0;">{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Internal linking section -->
+    <section class="internal-links-section page-container">
+      <div class="internal-links-grid">
+        <div class="internal-link-card card">
+          <h3 class="display-xs">More Downloaders</h3>
+          <p class="body-sm" style="color: var(--color-body);">mp4yt isn't just a YT downloader — it also supports 1000+ other platforms:</p>
+          <ul class="internal-links-list">
+            <li><a href="/instagram">Instagram Video Downloader</a></li>
+            <li><a href="/tiktok">TikTok Video Downloader</a></li>
+            <li><a href="/twitter">Twitter/X Video Downloader</a></li>
+            <li><a href="/facebook">Facebook Video Downloader</a></li>
+            <li><a href="/reddit">Reddit Video Downloader</a></li>
+            <li><a href="/vimeo">Vimeo Video Downloader</a></li>
+            <li><a href="/twitch">Twitch Clip Downloader</a></li>
+            <li><a href="/soundcloud">SoundCloud Downloader</a></li>
+            <li><a href="/">All Platforms →</a></li>
+          </ul>
+        </div>
+        <div class="internal-link-card card">
+          <h3 class="display-xs">Popular YT Downloader Searches</h3>
+          <p class="body-sm" style="color: var(--color-body);">People also search for:</p>
+          <ul class="internal-links-tags">
+            <li><a href="/yt-downloader">yt downloader</a></li>
+            <li><a href="/yt-downloader">yt video downloader</a></li>
+            <li><a href="/yt-downloader">download yt video</a></li>
+            <li><a href="/yt-downloader">yt to mp4</a></li>
+            <li><a href="/yt-downloader">yt to mp3</a></li>
+            <li><a href="/yt-downloader">yt downloader free</a></li>
+            <li><a href="/yt-downloader">yt downloader online</a></li>
+            <li><a href="/yt-downloader">best yt downloader</a></li>
+            <li><a href="/">video downloader</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Long-form SEO content */
+  .seo-section {
+    padding: var(--sp-4xl) var(--sp-lg);
+  }
+
+  .seo-long-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3xl);
+    max-width: 800px;
+  }
+
+  .seo-article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .seo-article h2 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .seo-article p {
+    margin: 0;
+    color: var(--color-body);
+    line-height: 1.8;
+  }
+
+  .seo-steps {
+    margin: 0;
+    padding-left: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    color: var(--color-body);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* FAQ styles (duplicated from FAQ.astro for this page's inline FAQ) */
+  .faq-band {
+    background-color: var(--color-canvas-soft);
+    padding: var(--sp-5xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--sp-4xl);
+    align-items: start;
+  }
+
+  .faq-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    position: sticky;
+    top: 80px;
+  }
+
+  .faq-title {
+    margin: 0;
+    max-width: 200px;
+  }
+
+  .faq-list {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  details.faq-item {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  details.faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-md);
+    padding: var(--sp-lg) 0;
+    color: var(--color-ink);
+    transition: color 0.15s ease;
+    user-select: none;
+  }
+
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::marker { display: none; }
+  details.faq-item summary:hover { color: var(--color-body); }
+
+  details.faq-item .faq-body {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s ease;
+  }
+
+  details.faq-item[open] .faq-body {
+    height: auto;
+    padding-bottom: var(--sp-lg);
+  }
+
+  .faq-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--color-mute);
+    transition: transform 0.3s ease, color 0.15s ease;
+  }
+
+  details.faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    color: var(--color-hairline-strong);
+  }
+
+  /* Internal linking section */
+  .internal-links-section {
+    padding: var(--sp-4xl) var(--sp-lg);
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .internal-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-xl);
+  }
+
+  .internal-link-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+    padding: var(--sp-xl);
+    background-color: var(--color-canvas-soft);
+    border: 1px solid var(--color-hairline);
+  }
+
+  .internal-link-card h3 {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .internal-links-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+  }
+
+  .internal-links-list a {
+    font-size: 14px;
+    color: var(--color-body);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .internal-links-list a:hover {
+    color: var(--color-ink);
+  }
+
+  .internal-links-tags {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-xs);
+  }
+
+  .internal-links-tags li a {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 13px;
+    color: var(--color-body);
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--rounded-full);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .internal-links-tags li a:hover {
+    color: var(--color-ink);
+    border-color: var(--color-hairline-strong);
+  }
+
+  @media (max-width: 992px) {
+    .internal-links-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .faq-inner { grid-template-columns: 1fr; gap: var(--sp-xl); }
+    .faq-header { position: static; }
+    .faq-title { max-width: none; }
+    .faq-band { padding: var(--sp-4xl) var(--sp-md); }
+    .seo-section { padding: var(--sp-3xl) var(--sp-md); }
+    .internal-links-section { padding: var(--sp-3xl) var(--sp-md); }
+  }
+
+  @media (max-width: 480px) {
+    .faq-band { padding: var(--sp-3xl) var(--sp-sm); }
+    .seo-section { padding: var(--sp-2xl) var(--sp-sm); }
+    .internal-links-section { padding: var(--sp-2xl) var(--sp-sm); }
+    details.faq-item summary {
+      padding: var(--sp-md) 0;
+      font-size: 14px;
+      min-height: 44px;
+    }
+    details.faq-item .faq-body p {
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .internal-link-card { padding: var(--sp-md); }
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll('details.faq-item');
+
+  items.forEach((detail) => {
+    const summary = detail.querySelector('summary');
+    const body = detail.querySelector('.faq-body');
+
+    if (!summary || !body) return;
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isOpen = detail.hasAttribute('open');
+
+      if (!isOpen) {
+        detail.setAttribute('open', '');
+        const h = body.scrollHeight;
+        body.style.height = '0px';
+        requestAnimationFrame(() => {
+          body.style.height = h + 'px';
+          body.addEventListener('transitionend', () => {
+            body.style.height = 'auto';
+          }, { once: true });
+        });
+      } else {
+        body.style.height = body.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          body.style.height = '0px';
+          body.addEventListener('transitionend', () => {
+            detail.removeAttribute('open');
+          }, { once: true });
+        });
+      }
+    });
+  });
+</script>

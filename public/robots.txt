@@ -10,6 +10,7 @@ User-agent: *
 Allow: /
 
 # Crawlable pages (explicit hints for crawlers)
+Allow: /yt-downloader
 Allow: /instagram
 Allow: /tiktok
 Allow: /facebook

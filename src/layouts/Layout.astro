@@ -11,12 +11,12 @@ interface Props {
 }
 
 const {
-  title = 'mp4yt — Download Any Video Instantly',
-  description = 'Download YouTube, Instagram, TikTok, Twitter and 1000+ site videos as MP4 instantly. Zero storage, zero tracking — just the direct CDN link.',
+  title = 'mp4yt — YT Video Downloader | Download Any Video Instantly',
+  description = 'Free YT video downloader — download YouTube, Instagram, TikTok, Twitter and 1000+ site videos as MP4 instantly. Zero storage, zero tracking.',
   ogImage = '/og-default.png',
   ogTitle = title,
   canonicalUrl = 'https://mp4yt.com',
-  keywords = 'video downloader, online video downloader, free video downloader, video downloader online free, mp4 video downloader, download video from any website, download video online, save video from url, best video downloader 2026, video downloader no watermark, video downloader hd, video downloader 4k, video downloader mp3, video downloader for pc, video downloader for iphone, video downloader for android, video downloader app free, fast video downloader, safe video downloader, video downloader no app, social media video downloader, all in one video downloader, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter, video link downloader, paste link download video',
+  keywords = 'yt downloader, yt video downloader, download yt video, yt to mp4, yt to mp3, video downloader, online video downloader, free video downloader, video downloader online free, mp4 video downloader, download video from any website, download video online, save video from url, best video downloader 2026, video downloader no watermark, video downloader hd, video downloader 4k, video downloader mp3, video downloader for pc, video downloader for iphone, video downloader for android, video downloader app free, fast video downloader, safe video downloader, video downloader no app, social media video downloader, all in one video downloader, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter, video link downloader, paste link download video',
 } = Astro.props;
 ---
 
@@ -83,13 +83,33 @@ const {
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data (JSON-LD) — WebApplication -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "mp4yt",
+      "alternateName": ["YT Downloader", "YT Video Downloader", "YouTube Video Downloader", "yt downloader online"],
       "url": "https://mp4yt.com",
       "description": description,
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web, Android, iOS, Windows, macOS, Linux",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": ["Download YT videos in 4K", "Convert YT to MP3", "YT to MP4 converter", "No app installation needed", "Works on iPhone, Android, PC", "1000+ supported platforms"]
+    })} />
+
+    <!-- Structured Data (JSON-LD) — SoftwareApplication for exact-match -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "YT Video Downloader - mp4yt",
+      "alternateName": ["YT Downloader", "YouTube Downloader"],
+      "url": "https://mp4yt.com",
+      "description": "Free YT video downloader online. Download yt videos in 4K MP4 or convert to MP3. Best yt downloader 2026 — no app needed.",
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Web",
       "offers": {
@@ -97,6 +117,20 @@ const {
         "price": "0",
         "priceCurrency": "USD"
       }
+    })} />
+
+    <!-- Structured Data (JSON-LD) — BreadcrumbList -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "YT Video Downloader",
+          "item": "https://mp4yt.com"
+        }
+      ]
     })} />
 
 

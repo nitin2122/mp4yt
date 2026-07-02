@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage (YouTube Video Downloader) — highest priority -->
+  <!-- Homepage (YT Video Downloader) — highest priority -->
   <url>
     <loc>https://mp4yt.com/</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <!-- YT Downloader dedicated landing page — very high priority -->
+  <url>
+    <loc>https://mp4yt.com/yt-downloader</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Platform-specific downloader pages — high priority -->
