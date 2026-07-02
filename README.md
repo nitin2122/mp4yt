@@ -251,7 +251,7 @@ Wrangler will:
 3. Deploy `worker.js` with the `ASSETS` binding
 4. Configure the `*/5 * * * *` cron trigger for keep-alive pings
 
-**Live deployment:** [`https://mp4yt.nitinjangir2211.workers.dev`](https://mp4yt.nitinjangir2211.workers.dev)
+**Live deployment:** [`https://mp4yt.nitinjangir2211.workers.dev`](https://mp4yt.com)
 
 ---
 
