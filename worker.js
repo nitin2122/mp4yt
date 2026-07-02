@@ -18,21 +18,31 @@ const CORS = {
   'Cache-Control': 'no-store, no-cache, must-revalidate'
 };
 
-// ── Community Cobalt instances ordered by cobalt.directory score ──
-// These are verified, safe-to-use instances tested every ~10 minutes.
-// Source: https://cobalt.directory/ (checked 2026-06-15)
+// ── Community Cobalt instances — verified open (no Turnstile/JWT) ──
+// Only instances that accept unauthenticated POST requests are listed.
+// Source: https://cobalt.directory/ (verified 2026-06-30)
 const COMMUNITY_COBALT_INSTANCES = [
-  'https://nuko-c.meowing.de/',            // 100% — 23/23 services
-  'https://apicobalt.mgytr.top/',          //  96% — 22/23 services
-  'https://api.cobalt.blackcat.sweeux.org/',//  91% — 21/23 services
-  'https://melon.clxxped.lol/',            //  91% — 21/23 services
-  'https://dog.kittycat.boo/',             //  87% — 20/23 services
-  'https://subito-c.meowing.de/',          //  87% — 20/23 services
-  'https://api.qwkuns.me/',               //  87% — 20/23 services
+  'https://api.cobalt.blackcat.sweeux.org/',// v11.7 — open, no auth
+  'https://dog.kittycat.boo/',             // v11.7 — open, no auth
+  'https://fox.kittycat.boo/',             // v11.7 — open, no auth
+  'https://cobaltapi.kittycat.boo/',       // v11.7 — open, no auth
+  'https://api.cobalt.liubquanti.click/',  // v11.7 — open, no auth
+  'https://rue-cobalt.xenon.zone/',        // v11.7 — open, no auth
+  'https://cobaltapi.cjs.nz/',             // v11.5 — open, no auth
 ];
 
 // Per-request timeout for Cobalt API calls (ms)
 const COBALT_TIMEOUT_MS = 12000;
+
+// Error codes that mean "skip this instance immediately" (auth-gated)
+const SKIP_ERROR_CODES = new Set([
+  'error.api.auth.jwt.missing',
+  'error.api.auth.jwt.invalid',
+  'error.api.auth.turnstile.missing',
+  'error.api.auth.turnstile.invalid',
+  'error.api.auth.key.invalid',
+  'error.api.auth.key.ip_not_allowed',
+]);
 
 const BOT_USER_AGENT_REGEX = /\b(Twitterbot|facebookexternalhit|Facebook(Catalog|Bot)|Discordbot|WhatsApp|TelegramBot|Slackbot(-LinkExpanding)?|Slack-ImgProxy|LinkedInBot|Pinterest(bot)?|Mastodon|Threads|SnapchatBot|Line(-NewsDigest)?|Googlebot|Google-InspectionTool|Google-Extended|bingbot|msnbot|YahooSeeker|DuckDuckBot|Baiduspider|YandexBot|Sogou(Spider)?|Exabot|AhrefsBot|SemrushBot|MJ12bot|DotBot|GPTBot|Claude-Web|anthropic-ai|PerplexityBot|CCBot|cohere-ai|Embedly|Iframely|unfurl|Rogerbot|UptimeRobot|Pingdom(Bot)?|StatusCake|HeadlessChrome|PhantomJS|Prerender|facebot|ia_archiver|scrapy|python-requests|wget|curl)\b/i;
 
@@ -126,6 +136,10 @@ function humanizeError(errorCode, targetUrl) {
     'error.api.fetch.critical': 'A critical fetch error occurred. The platform may be blocking requests.',
     'error.api.fetch.empty': 'The platform returned an empty response. Try a different instance or URL.',
     'error.api.auth.key.ip_not_allowed': 'This Cobalt instance requires API key authentication.',
+    'error.api.auth.jwt.missing': null,       // Auth-gated — silently skip
+    'error.api.auth.jwt.invalid': null,        // Auth-gated — silently skip
+    'error.api.auth.turnstile.missing': null,   // Auth-gated — silently skip
+    'error.api.auth.turnstile.invalid': null,   // Auth-gated — silently skip
   };
   return errorMap[errorCode] || null;
 }
@@ -198,6 +212,12 @@ async function callCobalt(targetUrl, quality, mode, cobaltApiUrl) {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorCode = errorData.error?.code || '';
+      // If auth-gated, throw a special skipable error
+      if (SKIP_ERROR_CODES.has(errorCode)) {
+        const err = new Error(`Instance requires authentication (${errorCode})`);
+        err.skipInstance = true;
+        throw err;
+      }
       const friendlyMsg = humanizeError(errorCode, targetUrl);
       throw new Error(friendlyMsg || `Cobalt API responded with status ${response.status}`);
     }
@@ -206,6 +226,11 @@ async function callCobalt(targetUrl, quality, mode, cobaltApiUrl) {
 
     if (data.status === 'error') {
       const errorCode = data.error?.code || '';
+      if (SKIP_ERROR_CODES.has(errorCode)) {
+        const err = new Error(`Instance requires authentication (${errorCode})`);
+        err.skipInstance = true;
+        throw err;
+      }
       const friendlyMsg = humanizeError(errorCode, targetUrl);
       throw new Error(friendlyMsg || 'Cobalt returned processing error');
     }
@@ -235,8 +260,11 @@ async function callCobaltWithFailover(targetUrl, quality, mode, instances) {
       console.log(`[Cobalt] ✓ ${quality} from ${new URL(apiUrl).hostname}`);
       return result;
     } catch (e) {
-      lastError = e;
-      console.warn(`[Cobalt] ✗ ${new URL(apiUrl).hostname} failed for ${quality}: ${e.message}`);
+      // Don't count auth-gated skips as real errors for user-facing messages
+      if (!e.skipInstance) {
+        lastError = e;
+      }
+      console.warn(`[Cobalt] ✗ ${new URL(apiUrl).hostname} failed for ${quality}: ${e.message}${e.skipInstance ? ' (skipped)' : ''}`);
       continue; // try next instance
     }
   }
