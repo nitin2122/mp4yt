@@ -492,7 +492,7 @@ const breadcrumbSchema = {
 
   items.forEach((detail) => {
     const summary = detail.querySelector('summary');
-    const body = detail.querySelector('.faq-body');
+    const body = detail.querySelector('.faq-body') as HTMLElement | null;
 
     if (!summary || !body) return;
 

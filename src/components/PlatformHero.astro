@@ -598,8 +598,8 @@ const { platform, emoji, accentColor, tagline, description, placeholder, feature
   const form = document.getElementById('extract-form') as HTMLFormElement;
   const input = document.getElementById('hero-input') as HTMLInputElement;
   const extractBtn = document.getElementById('extract-btn') as HTMLButtonElement;
-  const extractIcon = document.getElementById('extract-icon') as SVGElement;
-  const extractSpinner = document.getElementById('extract-spinner') as SVGElement;
+  const extractIcon = document.getElementById('extract-icon') as unknown as SVGElement;
+  const extractSpinner = document.getElementById('extract-spinner') as unknown as SVGElement;
   const extractBtnLabel = document.getElementById('extract-btn-label') as HTMLSpanElement;
   const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
   const errorMsg = document.getElementById('error-msg') as HTMLDivElement;
