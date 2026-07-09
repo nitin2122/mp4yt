@@ -7,27 +7,27 @@ import Footer from '../components/Footer.astro';
 <Layout
   title="Internal Server Error (500) — mp4yt"
   description="An unexpected error occurred on our server. Return to the homepage or try again later. mp4yt allows downloading video and audio streams seamlessly."
-  canonicalUrl="https://mp4yt.com/500"
+  canonicalUrl="https://mp4yt.com"
+  noindex={true}
 >
   <Navbar />
   <main id="main-content">
     <section class="error-section">
-      <div class="mesh-bg" aria-hidden="true"></div>
-      <div class="noise-overlay" aria-hidden="true"></div>
       <div class="page-container error-content">
-        <span class="eyebrow error-eyebrow">500 Error</span>
+        <span class="error-code">500</span>
+        <span class="error-eyebrow">ERROR_INTERNAL_SERVER</span>
         <h1 class="display-xl error-title">
-          Server hiccup.
+          SERVER HICCUP.
         </h1>
-        <p class="body-lg error-subtitle">
+        <p class="body-md error-subtitle">
           An unexpected error occurred on our end. Our backend team has been notified, and we are working to get it fixed.
         </p>
         <div class="error-actions">
           <a href="/" class="btn-primary btn-primary-lg">
-            Back to homepage
+            BACK TO HOMEPAGE
           </a>
-          <button onclick="window.location.reload();" class="btn-secondary" style="height: 48px; padding: 0 var(--sp-lg); font-size: 16px; cursor: pointer;">
-            Reload page
+          <button onclick="window.location.reload();" class="btn-secondary" style="height: 48px; cursor: pointer;">
+            RELOAD PAGE
           </button>
         </div>
       </div>
@@ -39,53 +39,56 @@ import Footer from '../components/Footer.astro';
 <style>
   .error-section {
     position: relative;
-    overflow: hidden;
     background-color: var(--color-canvas);
-    min-height: calc(100vh - 64px - 280px); /* Adjust based on navbar + footer height */
+    border-bottom: var(--border);
+    min-height: calc(100vh - 64px - 280px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--sp-section) var(--sp-lg);
     text-align: center;
   }
-  
-  .noise-overlay {
-    position: absolute; 
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
-    pointer-events: none; 
-    opacity: 0.4;
-  }
-  
+
   .error-content {
-    position: relative;
-    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--sp-md);
     max-width: 600px;
   }
-  
-  .error-eyebrow {
-    color: var(--color-warning);
-    background-color: var(--color-warning-soft);
-    padding: var(--sp-xxs) var(--sp-sm);
-    border-radius: var(--rounded-full);
-    font-weight: 600;
+
+  .error-code {
+    font-family: var(--font-headline);
+    font-size: 120px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-canvas-soft-2);
+    letter-spacing: -0.05em;
   }
-  
+
+  .error-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-on-primary);
+    background-color: var(--color-error);
+    padding: 4px 12px;
+    border: var(--border);
+  }
+
   .error-title {
     margin: 0;
     color: var(--color-ink);
   }
-  
+
   .error-subtitle {
     margin: 0;
     color: var(--color-body);
-    line-height: 28px;
+    line-height: 1.6;
   }
-  
+
   .error-actions {
     display: flex;
     align-items: center;
@@ -100,6 +103,7 @@ import Footer from '../components/Footer.astro';
       min-height: calc(100vh - 64px - 400px);
       padding: var(--sp-4xl) var(--sp-md);
     }
+    .error-code { font-size: 80px; }
     .error-actions {
       flex-direction: column;
       gap: var(--sp-sm);

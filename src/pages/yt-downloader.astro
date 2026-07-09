@@ -132,8 +132,8 @@ const breadcrumbSchema = {
       platform="YouTube"
       emoji="▶️"
       accentColor="#FF0000"
-      tagline="YT Downloader — Download YT Videos Free"
-      description="The best free YT video downloader online. Paste any YouTube video URL and download as MP4 in 4K or convert to MP3 instantly. No app, no sign-up, no limits."
+      tagline="YouTube Downloader"
+      description="Just Paste and Play."
       placeholder="https://www.youtube.com/watch?v=..."
       features={[
         "Download YT videos in 4K",
@@ -211,9 +211,9 @@ const breadcrumbSchema = {
           </h2>
         </div>
 
-        <div class="faq-list" role="list">
+        <div class="faq-list">
           {ytFaqs.map((faq) => (
-            <details class="faq-item" role="listitem">
+            <details class="faq-item">
               <summary>
                 <span class="body-md-strong">{faq.q}</span>
                 <svg class="faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -272,6 +272,7 @@ const breadcrumbSchema = {
   /* Long-form SEO content */
   .seo-section {
     padding: var(--sp-4xl) var(--sp-lg);
+    border-top: var(--border);
   }
 
   .seo-long-form {
@@ -309,17 +310,17 @@ const breadcrumbSchema = {
     line-height: 1.8;
   }
 
-  /* FAQ styles (duplicated from FAQ.astro for this page's inline FAQ) */
+  /* FAQ styles — brutalist */
   .faq-band {
-    background-color: var(--color-canvas-soft);
+    background-color: var(--color-canvas);
     padding: var(--sp-5xl) var(--sp-lg);
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   .faq-inner {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--sp-4xl);
+    grid-template-columns: 340px 1fr;
+    gap: var(--sp-3xl);
     align-items: start;
   }
 
@@ -333,15 +334,15 @@ const breadcrumbSchema = {
 
   .faq-title {
     margin: 0;
-    max-width: 200px;
+    max-width: 300px;
   }
 
   .faq-list {
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   details.faq-item {
-    border-bottom: 1px solid var(--color-hairline);
+    border-bottom: var(--border);
   }
 
   details.faq-item summary {
@@ -351,15 +352,28 @@ const breadcrumbSchema = {
     align-items: center;
     justify-content: space-between;
     gap: var(--sp-md);
-    padding: var(--sp-lg) 0;
+    padding: var(--sp-lg) var(--sp-sm);
+    font-family: var(--font-headline);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
     color: var(--color-ink);
-    transition: color 0.15s ease;
+    transition: all 0.1s ease;
     user-select: none;
   }
 
   details.faq-item summary::-webkit-details-marker { display: none; }
   details.faq-item summary::marker { display: none; }
-  details.faq-item summary:hover { color: var(--color-body); }
+  details.faq-item summary span {
+    flex: 1;
+    text-align: left;
+  }
+  details.faq-item summary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    padding-left: var(--sp-md);
+    padding-right: var(--sp-md);
+  }
 
   details.faq-item .faq-body {
     overflow: hidden;
@@ -369,7 +383,7 @@ const breadcrumbSchema = {
 
   details.faq-item[open] .faq-body {
     height: auto;
-    padding-bottom: var(--sp-lg);
+    padding: 0 var(--sp-sm) var(--sp-lg);
   }
 
   .faq-icon {
@@ -382,19 +396,25 @@ const breadcrumbSchema = {
 
   details.faq-item[open] .faq-icon {
     transform: rotate(45deg);
-    color: var(--color-hairline-strong);
+    color: var(--color-ink);
+  }
+
+  details.faq-item summary:hover .faq-icon {
+    color: var(--color-on-primary);
   }
 
   /* Internal linking section */
   .internal-links-section {
     padding: var(--sp-4xl) var(--sp-lg);
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   .internal-links-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--sp-xl);
+    border: var(--border);
+    background-color: var(--color-primary);
+    gap: 2px;
   }
 
   .internal-link-card {
@@ -402,8 +422,8 @@ const breadcrumbSchema = {
     flex-direction: column;
     gap: var(--sp-md);
     padding: var(--sp-xl);
-    background-color: var(--color-canvas-soft);
-    border: 1px solid var(--color-hairline);
+    background-color: var(--color-canvas);
+    border: none;
   }
 
   .internal-link-card h3 {
@@ -421,14 +441,18 @@ const breadcrumbSchema = {
   }
 
   .internal-links-list a {
-    font-size: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
     color: var(--color-body);
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition: all 0.1s ease;
   }
 
   .internal-links-list a:hover {
     color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
   }
 
   .internal-links-tags {
@@ -442,26 +466,29 @@ const breadcrumbSchema = {
 
   .internal-links-tags li a {
     display: inline-block;
-    padding: 4px 12px;
-    font-size: 13px;
-    color: var(--color-body);
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-ink);
     background-color: var(--color-canvas);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-full);
+    border: var(--border);
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.1s ease;
   }
 
   .internal-links-tags li a:hover {
-    color: var(--color-ink);
-    border-color: var(--color-hairline-strong);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 
   @media (max-width: 992px) {
     .internal-links-grid { grid-template-columns: 1fr; }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .faq-inner { grid-template-columns: 1fr; gap: var(--sp-xl); }
     .faq-header { position: static; }
     .faq-title { max-width: none; }
@@ -475,7 +502,7 @@ const breadcrumbSchema = {
     .seo-section { padding: var(--sp-2xl) var(--sp-sm); }
     .internal-links-section { padding: var(--sp-2xl) var(--sp-sm); }
     details.faq-item summary {
-      padding: var(--sp-md) 0;
+      padding: var(--sp-md) var(--sp-xs);
       font-size: 14px;
       min-height: 44px;
     }

@@ -1,52 +1,42 @@
 ---
-// Hero section — mesh gradient backdrop, URL input, auto-paste detection, hash URL autofill
-import PlatformSwitcher from './PlatformSwitcher.astro';
+// Hero section — Brutalist terminal-style video downloader with massive headline
+import PlatformSwitcher from "./PlatformSwitcher.astro";
 ---
 
 <section id="hero" class="hero-band" aria-labelledby="hero-headline">
-  <!-- Mesh gradient backdrop -->
-  <div class="mesh-bg" aria-hidden="true"></div>
-
-  <!-- Noise texture overlay for depth -->
-  <div class="noise-overlay" aria-hidden="true"></div>
-
   <div class="page-container hero-content">
-    <!-- Eyebrow badge -->
-    <div class="hero-eyebrow">
-      <span class="badge badge-new">
-        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
-          <circle cx="4" cy="4" r="4" fill="#0070f3"/>
-        </svg>
-        Powered by Cobalt · 1000+ sites
-      </span>
-    </div>
-
-    <!-- Headline -->
+    <!-- Massive Headline -->
     <h1 id="hero-headline" class="display-xl hero-headline">
-      Download YT videos & more.<br class="headline-break" /> Instantly.
+      VIDEO<br />DOWNLOADER
     </h1>
 
+    <!-- Brutalist eyebrow tag -->
+    <p class="hero-eyebrow-tag">BRUTALIST EDITION. INSTANT. ZERO FRICTION.</p>
+
     <!-- Subhead -->
-    <p class="body-lg hero-subhead">
-      The #1 free <strong>YT video downloader</strong> online. Paste a link from YouTube, Instagram, TikTok,
-      Twitter/X, or 1000+ platforms. Get the direct MP4 stream — zero waiting.
+    <p class="body-md hero-subhead">
+      The #1 free <strong>YT video downloader</strong> online. Paste a link from YouTube,
+      Instagram, TikTok, Twitter/X, or 1000+ platforms. Get the direct MP4 stream
+      — zero waiting.
     </p>
 
-    <!-- URL Input Form -->
-    <div class="hero-input-wrapper">
+    <!-- Main Terminal Interface -->
+    <div class="terminal-container hard-shadow-lg">
       <PlatformSwitcher currentPlatform="General" />
-      <form id="extract-form" class="input-row" aria-label="Video URL extractor" novalidate>
+      <!-- URL Bar -->
+      <form
+        id="extract-form"
+        class="terminal-url-bar"
+        aria-label="Video URL extractor"
+        novalidate
+      >
         <div class="input-group">
-          <span class="input-icon" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 3.5H4.5A2.5 2.5 0 0 0 2 6v.5M10 3.5h1.5A2.5 2.5 0 0 1 14 6v.5M6 12.5H4.5A2.5 2.5 0 0 1 2 10v-.5M10 12.5h1.5A2.5 2.5 0 0 0 14 10v-.5M6 8h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
-          </span>
+          <span class="terminal-prompt" aria-hidden="true">&gt;</span>
           <input
             id="hero-input"
             type="url"
             class="hero-url-input"
-            placeholder="Paste video URL here..."
+            placeholder="PASTE URL..."
             aria-label="Video URL"
             autocomplete="off"
             spellcheck="false"
@@ -55,75 +45,118 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
           <button
             id="extract-btn"
             type="submit"
-            class="btn-primary extract-btn"
+            class="extract-btn"
             aria-label="Extract video"
           >
-            <svg id="extract-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg
+              id="extract-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 1v8M4 6l3 3 3-3M2 11h10"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
             </svg>
-            <svg id="extract-spinner" class="animate-spin hidden" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <circle cx="7" cy="7" r="5" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-              <path d="M7 2a5 5 0 0 1 5 5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <svg
+              id="extract-spinner"
+              class="animate-spin hidden"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="7"
+                cy="7"
+                r="5"
+                stroke="rgba(255,255,255,0.3)"
+                stroke-width="2"></circle>
+              <path
+                d="M7 2a5 5 0 0 1 5 5"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"></path>
             </svg>
-            <span id="extract-btn-label">Extract</span>
+            <span id="extract-btn-label">EXTRACT</span>
           </button>
         </div>
 
         <!-- Loading progress bar -->
-        <div id="progress-bar" class="progress-bar-track hidden" role="progressbar" aria-label="Loading…">
+        <div
+          id="progress-bar"
+          class="progress-bar-track hidden"
+          role="progressbar"
+          aria-label="Loading…"
+        >
           <div class="progress-bar-fill"></div>
         </div>
 
         <!-- Error message -->
-        <div id="error-msg" class="error-msg hidden" role="alert" aria-live="assertive"></div>
+        <div
+          id="error-msg"
+          class="error-msg hidden"
+          role="alert"
+          aria-live="assertive"
+        >
+        </div>
       </form>
 
-      <!-- Paste hint -->
-      <p class="paste-hint body-sm" aria-live="polite" id="paste-hint">
-        <span class="paste-desktop"><kbd class="kbd">Ctrl+V</kbd> to paste — we'll auto-detect</span>
-        <span class="paste-mobile">Tap the input and paste your URL</span>
-      </p>
+      <!-- Decorative terminal status line -->
+      <div class="terminal-status" aria-hidden="true">
+        <span class="terminal-status-text">COBALT_ENGINE_v4.2</span>
+        <span class="terminal-status-dot"></span>
+        <span class="terminal-status-text">API_STATUS: NOMINAL</span>
+      </div>
     </div>
+
+    <!-- Paste hint -->
+    <p class="paste-hint body-sm" aria-live="polite" id="paste-hint">
+      <span class="paste-desktop"
+        ><kbd class="kbd">Ctrl+V</kbd> TO PASTE — AUTO-DETECT ENABLED</span
+      >
+      <span class="paste-mobile">TAP INPUT AND PASTE YOUR URL</span>
+    </p>
 
     <!-- Trust signals -->
     <div class="hero-trust" role="list" aria-label="Key features">
-      <div class="trust-item" role="listitem">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M2 7l3.5 3.5L12 3" stroke="#0070f3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>No registration</span>
-      </div>
-      <div class="trust-sep" aria-hidden="true">·</div>
-      <div class="trust-item" role="listitem">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M2 7l3.5 3.5L12 3" stroke="#0070f3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>No file storage</span>
-      </div>
-      <div class="trust-sep" aria-hidden="true">·</div>
-      <div class="trust-item" role="listitem">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M2 7l3.5 3.5L12 3" stroke="#0070f3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>Instant CDN stream</span>
-      </div>
+      <div class="trust-chip" role="listitem">NO_REGISTRATION</div>
+      <div class="trust-chip" role="listitem">NO_FILE_STORAGE</div>
+      <div class="trust-chip" role="listitem">INSTANT_CDN_STREAM</div>
     </div>
   </div>
 </section>
 
 <!-- Result Card Section (hidden until response) -->
-<div id="result-section" class="result-section hidden" aria-live="polite" aria-label="Video extraction result">
+<div
+  id="result-section"
+  class="result-section hidden"
+  aria-live="polite"
+  aria-label="Video extraction result"
+>
   <div class="page-container">
-    <div id="result-card" class="result-card card-lg animate-fade-in-up">
+    <div id="result-card" class="result-card animate-fade-in-up">
       <div class="result-inner">
         <!-- Thumbnail + Preview -->
         <div class="result-media">
           <div class="thumbnail-wrapper">
-            <img id="result-thumb" src="" alt="" class="result-thumb" loading="lazy" />
+            <img
+              id="result-thumb"
+              src=""
+              alt=""
+              class="result-thumb"
+              loading="lazy"
+            />
             <div class="thumb-overlay" aria-hidden="true">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="20" fill="rgba(0,0,0,0.5)"/>
-                <path d="M16 13l14 7-14 7V13z" fill="white"/>
+                <rect width="40" height="40" fill="rgba(0,0,0,0.5)"></rect>
+                <path d="M16 13l14 7-14 7V13z" fill="white"></path>
               </svg>
             </div>
           </div>
@@ -138,81 +171,171 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
 
           <div class="result-stats">
             <div class="stat-item">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <circle cx="7" cy="7" r="5" stroke="var(--color-mute)" stroke-width="1.3"/>
-                <path d="M7 4.5V7l2 1.5" stroke="var(--color-mute)" stroke-width="1.3" stroke-linecap="round"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="7"
+                  cy="7"
+                  r="5"
+                  stroke="var(--color-mute)"
+                  stroke-width="1.3"></circle>
+                <path
+                  d="M7 4.5V7l2 1.5"
+                  stroke="var(--color-mute)"
+                  stroke-width="1.3"
+                  stroke-linecap="round"></path>
               </svg>
-              <span id="result-duration" class="body-sm" style="color: var(--color-body);"></span>
+              <span id="result-duration" class="data-mono"></span>
             </div>
             <div class="stat-item">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M2.5 9.5L7 4.5l4.5 5" stroke="var(--color-mute)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="body-sm" style="color: var(--color-body);">Best quality MP4</span>
+              <span class="data-mono">BEST QUALITY MP4</span>
             </div>
           </div>
 
-          <!-- Advanced Quality / Resolution Dropdown Option Button -->
+          <!-- Quality Dropdown -->
           <div class="result-resolutions">
-            <span class="eyebrow">Select Resolution</span>
+            <span class="eyebrow">SELECT RESOLUTION</span>
             <div class="quality-dropdown-container">
-              <button id="quality-dropdown-trigger" class="quality-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false" type="button">
+              <button
+                id="quality-dropdown-trigger"
+                class="quality-dropdown-trigger"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                type="button"
+              >
                 <span class="dropdown-trigger-icon">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="2" y="2" width="12" height="12" rx="2" stroke-width="1.5"/>
-                    <path d="M5 8.5h6M5 11.5h6M5 5.5h6" stroke-linecap="round"/>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <rect x="2" y="2" width="12" height="12" stroke-width="1.5"
+                    ></rect>
+                    <path d="M5 8.5h6M5 11.5h6M5 5.5h6" stroke-linecap="round"
+                    ></path>
                   </svg>
                 </span>
-                <span id="quality-trigger-text">Select Quality</span>
+                <span id="quality-trigger-text">SELECT QUALITY</span>
                 <span class="dropdown-chevron">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M3 4.5l3 3 3-3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
                   </svg>
                 </span>
               </button>
-              <div id="quality-dropdown-menu" class="quality-dropdown-menu hidden" role="listbox">
+              <div
+                id="quality-dropdown-menu"
+                class="quality-dropdown-menu hidden"
+                role="listbox"
+              >
                 <!-- Dynamically populated options -->
               </div>
             </div>
           </div>
 
           <div class="result-filename">
-            <span class="eyebrow">Filename</span>
-            <code id="result-filename-display" class="code filename-code"></code>
+            <span class="eyebrow">FILENAME</span>
+            <code id="result-filename-display" class="code filename-code"
+            ></code>
           </div>
 
           <div class="result-actions">
             <a
               id="result-download-btn"
-              href="#"
+              href="#result-container"
               class="btn-primary btn-primary-lg"
               download
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 2v8M5 7l3 3 3-3M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8 2v8M5 7l3 3 3-3M2 13h12"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
               </svg>
-              Download MP4
+              DOWNLOAD MP4
             </a>
-            <button class="btn-secondary" id="copy-url-btn" aria-label="Copy direct URL">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
-                <path d="M11 5V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <button
+              class="btn-secondary"
+              id="copy-url-btn"
+              aria-label="Copy direct URL"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="5"
+                  y="5"
+                  width="8"
+                  height="8"
+                  stroke="currentColor"
+                  stroke-width="1.3"></rect>
+                <path
+                  d="M11 5V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1"
+                  stroke="currentColor"
+                  stroke-width="1.3"
+                  stroke-linecap="round"></path>
               </svg>
-              Copy URL
+              COPY URL
             </button>
           </div>
 
           <!-- Inline video preview -->
           <details class="video-preview-toggle">
             <summary class="body-sm-strong preview-summary">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M2 3.5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-7z" stroke="currentColor" stroke-width="1.2"/>
-                <path d="M5.5 5.5L8.5 7l-3 1.5v-3z" fill="currentColor"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="2"
+                  y="2.5"
+                  width="10"
+                  height="9"
+                  stroke="currentColor"
+                  stroke-width="1.2"></rect>
+                <path d="M5.5 5.5L8.5 7l-3 1.5v-3z" fill="currentColor"></path>
               </svg>
-              Preview video in browser
+              PREVIEW VIDEO IN BROWSER
             </summary>
             <div class="video-preview-wrapper">
-              <video id="result-video" controls preload="metadata" class="result-video">
+              <video
+                id="result-video"
+                controls
+                preload="metadata"
+                class="result-video"
+              >
                 Your browser does not support the video tag.
               </video>
             </div>
@@ -227,24 +350,14 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   /* Hero Band */
   .hero-band {
     position: relative;
-    overflow: hidden;
-    overflow-x: clip;
     background-color: var(--color-canvas);
-    padding: var(--sp-section) var(--sp-lg) var(--sp-5xl);
-    min-height: 600px;
+    padding: var(--sp-4xl) var(--sp-lg) var(--sp-5xl);
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     max-width: 100vw;
-  }
-
-  .noise-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0.4;
+    border-bottom: var(--border);
   }
 
   .hero-content {
@@ -257,65 +370,64 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     gap: var(--sp-lg);
   }
 
-  .hero-eyebrow {
-    display: flex;
-    justify-content: center;
-  }
-
   .hero-headline {
     margin: 0;
-    max-width: 720px;
+    max-width: 900px;
     color: var(--color-ink);
+  }
+
+  .hero-eyebrow-tag {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    margin: 0;
   }
 
   .hero-subhead {
     margin: 0;
-    max-width: 500px;
+    max-width: 600px;
     color: var(--color-body);
+    text-transform: none;
   }
 
-  /* Input Form */
-  .hero-input-wrapper {
+  /* Terminal Container */
+  .terminal-container {
     width: 100%;
-    max-width: 640px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-sm);
-    margin-top: var(--sp-xs);
-    min-width: 0;
-    box-sizing: border-box;
+    max-width: 800px;
+    border: var(--border);
+    background-color: var(--color-primary);
+    padding: 2px;
+    margin-top: var(--sp-sm);
   }
 
-  .input-row {
+  .terminal-url-bar {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-xs);
+    gap: 0;
   }
 
   .input-group {
     display: flex;
     align-items: center;
     background-color: var(--color-canvas);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-3);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    border-bottom: var(--border);
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
   }
 
-  .input-group:focus-within {
-    border-color: var(--color-hairline-strong);
-    box-shadow: var(--shadow-4), 0 0 0 3px rgba(0, 112, 243, 0.1);
-  }
-
-  .input-icon {
-    display: flex;
-    align-items: center;
-    padding: 0 var(--sp-sm);
-    color: var(--color-mute);
+  .terminal-prompt {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-primary);
+    padding: 0 var(--sp-sm) 0 var(--sp-md);
     flex-shrink: 0;
   }
 
@@ -324,42 +436,98 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     border: none;
     outline: none;
     background: transparent;
-    font-family: var(--font-sans);
-    font-size: 16px; /* Must be 16px to prevent iOS auto-zoom on focus */
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
     color: var(--color-ink);
     padding: var(--sp-md) var(--sp-sm) var(--sp-md) 0;
+    text-transform: uppercase;
     min-width: 0;
+    letter-spacing: 0.02em;
   }
 
   .hero-url-input::placeholder {
     color: var(--color-mute);
+    opacity: 0.5;
+    text-transform: uppercase;
   }
 
   .extract-btn {
-    border-radius: 0 var(--rounded-md) var(--rounded-md) 0 !important;
+    border: none;
+    border-left: var(--border);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     height: 54px;
-    padding: 0 var(--sp-lg);
-    font-size: 15px;
+    padding: 0 var(--sp-xl);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
     flex-shrink: 0;
     gap: var(--sp-xs);
-    background-color: var(--color-primary) !important;
-    color: var(--color-on-primary) !important;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.1s ease;
+  }
+
+  .extract-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  /* Terminal status line */
+  .terminal-status {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    padding: var(--sp-xs) var(--sp-md);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .terminal-status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #28c840;
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
   }
 
   /* Progress bar */
   .progress-bar-track {
-    margin-top: 4px;
+    margin: 0;
+    border: none;
+    background-color: var(--color-canvas-soft-2);
   }
 
   /* Error */
   .error-msg {
-    padding: var(--sp-xs) var(--sp-sm);
+    padding: var(--sp-xs) var(--sp-md);
     background-color: var(--color-error-soft);
-    border: 1px solid var(--color-error-border, #f9c8c8);
-    border-radius: var(--rounded-sm);
+    border: var(--border);
+    border-color: var(--color-error);
     color: var(--color-error-deep);
-    font-size: 14px;
-    line-height: 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.4;
+    text-transform: uppercase;
   }
 
   /* Paste hint */
@@ -367,61 +535,71 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     margin: 0;
     color: var(--color-mute);
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  .paste-mobile { display: none; }
-  .paste-desktop { display: inline; }
+  .paste-mobile {
+    display: none;
+  }
+  .paste-desktop {
+    display: inline;
+  }
 
   @media (max-width: 768px) {
-    .paste-mobile { display: inline; }
-    .paste-desktop { display: none; }
+    .paste-mobile {
+      display: inline;
+    }
+    .paste-desktop {
+      display: none;
+    }
   }
 
   .kbd {
     display: inline-flex;
     align-items: center;
     background-color: var(--color-canvas-soft-2);
-    border: 1px solid var(--color-hairline);
-    border-bottom-width: 2px;
-    border-radius: 4px;
-    padding: 0 5px;
+    border: var(--border);
+    padding: 1px 6px;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--color-body);
+    color: var(--color-ink);
   }
 
   /* Trust signals */
   .hero-trust {
     display: flex;
     align-items: center;
-    gap: var(--sp-sm);
+    gap: var(--sp-xs);
     flex-wrap: wrap;
     justify-content: center;
     margin-top: var(--sp-xs);
   }
 
-  .trust-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--color-body);
-  }
-
-  .trust-sep {
-    color: var(--color-hairline-strong);
-    font-size: 16px;
+  .trust-chip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border: var(--border);
+    color: var(--color-ink);
+    background: var(--color-canvas);
   }
 
   /* Result Section */
   .result-section {
-    background-color: var(--color-canvas-soft);
+    background-color: var(--color-canvas);
     padding: var(--sp-4xl) 0;
-    border-top: 1px solid var(--color-hairline);
-    border-bottom: 1px solid var(--color-hairline);
+    border-bottom: var(--border);
   }
 
   .result-card {
+    border: var(--border);
+    box-shadow: var(--shadow-3);
+    padding: var(--sp-xl);
+    background-color: var(--color-canvas);
     overflow: hidden;
   }
 
@@ -438,11 +616,10 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
 
   .thumbnail-wrapper {
     position: relative;
-    border-radius: var(--rounded-md);
     overflow: hidden;
     aspect-ratio: 16/9;
     background-color: var(--color-canvas-soft-2);
-    box-shadow: var(--shadow-3);
+    border: var(--border);
   }
 
   .result-thumb {
@@ -458,9 +635,9 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.15s ease;
   }
 
   .thumbnail-wrapper:hover .thumb-overlay {
@@ -473,7 +650,11 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     gap: var(--sp-lg);
   }
 
-  .result-header { display: flex; flex-direction: column; gap: var(--sp-xs); }
+  .result-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+  }
 
   .result-title {
     margin: 0;
@@ -508,8 +689,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     font-size: 12px;
     color: var(--color-body);
     background-color: var(--color-canvas-soft-2);
+    border: var(--border-thin);
     padding: var(--sp-xs) var(--sp-sm);
-    border-radius: var(--rounded-sm);
     word-break: break-all;
     display: block;
   }
@@ -531,21 +712,32 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     align-items: center;
     gap: var(--sp-xs);
     cursor: pointer;
-    color: var(--color-link);
+    color: var(--color-ink);
     list-style: none;
     padding: var(--sp-xs) 0;
-    transition: color 0.15s ease;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.1s ease;
   }
 
-  .preview-summary:hover { color: var(--color-link-deep); }
-  .preview-summary::-webkit-details-marker { display: none; }
+  .preview-summary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    padding-left: var(--sp-sm);
+    padding-right: var(--sp-sm);
+  }
+  .preview-summary::-webkit-details-marker {
+    display: none;
+  }
 
   .video-preview-wrapper {
     margin-top: var(--sp-sm);
-    border-radius: var(--rounded-md);
+    border: var(--border);
     overflow: hidden;
     background: #000;
-    box-shadow: var(--shadow-3);
   }
 
   .result-video {
@@ -574,21 +766,19 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     justify-content: space-between;
     height: 48px;
     padding: 0 var(--sp-md);
-    border-radius: var(--rounded-md);
     background-color: var(--color-canvas);
-    border: 1px solid var(--color-hairline);
+    border: var(--border);
     color: var(--color-ink);
     cursor: pointer;
-    font-size: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
     font-weight: 500;
-    transition: all 0.15s ease;
-    box-shadow: var(--shadow-2);
+    transition: all 0.1s ease;
   }
 
   .quality-dropdown-trigger:hover,
   .quality-dropdown-trigger.active {
-    border-color: var(--color-hairline-strong);
-    background-color: var(--color-canvas-soft);
+    background-color: var(--color-canvas-soft-2);
   }
 
   .dropdown-trigger-icon {
@@ -601,6 +791,8 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     flex: 1;
     text-align: left;
     margin-left: var(--sp-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .dropdown-chevron {
@@ -616,33 +808,19 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
 
   .quality-dropdown-menu {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 2px);
     left: 0;
     right: 0;
     z-index: 100;
     max-height: 280px;
     overflow-y: auto;
     background: var(--color-canvas);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-md);
-    box-shadow: var(--shadow-4);
+    border: var(--border);
     display: flex;
     flex-direction: column;
-    padding: 6px;
+    padding: 4px;
     gap: 2px;
-  }
-
-  /* Support dark-theme style glassmorphism */
-  @media (prefers-color-scheme: dark) {
-    .quality-dropdown-menu {
-      background: rgba(17, 17, 17, 0.85);
-      backdrop-filter: blur(12px);
-    }
-  }
-
-  :root[data-theme="dark"] .quality-dropdown-menu {
-    background: rgba(17, 17, 17, 0.85);
-    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-3);
   }
 
   .dropdown-item {
@@ -650,25 +828,25 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     align-items: center;
     justify-content: space-between;
     padding: var(--sp-xs) var(--sp-sm);
-    border-radius: var(--rounded-sm);
     border: none;
     background: transparent;
     color: var(--color-ink);
     cursor: pointer;
     text-align: left;
     width: 100%;
-    font-family: var(--font-sans);
-    transition: background-color 0.1s ease;
+    font-family: var(--font-mono);
+    transition: all 0.1s ease;
   }
 
   .dropdown-item:hover {
-    background-color: var(--color-canvas-soft-2);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 
   .dropdown-item.active {
-    background-color: var(--color-link-bg-soft);
-    color: var(--color-link-deep);
-    font-weight: 500;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
   }
 
   .opt-info {
@@ -678,26 +856,26 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   }
 
   .opt-res {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
   .opt-badge {
     font-family: var(--font-mono);
     font-size: 9px;
-    font-weight: 600;
-    padding: 1px 5px;
-    border-radius: 3px;
-    background-color: var(--color-canvas-soft-2);
-    border: 1px solid var(--color-hairline-strong);
-    color: var(--color-body);
+    font-weight: 700;
+    padding: 2px 6px;
+    border: var(--border);
+    color: var(--color-ink);
     text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: transparent;
   }
 
   .dropdown-item.active .opt-badge {
-    background-color: var(--color-link-deep);
-    color: #ffffff;
-    border-color: transparent;
+    border-color: var(--color-on-primary);
+    color: var(--color-on-primary);
   }
 
   .opt-meta {
@@ -712,17 +890,18 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   }
 
   .dropdown-item.active .opt-size {
-    color: var(--color-link-deep);
-    opacity: 0.8;
+    color: var(--color-on-primary);
+    opacity: 0.7;
   }
 
   .opt-audio {
     display: inline-flex;
     align-items: center;
+    font-size: 11px;
   }
 
   .opt-audio.has-audio {
-    color: #10b981;
+    color: #28c840;
   }
 
   .opt-audio.no-audio {
@@ -730,17 +909,31 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   }
 
   .dropdown-item.active .opt-audio.has-audio {
-    color: var(--color-link-deep);
+    color: var(--color-on-primary);
   }
 
-  .hidden { display: none !important; }
+  .dropdown-item:hover .opt-badge {
+    border-color: var(--color-on-primary);
+    color: var(--color-on-primary);
+  }
+
+  .dropdown-item:hover .opt-size {
+    color: var(--color-on-primary);
+    opacity: 0.7;
+  }
+
+  .dropdown-item:hover .opt-audio {
+    color: var(--color-on-primary);
+  }
+
+  .hidden {
+    display: none !important;
+  }
 
   @media (max-width: 768px) {
     .hero-band {
-      padding: var(--sp-5xl) var(--sp-md) var(--sp-4xl);
-      min-height: auto;
+      padding: var(--sp-3xl) var(--sp-md) var(--sp-3xl);
     }
-    .headline-break { display: none; }
     .result-inner {
       grid-template-columns: 1fr;
     }
@@ -749,26 +942,20 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       min-width: 0;
       max-width: 100%;
     }
-    .hero-input-wrapper {
-      max-width: 100%;
-      min-width: 0;
-    }
     .result-section {
       padding: var(--sp-xl) 0;
     }
-    /* Ensure filename doesn't overflow */
     .filename-code {
       font-size: 11px;
       word-break: break-all;
       overflow-wrap: anywhere;
     }
-    /* Improve dropdown on mobile */
     .quality-dropdown-menu {
       max-height: 220px;
     }
     .quality-dropdown-trigger {
       height: 44px;
-      font-size: 13px;
+      font-size: 12px;
     }
     .opt-meta {
       flex-direction: column;
@@ -777,153 +964,180 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
     }
   }
 
-  /* ── Stacked mobile layout for all phones (≤640px) ── */
+  /* ── Stacked mobile layout (≤640px) ── */
   @media (max-width: 640px) {
     .hero-band {
-      padding: var(--sp-4xl) var(--sp-md) var(--sp-3xl);
+      padding: var(--sp-3xl) var(--sp-md) var(--sp-2xl);
     }
     .input-group {
       flex-direction: column;
-      background: transparent;
+      background: var(--color-canvas);
       border: none;
-      box-shadow: none;
-      border-radius: 0;
-      gap: var(--sp-sm);
+      gap: 0;
       overflow: visible;
       max-width: 100%;
     }
-    /* Disable the focus-within glow on the transparent wrapper */
-    .input-group:focus-within {
-      border-color: transparent;
-      box-shadow: none;
-    }
-    .input-icon {
+    .terminal-prompt {
       display: none;
     }
     .hero-url-input {
       background-color: var(--color-canvas);
-      border: 1px solid var(--color-hairline);
-      border-radius: var(--rounded-md);
-      padding: var(--sp-md) var(--sp-md);
+      border: var(--border);
+      padding: var(--sp-md);
       width: 100%;
       max-width: 100%;
       height: 50px;
-      box-shadow: var(--shadow-3);
-      font-size: 16px;
+      font-size: 14px;
       box-sizing: border-box;
     }
-    /* Proper focus ring on standalone input on mobile */
     .hero-url-input:focus {
-      border-color: var(--color-link);
-      box-shadow: var(--shadow-3), 0 0 0 3px rgba(0, 112, 243, 0.15);
+      box-shadow: var(--shadow-3);
     }
     .extract-btn {
       width: 100%;
       max-width: 100%;
-      border-radius: var(--rounded-md) !important;
       justify-content: center;
-      box-shadow: var(--shadow-3);
       padding: 0 var(--sp-md);
       height: 50px;
       min-height: 50px;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      letter-spacing: -0.01em;
-      background-color: var(--color-primary) !important;
-      color: var(--color-on-primary) !important;
-      display: inline-flex !important;
-      align-items: center !important;
+      font-size: 14px;
+      font-weight: 700;
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
+      border: var(--border);
+      border-left: var(--border);
+      display: inline-flex;
+      align-items: center;
       box-sizing: border-box;
+      margin-top: -2px; /* overlap borders */
     }
     .extract-btn:active {
       transform: scale(0.98);
     }
-    .hero-trust { gap: var(--sp-xs); }
-    .trust-sep { display: none; }
-    .trust-item { font-size: 12px; }
-    .result-actions { flex-direction: column; }
-    .result-actions .btn-primary, .result-actions .btn-secondary {
+    .hero-trust {
+      gap: var(--sp-xs);
+    }
+    .trust-chip {
+      font-size: 9px;
+      padding: 3px 8px;
+    }
+    .result-actions {
+      flex-direction: column;
+    }
+    .result-actions .btn-primary,
+    .result-actions .btn-secondary {
       width: 100%;
       justify-content: center;
       min-height: 44px;
     }
     .paste-hint {
-      font-size: 12px;
+      font-size: 11px;
     }
     .hero-subhead {
-      font-size: 14px;
-      line-height: 22px;
+      font-size: 13px;
+      line-height: 1.5;
     }
     .result-card {
-      padding: var(--sp-md);
-    }
-    .card-lg {
       padding: var(--sp-md);
     }
     .result-inner {
       gap: var(--sp-md);
     }
-    /* Improve dropdown on mobile */
     .dropdown-item {
       padding: var(--sp-sm) var(--sp-sm);
       min-height: 44px;
     }
-    .opt-audio {
-      font-size: 11px;
+    .terminal-container {
+      box-shadow: var(--shadow-3);
     }
   }
 
-  /* ── Extra-small phone refinements (≤400px) ── */
   @media (max-width: 400px) {
     .hero-band {
-      padding: var(--sp-3xl) var(--sp-sm) var(--sp-2xl);
+      padding: var(--sp-2xl) var(--sp-sm) var(--sp-xl);
     }
   }
 </style>
 
 <script>
-  const form = document.getElementById('extract-form') as HTMLFormElement;
-  const input = document.getElementById('hero-input') as HTMLInputElement;
-  const extractBtn = document.getElementById('extract-btn') as HTMLButtonElement;
-  const extractIcon = document.getElementById('extract-icon') as unknown as SVGElement;
-  const extractSpinner = document.getElementById('extract-spinner') as unknown as SVGElement;
-  const extractBtnLabel = document.getElementById('extract-btn-label') as HTMLSpanElement;
-  const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
-  const errorMsg = document.getElementById('error-msg') as HTMLDivElement;
-  const pasteHint = document.getElementById('paste-hint') as HTMLParagraphElement;
+  const form = document.getElementById("extract-form") as HTMLFormElement;
+  const input = document.getElementById("hero-input") as HTMLInputElement;
+  const extractBtn = document.getElementById(
+    "extract-btn",
+  ) as HTMLButtonElement;
+  const extractIcon = document.getElementById(
+    "extract-icon",
+  ) as unknown as SVGElement;
+  const extractSpinner = document.getElementById(
+    "extract-spinner",
+  ) as unknown as SVGElement;
+  const extractBtnLabel = document.getElementById(
+    "extract-btn-label",
+  ) as HTMLSpanElement;
+  const progressBar = document.getElementById("progress-bar") as HTMLDivElement;
+  const errorMsg = document.getElementById("error-msg") as HTMLDivElement;
+  const pasteHint = document.getElementById(
+    "paste-hint",
+  ) as HTMLParagraphElement;
 
-  const resultSection = document.getElementById('result-section') as HTMLDivElement;
-  const resultThumb = document.getElementById('result-thumb') as HTMLImageElement;
-  const resultTitle = document.getElementById('result-title') as HTMLHeadingElement;
-  const resultDuration = document.getElementById('result-duration') as HTMLSpanElement;
-  const resultFilename = document.getElementById('result-filename-display') as HTMLElement;
-  const resultDownloadBtn = document.getElementById('result-download-btn') as HTMLAnchorElement;
-  const copyUrlBtn = document.getElementById('copy-url-btn') as HTMLButtonElement;
-  const resultVideo = document.getElementById('result-video') as HTMLVideoElement;
-  const resultPlatform = document.getElementById('result-platform') as HTMLSpanElement;
-  const triggerBtn = document.getElementById('quality-dropdown-trigger') as HTMLButtonElement;
-  const dropdownMenu = document.getElementById('quality-dropdown-menu') as HTMLDivElement;
-  const triggerText = document.getElementById('quality-trigger-text') as HTMLSpanElement;
+  const resultSection = document.getElementById(
+    "result-section",
+  ) as HTMLDivElement;
+  const resultThumb = document.getElementById(
+    "result-thumb",
+  ) as HTMLImageElement;
+  const resultTitle = document.getElementById(
+    "result-title",
+  ) as HTMLHeadingElement;
+  const resultDuration = document.getElementById(
+    "result-duration",
+  ) as HTMLSpanElement;
+  const resultFilename = document.getElementById(
+    "result-filename-display",
+  ) as HTMLElement;
+  const resultDownloadBtn = document.getElementById(
+    "result-download-btn",
+  ) as HTMLAnchorElement;
+  const copyUrlBtn = document.getElementById(
+    "copy-url-btn",
+  ) as HTMLButtonElement;
+  const resultVideo = document.getElementById(
+    "result-video",
+  ) as HTMLVideoElement;
+  const resultPlatform = document.getElementById(
+    "result-platform",
+  ) as HTMLSpanElement;
+  const triggerBtn = document.getElementById(
+    "quality-dropdown-trigger",
+  ) as HTMLButtonElement;
+  const dropdownMenu = document.getElementById(
+    "quality-dropdown-menu",
+  ) as HTMLDivElement;
+  const triggerText = document.getElementById(
+    "quality-trigger-text",
+  ) as HTMLSpanElement;
 
   // ── Hash URL autofill (from seo-handler redirect: /#url=...) ──
   function checkHashUrl() {
     const hash = window.location.hash;
-    if (hash.startsWith('#url=')) {
+    if (hash.startsWith("#url=")) {
       const encodedUrl = hash.slice(5);
       try {
         const url = decodeURIComponent(encodedUrl);
         input.value = url;
         // Clean the hash from the URL bar
-        history.replaceState(null, '', window.location.pathname);
+        history.replaceState(null, "", window.location.pathname);
         // Auto-trigger extraction
         setTimeout(() => extractVideo(url), 300);
-      } catch (e) { /* invalid encoding, ignore */ }
+      } catch (e) {
+        /* invalid encoding, ignore */
+      }
     }
   }
 
   // ── Auto-paste detection ──
-  document.addEventListener('paste', (e: ClipboardEvent) => {
-    const text = e.clipboardData?.getData('text/plain')?.trim() ?? '';
+  document.addEventListener("paste", (e: ClipboardEvent) => {
+    const text = e.clipboardData?.getData("text/plain")?.trim() ?? "";
     if (text && isValidUrl(text) && document.activeElement !== input) {
       input.value = text;
       extractVideo(text);
@@ -931,12 +1145,14 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   });
 
   // ── Form submission ──
-  form.addEventListener('submit', (e: Event) => {
+  form.addEventListener("submit", (e: Event) => {
     e.preventDefault();
     const url = input.value.trim();
     if (!url) return;
     if (!isValidUrl(url)) {
-      showError('Please paste a valid video URL (e.g. https://instagram.com/p/...)');
+      showError(
+        "Please paste a valid video URL (e.g. https://instagram.com/p/...)",
+      );
       return;
     }
     extractVideo(url);
@@ -945,84 +1161,95 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
   function isValidUrl(url: string): boolean {
     try {
       const u = new URL(url);
-      return u.protocol === 'http:' || u.protocol === 'https:';
-    } catch { return false; }
+      return u.protocol === "http:" || u.protocol === "https:";
+    } catch {
+      return false;
+    }
   }
 
   function setLoading(loading: boolean) {
     extractBtn.disabled = loading;
-    extractIcon.classList.toggle('hidden', loading);
-    extractSpinner.classList.toggle('hidden', !loading);
-    extractBtnLabel.textContent = loading ? 'Extracting…' : 'Extract';
-    progressBar.classList.toggle('hidden', !loading);
+    extractIcon.classList.toggle("hidden", loading);
+    extractSpinner.classList.toggle("hidden", !loading);
+    extractBtnLabel.textContent = loading ? "EXTRACTING…" : "EXTRACT";
+    progressBar.classList.toggle("hidden", !loading);
     if (loading) {
-      errorMsg.classList.add('hidden');
+      errorMsg.classList.add("hidden");
     }
   }
 
   function showError(msg: string) {
     errorMsg.textContent = msg;
-    errorMsg.classList.remove('hidden');
-    resultSection.classList.add('hidden');
+    errorMsg.classList.remove("hidden");
+    resultSection.classList.add("hidden");
   }
 
   function formatDuration(seconds: number): string {
-    if (!seconds || isNaN(seconds)) return 'Unknown duration';
+    if (!seconds || isNaN(seconds)) return "Unknown duration";
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = Math.floor(seconds % 60);
-    if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    return `${m}:${String(s).padStart(2,'0')}`;
+    if (h > 0)
+      return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    return `${m}:${String(s).padStart(2, "0")}`;
   }
 
   function getPlatformName(url: string): string {
     try {
-      const host = new URL(url).hostname.replace('www.', '');
+      const host = new URL(url).hostname.replace("www.", "");
       const map: Record<string, string> = {
-        'instagram.com': 'Instagram',
-        'tiktok.com': 'TikTok',
-        'twitter.com': 'Twitter/X', 'x.com': 'Twitter/X',
-        'facebook.com': 'Facebook', 'fb.com': 'Facebook',
-        'reddit.com': 'Reddit', 'vimeo.com': 'Vimeo',
-        'twitch.tv': 'Twitch', 'soundcloud.com': 'SoundCloud',
-        'dailymotion.com': 'Dailymotion',
+        "instagram.com": "Instagram",
+        "tiktok.com": "TikTok",
+        "twitter.com": "Twitter/X",
+        "x.com": "Twitter/X",
+        "facebook.com": "Facebook",
+        "fb.com": "Facebook",
+        "reddit.com": "Reddit",
+        "vimeo.com": "Vimeo",
+        "twitch.tv": "Twitch",
+        "soundcloud.com": "SoundCloud",
+        "dailymotion.com": "Dailymotion",
       };
       return map[host] ?? host;
-    } catch { return 'Video'; }
+    } catch {
+      return "Video";
+    }
   }
 
   // Helper to format bytes to human readable string
   function formatBytes(bytes: number, decimals = 1): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
   // Helper to sanitize filenames on frontend
   function sanitizeFilename(title: string): string {
-    if (!title || typeof title !== 'string') return 'video';
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s\-_]/g, '')
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .slice(0, 120) || 'video';
+    if (!title || typeof title !== "string") return "video";
+    return (
+      title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s\-_]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .slice(0, 120) || "video"
+    );
   }
 
   // Helper to format filenames with resolutions
   function getFilenameWithRes(title: string, res: string, ext: string): string {
-    const cleanRes = res.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const cleanRes = res.toLowerCase().replace(/[^a-z0-9]/g, "");
     const sanitized = sanitizeFilename(title);
     return `${sanitized}-${cleanRes}.${ext}`;
   }
 
   // Store the raw CDN stream URL separately for the video preview player
-  let currentStreamUrl = '';
-  let currentFilename = 'video.mp4';
+  let currentStreamUrl = "";
+  let currentFilename = "video.mp4";
 
   async function extractVideo(url: string) {
     setLoading(true);
@@ -1031,48 +1258,57 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       const data = await resp.json();
 
       if (!resp.ok) {
-        showError(data.error ?? 'Failed to extract video. Please check the URL and try again.');
+        showError(
+          data.error ??
+            "Failed to extract video. Please check the URL and try again.",
+        );
         return;
       }
 
       // Populate result card
       const platformName = getPlatformName(url);
       resultPlatform.textContent = platformName;
-      resultTitle.textContent = data.title ?? 'Untitled video';
+      resultTitle.textContent = data.title ?? "Untitled video";
       resultDuration.textContent = formatDuration(data.duration);
-      currentFilename = data.filename ?? 'video.mp4';
+      currentFilename = data.filename ?? "video.mp4";
       resultFilename.textContent = currentFilename;
-      resultThumb.src = data.thumbnail ?? '';
-      resultThumb.alt = data.title ?? 'Video thumbnail';
+      resultThumb.src = data.thumbnail ?? "";
+      resultThumb.alt = data.title ?? "Video thumbnail";
 
       // Store the CDN stream URL and build download URL
       currentStreamUrl = data.url;
       const downloadUrl = `/download-stream?url=${encodeURIComponent(data.url)}&filename=${encodeURIComponent(currentFilename)}`;
       resultDownloadBtn.href = downloadUrl;
-      resultDownloadBtn.setAttribute('download', currentFilename);
+      resultDownloadBtn.setAttribute("download", currentFilename);
 
       // Video preview uses raw stream URL directly (plays inline)
       resultVideo.src = currentStreamUrl;
 
       // Populate resolution options dropdown
-      dropdownMenu.innerHTML = '';
+      dropdownMenu.innerHTML = "";
       if (Array.isArray(data.formats) && data.formats.length > 0) {
         let selectedFormat = data.formats[0];
 
         const updateSelectedFormat = (fmt: any) => {
           selectedFormat = fmt;
           const label = fmt.resolution;
-          const sizeStr = fmt.filesize ? formatBytes(fmt.filesize) : 'Unknown size';
+          const sizeStr = fmt.filesize
+            ? formatBytes(fmt.filesize)
+            : "Unknown size";
           triggerText.textContent = `${label} (${fmt.ext} · ${sizeStr})`;
-          
+
           currentStreamUrl = fmt.url;
-          const specificFilename = getFilenameWithRes(data.title || 'video', fmt.resolution, fmt.ext);
+          const specificFilename = getFilenameWithRes(
+            data.title || "video",
+            fmt.resolution,
+            fmt.ext,
+          );
           let rowDownloadUrl = `/download-stream?url=${encodeURIComponent(fmt.url)}&filename=${encodeURIComponent(specificFilename)}`;
           if (fmt.audio_url) {
             rowDownloadUrl += `&audioUrl=${encodeURIComponent(fmt.audio_url)}`;
           }
           resultDownloadBtn.href = rowDownloadUrl;
-          resultDownloadBtn.setAttribute('download', specificFilename);
+          resultDownloadBtn.setAttribute("download", specificFilename);
           currentFilename = specificFilename;
           resultFilename.textContent = specificFilename;
 
@@ -1084,32 +1320,34 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v8M5 7l3 3 3-3M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Download ${fmt.resolution}
+            DOWNLOAD ${fmt.resolution}
           `;
 
           // Mark active item in dropdown
-          const items = dropdownMenu.querySelectorAll('.dropdown-item');
+          const items = dropdownMenu.querySelectorAll(".dropdown-item");
           items.forEach((item: any) => {
-            const itemRes = item.getAttribute('data-res');
+            const itemRes = item.getAttribute("data-res");
             if (itemRes === fmt.resolution) {
-              item.classList.add('active');
-              item.setAttribute('aria-selected', 'true');
+              item.classList.add("active");
+              item.setAttribute("aria-selected", "true");
             } else {
-              item.classList.remove('active');
-              item.setAttribute('aria-selected', 'false');
+              item.classList.remove("active");
+              item.setAttribute("aria-selected", "false");
             }
           });
         };
 
         data.formats.forEach((fmt: any) => {
-          const item = document.createElement('button');
-          item.className = 'dropdown-item';
-          item.type = 'button';
-          item.role = 'option';
-          item.setAttribute('data-res', fmt.resolution);
-          item.setAttribute('data-ext', fmt.ext);
+          const item = document.createElement("button");
+          item.className = "dropdown-item";
+          item.type = "button";
+          item.role = "option";
+          item.setAttribute("data-res", fmt.resolution);
+          item.setAttribute("data-ext", fmt.ext);
 
-          const sizeLabel = fmt.filesize ? formatBytes(fmt.filesize) : 'Unknown size';
+          const sizeLabel = fmt.filesize
+            ? formatBytes(fmt.filesize)
+            : "Unknown size";
           const audioIcon = fmt.has_audio
             ? `<span class="opt-audio has-audio" title="Contains Audio"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M8 2a.75.75 0 01.19.46v10.58a.75.75 0 01-1.28.53L3.69 10.5H1.75A.75.75 0 011 9.75V6.25A.75.75 0 011.75 5.5h1.94l3.22-3.28A.75.75 0 018 2zm3.3 3.2a.75.75 0 111.1 1.02 3.5 3.5 0 010 4.56.75.75 0 11-1.1 1.02 5 5 0 000-6.6zM13.8 2.7a.75.75 0 111.1 1.02 8 8 0 010 9.56.75.75 0 11-1.1 1.02 9.5 9.5 0 000-11.6z"/></svg>Video + Audio</span>`
             : `<span class="opt-audio no-audio" title="No Audio (Muted)"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M6.5 1.75a.75.75 0 01.19.46v11.58a.75.75 0 01-1.28.53L2.19 11H.75A.75.75 0 010 10.25V5.75A.75.75 0 01.75 5h1.44l3.22-3.28a.75.75 0 01.59-.22zM12.44 8l1.78-1.78a.75.75 0 00-1.06-1.06L11.38 6.94l-1.78-1.78a.75.75 0 00-1.06 1.06L10.32 8l-1.78 1.78a.75.75 0 001.06 1.06l1.78-1.78 1.78 1.78a.75.75 0 001.06-1.06L12.44 8z"/></svg>Video Only</span>`;
@@ -1125,11 +1363,11 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
             </div>
           `;
 
-          item.addEventListener('click', () => {
+          item.addEventListener("click", () => {
             updateSelectedFormat(fmt);
-            dropdownMenu.classList.add('hidden');
-            triggerBtn.classList.remove('active');
-            triggerBtn.setAttribute('aria-expanded', 'false');
+            dropdownMenu.classList.add("hidden");
+            triggerBtn.classList.remove("active");
+            triggerBtn.setAttribute("aria-expanded", "false");
           });
 
           dropdownMenu.appendChild(item);
@@ -1140,14 +1378,13 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
       }
 
       // Show result
-      resultSection.classList.remove('hidden');
-      resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      resultSection.classList.remove("hidden");
+      resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
 
       // Clear hash if any
-      history.replaceState(null, '', window.location.pathname);
-
+      history.replaceState(null, "", window.location.pathname);
     } catch (err) {
-      showError('Network error — please try again.');
+      showError("Network error — please try again.");
     } finally {
       setLoading(false);
     }
@@ -1155,58 +1392,63 @@ import PlatformSwitcher from './PlatformSwitcher.astro';
 
   // Toggle quality select dropdown
   if (triggerBtn && dropdownMenu) {
-    triggerBtn.addEventListener('click', (e: Event) => {
+    triggerBtn.addEventListener("click", (e: Event) => {
       e.stopPropagation();
-      const isHidden = dropdownMenu.classList.contains('hidden');
-      dropdownMenu.classList.toggle('hidden', !isHidden);
-      triggerBtn.classList.toggle('active', isHidden);
-      triggerBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      const isHidden = dropdownMenu.classList.contains("hidden");
+      dropdownMenu.classList.toggle("hidden", !isHidden);
+      triggerBtn.classList.toggle("active", isHidden);
+      triggerBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
     });
 
     // Close when clicking outside
-    document.addEventListener('click', (e: Event) => {
-      if (!triggerBtn.contains(e.target as Node) && !dropdownMenu.contains(e.target as Node)) {
-        dropdownMenu.classList.add('hidden');
-        triggerBtn.classList.remove('active');
-        triggerBtn.setAttribute('aria-expanded', 'false');
+    document.addEventListener("click", (e: Event) => {
+      if (
+        !triggerBtn.contains(e.target as Node) &&
+        !dropdownMenu.contains(e.target as Node)
+      ) {
+        dropdownMenu.classList.add("hidden");
+        triggerBtn.classList.remove("active");
+        triggerBtn.setAttribute("aria-expanded", "false");
       }
     });
   }
 
-  // Native streaming download button — triggers Service Worker interception or direct browser proxy stream
-  resultDownloadBtn.addEventListener('click', (e: Event) => {
+  // Native streaming download button
+  resultDownloadBtn.addEventListener("click", (e: Event) => {
     e.preventDefault();
     const downloadUrl = resultDownloadBtn.href;
-    if (!downloadUrl || downloadUrl === '#') return;
+    if (!downloadUrl || downloadUrl === "#") return;
 
-    // Trigger download natively
     window.location.href = downloadUrl;
 
-    // Provide immediate visual feedback on the button
     const origHTML = resultDownloadBtn.innerHTML;
     resultDownloadBtn.innerHTML = `
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline-block;vertical-align:middle;margin-right:6px;">
         <path d="M2 8l4 4L14 3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Download Started
+      DOWNLOAD STARTED
     `;
-    (resultDownloadBtn as any).style.pointerEvents = 'none';
+    (resultDownloadBtn as any).style.pointerEvents = "none";
 
     setTimeout(() => {
       resultDownloadBtn.innerHTML = origHTML;
-      (resultDownloadBtn as any).style.pointerEvents = '';
+      (resultDownloadBtn as any).style.pointerEvents = "";
     }, 4000);
   });
 
   // Copy URL button
-  copyUrlBtn.addEventListener('click', async () => {
+  copyUrlBtn.addEventListener("click", async () => {
     if (!currentStreamUrl) return;
     try {
       await navigator.clipboard.writeText(currentStreamUrl);
       const prev = copyUrlBtn.innerHTML;
-      copyUrlBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4L14 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied!`;
-      setTimeout(() => { copyUrlBtn.innerHTML = prev; }, 2000);
-    } catch { /* fallback */ }
+      copyUrlBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4L14 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> COPIED!`;
+      setTimeout(() => {
+        copyUrlBtn.innerHTML = prev;
+      }, 2000);
+    } catch {
+      /* fallback */
+    }
   });
 
   // Init on load

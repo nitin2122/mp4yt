@@ -1,98 +1,50 @@
 ---
-// FAQ section — accordion using native <details> element with smooth JS animation
+// FAQ Component — Highly SEO-optimized reusable component.
+// Automatically renders standard FAQs for the main page or custom ones if passed as props.
+
+interface FAQItem {
+  q: string;
+  a: string;
+}
 
 interface Props {
-  platform?: string;
+  faqs?: FAQItem[];
 }
 
-const { platform } = Astro.props;
-
-// Determine platform based on prop or pathname
-let activePlatform = platform;
-if (!activePlatform) {
-  const pathname = Astro.url.pathname;
-  const parts = pathname.split('/').filter(Boolean);
-  if (parts.length > 0) {
-    activePlatform = parts[0].toLowerCase();
-  } else {
-    activePlatform = 'general';
+const defaultFaqs: FAQItem[] = [
+  {
+    q: "Is downloading MP4 files from YouTube legal?",
+    a: "Downloading MP4 files from YouTube violates YouTube's Terms of Service, which state that users should not download content unless a download link is provided. However, downloading video content for personal, private, and non-commercial use, or under fair use principles, is generally considered a legal gray area. As long as you do not distribute, sell, or monetize the downloaded files, it is highly unlikely to cause legal issues. Always respect creators' copyrights."
+  },
+  {
+    q: "How to download YouTube videos to MP4 for free?",
+    a: "To download YouTube videos to MP4 for free, copy the video URL from YouTube's address bar or share sheet. Go to mp4yt.com, paste the link into our input field, and click \"Extract\". Once the direct streams are ready, choose your preferred MP4 resolution (from 360p up to 4K Ultra HD) and click the download button to save the file."
+  },
+  {
+    q: "Is using an online YouTube video downloader safe?",
+    a: "Yes, mp4yt is completely safe. Unlike desktop software or browser extensions that might bundle malware or unwanted ads, our tool is 100% web-based. We do not require any installation, account creation, or personal information. Furthermore, we do not store any files on our servers, ensuring your download activity remains completely private."
+  },
+  {
+    q: "Can I convert YouTube videos to MP3 audio?",
+    a: "Absolutely! mp4yt serves as a powerful YouTube to MP3 converter. After pasting a YouTube URL and extracting the media, select the audio-only tab or download option. You can download the audio track as a high-quality MP3 file (up to 320kbps), perfect for music, podcasts, or lectures."
+  },
+  {
+    q: "How can I download YouTube videos on my iPhone or Android?",
+    a: "mp4yt is fully responsive and works on all mobile devices. For iPhone, paste the link in Safari, tap Extract, choose your quality, and tap Download. You can save it to the Files app via the browser's download manager. For Android, copy the link, paste it in Google Chrome, extract, and download the video directly to your storage."
+  },
+  {
+    q: "Are there any download limits on mp4yt?",
+    a: "No, there are zero limits on mp4yt. You can download as many YouTube videos as you like, convert unlimited videos to MP3, and use our extractor for TikTok, Instagram, Twitter, and other platforms without any restrictions or paywalls."
+  },
+  {
+    q: "What other platforms does this video downloader support?",
+    a: "While mp4yt is optimized for YouTube, it is a universal media extractor. We support downloading videos, clips, and audio from 1000+ social media and sharing platforms, including Instagram, TikTok, Twitter/X, Facebook, Reddit, Vimeo, Twitch, SoundCloud, Dailymotion, Pinterest, LinkedIn, and more."
   }
-}
+];
 
-// Define platform-specific FAQs
-let faqs = [];
+const { faqs = defaultFaqs } = Astro.props;
 
-if (activePlatform === 'general') {
-  faqs = [
-    {
-      q: "What is a YT downloader?",
-      a: "A YT downloader (also called a 'yt video downloader') is an online tool that lets you download YouTube videos to your device. mp4yt is the best free yt downloader — just paste any YouTube video URL, click Extract, and download your video as MP4 in up to 4K quality or convert it to MP3 audio. No app installation or account sign-up required."
-    },
-    {
-      q: "What is the best online YT video downloader?",
-      a: "mp4yt is widely considered the best yt video downloader online. It is completely free, runs directly in your web browser, requires no software installation or registration, and delivers maximum download speeds without limitations. It supports downloading YT videos in resolutions from 144p to 4K."
-    },
-    {
-      q: "How to download YT videos for free?",
-      a: "To download YT videos for free: 1) Copy the YouTube video URL from your browser. 2) Go to mp4yt.com and paste the URL into the extraction bar. 3) Click 'Extract' and wait a few seconds. 4) Choose your desired resolution (up to 4K) or MP3 audio format. 5) Click the download button. That's it — this yt downloader is completely free with no limits."
-    },
-    {
-      q: "Is this YT downloader safe to use?",
-      a: "Yes, mp4yt is 100% safe. Because it is a web-based yt video downloader, you do not need to install any potentially unsafe downloader apps or browser extensions. We never store files on our servers or track your download history. Your privacy is fully protected."
-    },
-    {
-      q: "Is it legal to use a YT Video Downloader?",
-      a: "Downloading YT videos for personal, offline viewing of non-copyrighted content or material you own is legal. However, downloading copyrighted content without permission violates platform Terms of Service and may violate copyright laws."
-    },
-    {
-      q: "Is mp4yt the best YT downloader for 2026?",
-      a: "Yes! mp4yt is the best yt downloader for 2026 with absolutely NO AI bloat. We do not use slow AI interfaces or require AI credits — just paste your YouTube link and get a direct, ultra-fast download. Our yt video downloader supports 4K downloads, MP3 conversion, and works on every device including iPhone, Android, and PC."
-    },
-    {
-      q: "Can I use this YT downloader on iPhone or Android?",
-      a: "Absolutely! mp4yt works as a yt downloader for iPhone, Android, and all other devices. Since it runs entirely in your web browser, there's no app to install. On iOS, after extracting the video, tap the download link and use 'Save to Files' to save the video. On Android, the download starts automatically."
-    },
-    {
-      q: "Does this YT downloader support MP3 conversion?",
-      a: "Yes, mp4yt works as both a yt to mp4 and yt to mp3 converter. After pasting your YouTube link, you can choose to download the video as MP4 or extract just the audio as a high-quality MP3 file. Perfect for saving music, podcasts, or lectures."
-    }
-  ];
-} else {
-  // Capitalize platform name for display
-  const capitalizedPlatform = activePlatform.charAt(0).toUpperCase() + activePlatform.slice(1);
-  faqs = [
-    {
-      q: `Is mp4yt free to use for ${capitalizedPlatform}?`,
-      a: `Yes, completely free. No subscription, no premium tier, and no sign-up required. Simply paste a ${capitalizedPlatform} URL and download the video instantly.`
-    },
-    {
-      q: "How does the download work — are files saved on your servers?",
-      a: "Never. Our serverless API fetches the direct CDN streaming URL from the platform and returns it to your browser. Your browser then downloads directly from that CDN. No file ever touches our disk."
-    },
-    {
-      q: "What video formats and qualities are available?",
-      a: "We filter for the best available progressive MP4 container so your browser can stream and download immediately without any re-encoding. Progressive MP4 means the file plays as it downloads — no waiting for the full file."
-    },
-    {
-      q: "Which platforms are supported?",
-      a: "mp4yt is powered by Cobalt, the most comprehensive open-source media downloader engine. It supports 1000+ sites including Instagram, TikTok, Twitter/X, Facebook, Reddit, Vimeo, Twitch, SoundCloud, Dailymotion, Bilibili, and many more."
-    },
-    {
-      q: "Is it legal to download videos?",
-      a: "Downloading videos for personal, offline viewing is generally permissible in most jurisdictions for content you have legitimate access to. However, redistributing downloaded content, using it commercially, or downloading content behind a paywall without authorization may violate platform terms of service and applicable copyright law. Always respect content creators' rights."
-    },
-    {
-      q: "Why is the download link a CDN URL?",
-      a: "That is expected behavior. It is the actual streaming URL the platform uses to deliver video to your browser. It is time-limited (typically expires in a few hours) so download immediately after extraction."
-    },
-    {
-      q: "Does it work on mobile?",
-      a: "Yes. The site is fully responsive. On iOS, you may need to use the 'Share' then 'Save to Files' option after tapping the download link, as Safari handles video links differently from desktop browsers."
-    }
-  ];
-}
-
-// Generate JSON-LD Schema
+// Generate FAQPage Schema
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -108,28 +60,31 @@ const faqSchema = {
 ---
 
 <section id="faq" class="faq-band" aria-labelledby="faq-headline">
-  <!-- JSON-LD for FAQ SEO -->
+  <!-- Structured Data JSON-LD Schema for SEO Search Snippets -->
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <div class="page-container faq-inner">
     <div class="faq-header">
-      <span class="eyebrow">FAQ</span>
+      <span class="eyebrow">FAQ Section</span>
       <h2 id="faq-headline" class="display-lg faq-title">
-        Common questions.
+        Frequently Asked Questions
       </h2>
+      <p class="body-sm faq-desc">
+        Got questions about downloading video and audio from YouTube or other platforms? Find all the answers you need about safety, legalities, and quality below.
+      </p>
     </div>
 
-    <div class="faq-list" role="list">
+    <div class="faq-list">
       {faqs.map((faq) => (
-        <details class="faq-item" role="listitem">
+        <details class="faq-item">
           <summary>
-            <span class="body-md-strong">{faq.q}</span>
+            <span class="faq-question">{faq.q}</span>
             <svg class="faq-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </summary>
           <div class="faq-body">
-            <p class="body-md" style="color: var(--color-body); margin: 0;">{faq.a}</p>
+            <p class="body-md">{faq.a}</p>
           </div>
         </details>
       ))}
@@ -139,15 +94,15 @@ const faqSchema = {
 
 <style>
   .faq-band {
-    background-color: var(--color-canvas-soft);
+    background-color: var(--color-canvas);
     padding: var(--sp-5xl) var(--sp-lg);
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   .faq-inner {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--sp-4xl);
+    grid-template-columns: 340px 1fr;
+    gap: var(--sp-3xl);
     align-items: start;
   }
 
@@ -161,15 +116,22 @@ const faqSchema = {
 
   .faq-title {
     margin: 0;
-    max-width: 200px;
+    max-width: 300px;
+    color: var(--color-ink);
+  }
+
+  .faq-desc {
+    margin: 0;
+    color: var(--color-mute);
+    line-height: 1.6;
   }
 
   .faq-list {
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   details.faq-item {
-    border-bottom: 1px solid var(--color-hairline);
+    border-bottom: var(--border);
   }
 
   details.faq-item summary {
@@ -179,94 +141,98 @@ const faqSchema = {
     align-items: center;
     justify-content: space-between;
     gap: var(--sp-md);
-    padding: var(--sp-lg) 0;
+    padding: var(--sp-lg) var(--sp-sm);
+    font-family: var(--font-headline);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
     color: var(--color-ink);
-    transition: color 0.15s ease;
+    transition: all 0.1s ease;
     user-select: none;
   }
 
   details.faq-item summary::-webkit-details-marker { display: none; }
   details.faq-item summary::marker { display: none; }
+  
+  .faq-question {
+    flex: 1;
+    text-align: left;
+  }
 
-  details.faq-item summary:hover { color: var(--color-body); }
+  details.faq-item summary:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    padding-left: var(--sp-md);
+    padding-right: var(--sp-md);
+  }
+
+  details.faq-item summary:hover .faq-icon {
+    color: var(--color-on-primary);
+  }
 
   details.faq-item .faq-body {
-    overflow: hidden;
+    padding: 0 var(--sp-sm) var(--sp-lg) var(--sp-sm);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.6;
     height: 0;
+    overflow: hidden;
     transition: height 0.3s ease;
   }
 
   details.faq-item[open] .faq-body {
     height: auto;
-    padding-bottom: var(--sp-lg);
   }
 
-  .faq-icon {
-    width: 18px;
-    height: 18px;
+  details.faq-item .faq-icon {
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     color: var(--color-mute);
-    transition: transform 0.3s ease, color 0.15s ease;
+    transition: transform 0.3s ease;
   }
 
   details.faq-item[open] .faq-icon {
     transform: rotate(45deg);
-    color: var(--color-hairline-strong);
+  }
+
+  @media (max-width: 992px) {
+    .faq-inner {
+      grid-template-columns: 1fr;
+      gap: var(--sp-xl);
+    }
+
+    .faq-header {
+      position: static;
+      max-width: 100%;
+    }
+
+    .faq-title {
+      max-width: 100%;
+    }
   }
 
   @media (max-width: 768px) {
-    .faq-inner { grid-template-columns: 1fr; gap: var(--sp-xl); }
-    .faq-header { position: static; }
-    .faq-title { max-width: none; }
-    .faq-band { padding: var(--sp-4xl) var(--sp-md); }
+    .faq-band {
+      padding: var(--sp-4xl) var(--sp-md);
+    }
   }
 
   @media (max-width: 480px) {
-    .faq-band { padding: var(--sp-3xl) var(--sp-sm); }
-    details.faq-item summary {
-      padding: var(--sp-md) 0;
-      font-size: 14px;
-      min-height: 44px;
+    .faq-band {
+      padding: var(--sp-3xl) var(--sp-sm);
     }
-    details.faq-item .faq-body p {
+
+    details.faq-item summary {
       font-size: 14px;
-      line-height: 22px;
+      padding: var(--sp-md) var(--sp-xs);
+    }
+
+    details.faq-item .faq-body {
+      font-size: 13px;
+      line-height: 1.5;
+      padding-bottom: var(--sp-md);
     }
   }
 </style>
-
-<script>
-  const items = document.querySelectorAll('details.faq-item');
-
-  items.forEach((detail) => {
-    const summary = detail.querySelector('summary');
-    const body = detail.querySelector('.faq-body') as HTMLElement | null;
-
-    if (!summary || !body) return;
-
-    summary.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isOpen = detail.hasAttribute('open');
-
-      if (!isOpen) {
-        detail.setAttribute('open', '');
-        const h = body.scrollHeight;
-        body.style.height = '0px';
-        requestAnimationFrame(() => {
-          body.style.height = h + 'px';
-          body.addEventListener('transitionend', () => {
-            body.style.height = 'auto';
-          }, { once: true });
-        });
-      } else {
-        body.style.height = body.scrollHeight + 'px';
-        requestAnimationFrame(() => {
-          body.style.height = '0px';
-          body.addEventListener('transitionend', () => {
-            detail.removeAttribute('open');
-          }, { once: true });
-        });
-      }
-    });
-  });
-</script>

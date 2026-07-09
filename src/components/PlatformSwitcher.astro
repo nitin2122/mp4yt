@@ -230,73 +230,74 @@ const isActive = (name: string) => {
 
   .platform-switcher-track {
     display: flex;
-    gap: var(--sp-xs);
+    gap: 0;
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
-    padding: 4px 2px;
-    margin: 0 -2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0;
+    margin: 0;
     -webkit-overflow-scrolling: touch;
+    border: var(--border);
   }
 
   .platform-switcher-track::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
   }
 
   .platform-tab {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background-color: var(--color-canvas-soft);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-full);
+    background-color: var(--color-canvas);
+    border: none;
+    border-right: var(--border);
     padding: 7px 14px;
     white-space: nowrap;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
     color: var(--color-body);
     text-decoration: none;
-    transition: all 0.15s ease-in-out;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.1s ease;
     cursor: pointer;
-    box-shadow: var(--shadow-1);
+  }
+
+  .platform-tab:last-child {
+    border-right: none;
   }
 
   .platform-tab:hover {
-    background-color: var(--color-canvas-soft-2);
-    color: var(--color-ink);
-    border-color: var(--color-hairline-strong);
-    transform: translateY(-1px);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 
-  /* Active State styling */
   .platform-tab.active {
-    background-color: color-mix(in srgb, var(--brand-color) 12%, var(--color-canvas));
-    border-color: var(--brand-color);
-    color: var(--color-ink);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--brand-color) 20%, transparent);
-    font-weight: 600;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 800;
   }
 
-  /* Theme adjustments */
   :root[data-theme="dark"] .platform-tab.active {
-    background-color: color-mix(in srgb, var(--brand-color) 20%, var(--color-canvas));
+    background-color: var(--color-on-primary);
+    color: var(--color-primary);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) .platform-tab.active {
-      background-color: color-mix(in srgb, var(--brand-color) 20%, var(--color-canvas));
+      background-color: var(--color-on-primary);
+      color: var(--color-primary);
     }
   }
 
-  /* Icon transitions */
   .tab-icon {
     flex-shrink: 0;
-    transition: transform 0.15s ease;
+    transition: none;
   }
-  
+
   .platform-tab:hover .tab-icon {
-    transform: scale(1.08);
+    transform: none;
   }
 
   .globe-icon {
@@ -304,6 +305,10 @@ const isActive = (name: string) => {
   }
 
   .platform-tab.active .globe-icon {
-    color: var(--brand-color);
+    color: var(--color-on-primary);
+  }
+
+  .platform-tab:hover .globe-icon {
+    color: var(--color-on-primary);
   }
 </style>

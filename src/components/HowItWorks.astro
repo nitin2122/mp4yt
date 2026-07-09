@@ -1,16 +1,16 @@
 ---
-// HowItWorks — dark polarity-flipped band with 3-step flow + code mockup
+// HowItWorks — Brutalist dark polarity-flipped band with 3-step flow + code mockup
 ---
 
 <section id="how-it-works" class="how-band" aria-labelledby="how-headline">
   <div class="page-container how-inner">
     <!-- Left: copy -->
     <div class="how-copy">
-      <span class="eyebrow" style="color: rgba(255,255,255,0.4);">How it works</span>
+      <span class="eyebrow" style="color: rgba(255,255,255,0.4);">HOW IT WORKS</span>
       <h2 id="how-headline" class="display-lg how-title">
-        Three steps.<br />Zero friction.
+        THREE STEPS.<br />ZERO FRICTION.
       </h2>
-      <p class="body-lg how-subtitle">
+      <p class="body-md how-subtitle">
         No browser extensions, no desktop apps, no account required.
         Just a URL and a single click.
       </p>
@@ -19,7 +19,7 @@
         <li class="step-item">
           <div class="step-num" aria-label="Step 1">01</div>
           <div class="step-content">
-            <h3 class="display-sm step-title">Paste the link.</h3>
+            <h3 class="display-sm step-title">PASTE THE LINK.</h3>
             <p class="body-md step-desc">
               Copy any video URL from TikTok, Instagram, Reddit, or 1000+ sites.
               Paste it into the input — or just press <kbd class="kbd-dark">Ctrl+V</kbd> anywhere on the page.
@@ -29,7 +29,7 @@
         <li class="step-item">
           <div class="step-num" aria-label="Step 2">02</div>
           <div class="step-content">
-            <h3 class="display-sm step-title">We extract the stream.</h3>
+            <h3 class="display-sm step-title">WE EXTRACT THE STREAM.</h3>
             <p class="body-md step-desc">
               Our serverless backend queries the Cobalt engine at the edge, fetches
               the direct CDN streaming URL in milliseconds, and returns a clean JSON payload.
@@ -39,7 +39,7 @@
         <li class="step-item">
           <div class="step-num" aria-label="Step 3">03</div>
           <div class="step-content">
-            <h3 class="display-sm step-title">Download instantly.</h3>
+            <h3 class="display-sm step-title">DOWNLOAD INSTANTLY.</h3>
             <p class="body-md step-desc">
               Your browser downloads directly from the platform's CDN.
               No file touches our servers. No rate limits. Maximum speed.
@@ -49,15 +49,11 @@
       </ol>
     </div>
 
-    <!-- Right: code editor mockup -->
+    <!-- Right: code editor mockup (brutalist terminal) -->
     <div class="how-mockup" aria-hidden="true">
       <div class="editor-chrome">
-        <div class="editor-dots">
-          <span class="dot dot-red"></span>
-          <span class="dot dot-yellow"></span>
-          <span class="dot dot-green"></span>
-        </div>
-        <span class="editor-filename caption-mono">api/extract.js response</span>
+        <span class="editor-label">API_RESPONSE.JSON</span>
+        <span class="editor-status-label">200_OK</span>
       </div>
       <div class="editor-body">
         <pre class="editor-code"><code><span class="tok-brace">{`{`}</span>
@@ -69,7 +65,7 @@
 <span class="tok-brace">}</span></code></pre>
         <div class="editor-status">
           <span class="status-dot"></span>
-          <span class="caption-mono" style="color: rgba(255,255,255,0.35);">200 OK · ~180ms</span>
+          <span class="caption-mono" style="color: rgba(255,255,255,0.35);">200 OK · ~180MS</span>
         </div>
       </div>
     </div>
@@ -80,6 +76,8 @@
   .how-band {
     background-color: var(--color-primary);
     padding: var(--sp-5xl) var(--sp-lg);
+    border-top: var(--border);
+    border-bottom: var(--border);
   }
 
   .how-inner {
@@ -124,7 +122,7 @@
   .step-num {
     font-family: var(--font-mono);
     font-size: 11px;
-    font-weight: 400;
+    font-weight: 700;
     color: rgba(255, 255, 255, 0.25);
     letter-spacing: 0.1em;
     flex-shrink: 0;
@@ -152,54 +150,38 @@
     display: inline-flex;
     align-items: center;
     background-color: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-bottom-width: 2px;
-    border-radius: 4px;
+    border: 2px solid rgba(255,255,255,0.2);
     padding: 0 5px;
     font-family: var(--font-mono);
     font-size: 11px;
     color: rgba(255,255,255,0.7);
   }
 
-
-
-  /* Editor Mockup */
+  /* Editor Mockup (Brutalist terminal) */
   .how-mockup {
-    border-radius: var(--rounded-lg);
+    border: 2px solid var(--color-on-primary);
     overflow: hidden;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.4), 0px 24px 48px rgba(0,0,0,0.5);
     min-width: 0;
     width: 100%;
+    box-shadow: 8px 8px 0px 0px rgba(255,255,255,0.15);
   }
 
   .editor-chrome {
     display: flex;
     align-items: center;
-    gap: var(--sp-sm);
-    background-color: #0a0a0a;
-    padding: var(--sp-sm) var(--sp-md);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .editor-dots {
-    display: flex;
-    gap: 6px;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--rounded-full);
-  }
-
-  .dot-red    { background-color: #ff5f57; }
-  .dot-yellow { background-color: #febc2e; }
-  .dot-green  { background-color: #28c840; }
-
-  .editor-filename {
-    color: rgba(255,255,255,0.3);
-    margin-left: auto;
+    justify-content: space-between;
+    background-color: var(--color-on-primary);
+    color: var(--color-primary);
+    padding: var(--sp-xs) var(--sp-md);
+    font-family: var(--font-mono);
     font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .editor-status-label {
+    opacity: 0.5;
   }
 
   .editor-body {
@@ -233,13 +215,12 @@
     align-items: center;
     gap: var(--sp-xs);
     padding-top: var(--sp-sm);
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 2px solid rgba(255,255,255,0.1);
   }
 
   .status-dot {
     width: 6px;
     height: 6px;
-    border-radius: var(--rounded-full);
     background-color: #28c840;
     animation: statusPulse 2s ease-in-out infinite;
   }

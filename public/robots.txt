@@ -32,6 +32,9 @@ Allow: /dmca
 Disallow: /api/
 Disallow: /download-stream
 
+# Block dynamic bot-handler route (makes live API calls, can 5xx)
+Disallow: /watch
+
 # Block error pages
 Disallow: /404
 Disallow: /500
@@ -50,6 +53,7 @@ User-agent: Googlebot
 Allow: /
 Disallow: /api/
 Disallow: /download-stream
+Disallow: /watch
 Disallow: /404
 Disallow: /500
 Disallow: /about
@@ -64,6 +68,7 @@ User-agent: Bingbot
 Allow: /
 Disallow: /api/
 Disallow: /download-stream
+Disallow: /watch
 Disallow: /404
 Disallow: /500
 Disallow: /about

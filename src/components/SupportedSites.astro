@@ -236,8 +236,8 @@
   .platforms-band {
     background-color: var(--color-canvas);
     padding: var(--sp-4xl) 0;
-    border-top: 1px solid var(--color-hairline);
-    border-bottom: 1px solid var(--color-hairline);
+    border-top: var(--border);
+    border-bottom: var(--border);
     overflow: hidden;
   }
 
@@ -252,6 +252,8 @@
 
   .platforms-sub {
     margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   /* Marquee container */
@@ -287,7 +289,7 @@
 
   .marquee-track {
     display: flex;
-    gap: var(--sp-sm);
+    gap: var(--sp-xs);
     width: max-content;
     animation: marquee 40s linear infinite;
   }
@@ -296,22 +298,29 @@
     animation-play-state: paused;
   }
 
-  /* Platform chips */
+  /* Platform chips — Brutalist rectangular */
   .platform-chip {
     display: inline-flex;
     align-items: center;
     gap: var(--sp-xs);
-    background-color: var(--color-canvas-soft);
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--rounded-full);
+    background-color: var(--color-canvas);
+    border: var(--border);
+    border-radius: 0px;
     padding: var(--sp-xs) var(--sp-md);
     white-space: nowrap;
-    font-size: 13px;
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: var(--color-ink);
-    box-shadow: var(--shadow-1);
     flex-shrink: 0;
-    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    transition: all 0.1s ease;
+  }
+
+  .platform-chip:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
   }
 
   .platform-more {
@@ -331,7 +340,7 @@
       padding: var(--sp-xl) 0;
     }
     .platform-chip {
-      font-size: 12px;
+      font-size: 11px;
       padding: var(--sp-xs) var(--sp-sm);
     }
     .marquee-track {
@@ -345,8 +354,8 @@
       width: 20px;
     }
     .platform-chip {
-      font-size: 11px;
-      padding: 6px 10px;
+      font-size: 10px;
+      padding: 5px 8px;
     }
   }
 </style>

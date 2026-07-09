@@ -8,6 +8,7 @@ interface Props {
   ogTitle?: string;
   canonicalUrl?: string;
   keywords?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   ogTitle = title,
   canonicalUrl = 'https://mp4yt.com',
   keywords = 'yt downloader, yt video downloader, download yt video, yt to mp4, yt to mp3, video downloader, online video downloader, free video downloader, video downloader online free, mp4 video downloader, download video from any website, download video online, save video from url, best video downloader 2026, video downloader no watermark, video downloader hd, video downloader 4k, video downloader mp3, video downloader for pc, video downloader for iphone, video downloader for android, video downloader app free, fast video downloader, safe video downloader, video downloader no app, social media video downloader, all in one video downloader, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter, video link downloader, paste link download video',
+  noindex = false,
 } = Astro.props;
 ---
 
@@ -79,9 +81,9 @@ const {
     </script>
 
     <!-- Robots & Indexing -->
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f9f9f9" media="(prefers-color-scheme: light)" />
 
     <!-- Structured Data (JSON-LD) — WebApplication -->
     <script type="application/ld+json" set:html={JSON.stringify({

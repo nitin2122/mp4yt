@@ -1,9 +1,10 @@
 ---
-// Footer — 4-column nav, Vercel-style caption-mono headers
+// Footer — Brutalist style with structural borders, mono typography
+import { Image } from 'astro:assets';
+import logoImage from '../assets/logo.png';
 
 const year = new Date().getFullYear();
 ---
-
 
 <footer class="site-footer" aria-labelledby="footer-label">
   <div class="page-container footer-inner">
@@ -11,22 +12,22 @@ const year = new Date().getFullYear();
     <div class="footer-brand">
       <a href="/" class="footer-logo" aria-label="mp4yt home">
         <div class="footer-logo-mark">
-          <img src="/favicon.svg" width="20" height="20" alt="" aria-hidden="true" />
+          <Image src={logoImage} width={20} height={20} alt="mp4yt logo" />
         </div>
-        <span class="footer-logo-text">mp4yt</span>
+        <span class="footer-logo-text">MP4YT</span>
       </a>
       <p class="body-sm footer-tagline">
         The fastest way to download videos from Instagram, TikTok and 1000+ platforms.
         Zero storage. Zero tracking.
       </p>
-      <div class="footer-legal-note caption" style="color: var(--color-mute); margin-top: var(--sp-sm);">
-        For personal, non-commercial use only.
+      <div class="footer-legal-note" style="margin-top: var(--sp-sm);">
+        FOR PERSONAL, NON-COMMERCIAL USE ONLY.
       </div>
     </div>
 
     <!-- Col 2: Product -->
     <div class="footer-col">
-      <h3 class="eyebrow footer-col-head" id="footer-label">Product</h3>
+      <h3 class="eyebrow footer-col-head" id="footer-label">PRODUCT</h3>
       <ul class="footer-links" role="list">
         <li><a href="/yt-downloader" class="footer-link">YT Downloader</a></li>
         <li><a href="#features" class="footer-link">Features</a></li>
@@ -39,7 +40,7 @@ const year = new Date().getFullYear();
 
     <!-- Col 3: Platforms -->
     <div class="footer-col">
-      <h3 class="eyebrow footer-col-head">Platforms</h3>
+      <h3 class="eyebrow footer-col-head">PLATFORMS</h3>
       <ul class="footer-links" role="list">
         <li><a href="/instagram" class="footer-link">Instagram</a></li>
         <li><a href="/tiktok" class="footer-link">TikTok</a></li>
@@ -57,7 +58,7 @@ const year = new Date().getFullYear();
 
     <!-- Col 4: Legal & Resources -->
     <div class="footer-col">
-      <h3 class="eyebrow footer-col-head">Legal</h3>
+      <h3 class="eyebrow footer-col-head">LEGAL</h3>
       <ul class="footer-links" role="list">
         <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
         <li><a href="/terms-and-conditions" class="footer-link">Terms & Conditions</a></li>
@@ -81,15 +82,19 @@ const year = new Date().getFullYear();
   <!-- Bottom bar -->
   <div class="footer-bottom">
     <div class="page-container footer-bottom-inner">
-      <span class="caption" style="color: var(--color-mute);">
-        &copy; {year} mp4yt.com — All rights reserved.
-      </span>
-      <span class="caption" style="color: var(--color-mute);">
-        Built with
-        <a href="https://astro.build" class="footer-link-subtle" target="_blank" rel="noopener">Astro</a>
-        &amp;
-        <a href="https://github.com/wukko/cobalt" class="footer-link-subtle" target="_blank" rel="noopener">Cobalt</a>
-      </span>
+      <div class="footer-bottom-left">
+        <span class="data-mono footer-copyright">©{year}_CORE_SYSTEM_v1.0</span>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <span class="footer-status">
+          <span class="status-dot-footer"></span>
+          API_STATUS: NOMINAL
+        </span>
+      </div>
+      <div class="footer-bottom-right">
+        <a href="https://github.com/wukko/cobalt" class="footer-link-bottom" target="_blank" rel="noopener">GITHUB</a>
+        <a href="/terms-and-conditions" class="footer-link-bottom">TERMS</a>
+        <a href="/privacy-policy" class="footer-link-bottom">PRIVACY</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -97,7 +102,7 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     background-color: var(--color-canvas);
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   .footer-inner {
@@ -122,17 +127,27 @@ const year = new Date().getFullYear();
   }
 
   .footer-logo-text {
-    font-family: var(--font-sans);
-    font-size: 15px;
-    font-weight: 600;
+    font-family: var(--font-headline);
+    font-size: 18px;
+    font-weight: 800;
     color: var(--color-ink);
-    letter-spacing: -0.3px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
 
   .footer-tagline {
     margin: 0;
     color: var(--color-body);
     max-width: 280px;
+  }
+
+  .footer-legal-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-mute);
   }
 
   .footer-col {
@@ -156,32 +171,25 @@ const year = new Date().getFullYear();
   }
 
   .footer-link {
-    font-size: 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
     font-weight: 400;
     color: var(--color-body);
     text-decoration: none;
-    line-height: 20px;
-    letter-spacing: -0.28px;
-    transition: color 0.15s ease;
+    line-height: 1.5;
+    transition: all 0.1s ease;
   }
 
   .footer-link:hover {
     color: var(--color-ink);
-  }
-
-  .footer-link-subtle {
-    color: var(--color-mute);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-
-  .footer-link-subtle:hover {
-    color: var(--color-body);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
   }
 
   /* Bottom bar */
   .footer-bottom {
-    border-top: 1px solid var(--color-hairline);
+    border-top: var(--border);
   }
 
   .footer-bottom-inner {
@@ -192,6 +200,66 @@ const year = new Date().getFullYear();
     padding-bottom: var(--sp-md);
     flex-wrap: wrap;
     gap: var(--sp-sm);
+  }
+
+  .footer-bottom-left {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  .footer-sep {
+    opacity: 0.3;
+  }
+
+  .footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-mute);
+    letter-spacing: 0.05em;
+  }
+
+  .status-dot-footer {
+    width: 6px;
+    height: 6px;
+    background-color: #28c840;
+    display: inline-block;
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .footer-bottom-right {
+    display: flex;
+    gap: var(--sp-md);
+  }
+
+  .footer-link-bottom {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-body);
+    text-decoration: none;
+    transition: all 0.1s ease;
+  }
+
+  .footer-link-bottom:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 
   @media (max-width: 960px) {
@@ -228,7 +296,7 @@ const year = new Date().getFullYear();
       padding-right: var(--sp-sm);
     }
     .footer-link {
-      font-size: 13px;
+      font-size: 12px;
     }
     .footer-bottom-inner {
       padding-left: var(--sp-sm);
