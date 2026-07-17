@@ -4,6 +4,24 @@ import Navbar from '../components/Navbar.astro';
 import PlatformHero from '../components/PlatformHero.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+const twitterFaqs = [
+  {
+    q: "How can I download videos from Twitter (X)?",
+    a: "Open the post containing the video on Twitter/X, copy the link to the tweet, paste it into our Twitter video downloader, click Extract, and download the MP4 file in HD quality."
+  },
+  {
+    q: "Can I download animated GIFs from Twitter/X?",
+    a: "Yes. Twitter/X displays GIFs in a custom video format. Our Twitter GIF downloader converts them back into standard loopable MP4 files for easy sharing and saving."
+  },
+  {
+    q: "What is the maximum resolution for X video downloads?",
+    a: "The downloader fetches the original quality uploaded by the tweet author, including Full HD (1080p) or HD (720p) depending on the source media."
+  },
+  {
+    q: "Can I download video from private X accounts?",
+    a: "No, our X video downloader only works on tweets from public profiles. Content from protected or private accounts cannot be accessed."
+  }
+];
 ---
 
 <Layout
@@ -62,7 +80,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <FAQ />
+    <FAQ faqs={twitterFaqs} />
   </main>
   <Footer />
 </Layout>

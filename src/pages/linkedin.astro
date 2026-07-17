@@ -4,6 +4,20 @@ import Navbar from '../components/Navbar.astro';
 import PlatformHero from '../components/PlatformHero.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+const linkedinFaqs = [
+  {
+    q: "How do I download a video from a LinkedIn post?",
+    a: "Click the three dots on the top-right of the LinkedIn post, choose 'Copy link to post', paste it into our LinkedIn video downloader, and click Extract to download the MP4 file."
+  },
+  {
+    q: "Do I need to be logged into LinkedIn to use the downloader?",
+    a: "No, you do not need a LinkedIn account. Our tool fetches the public video feed from the post link completely anonymously."
+  },
+  {
+    q: "Can I download videos from private LinkedIn groups or direct messages?",
+    a: "No. Our downloader can only retrieve videos from public posts and feeds. Group-locked or message-locked videos are secure and cannot be fetched."
+  }
+];
 ---
 
 <Layout
@@ -62,7 +76,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <FAQ />
+    <FAQ faqs={linkedinFaqs} />
   </main>
   <Footer />
 </Layout>

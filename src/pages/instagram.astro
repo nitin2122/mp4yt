@@ -4,6 +4,24 @@ import Navbar from '../components/Navbar.astro';
 import PlatformHero from '../components/PlatformHero.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+const instagramFaqs = [
+  {
+    q: "How do I use the Instagram reels downloader?",
+    a: "To download Instagram Reels, copy the Reel link from the Instagram app (Share > Copy Link), paste it into the search box on our Instagram downloader page, click Extract, and download it as a high-quality MP4."
+  },
+  {
+    q: "Do I need to log in to my Instagram account to download videos?",
+    a: "No login or registration is required. Our Instagram video downloader works completely anonymously without needing your IG username or password."
+  },
+  {
+    q: "Can I save Instagram Stories or IGTV videos?",
+    a: "Yes, our universal Instagram saver can extract public Stories, IGTV videos, and feed posts. Make sure the target profile is set to public."
+  },
+  {
+    q: "Where do my downloaded Instagram videos get saved?",
+    a: "Downloaded files are saved directly to your device's default downloads folder (e.g., Downloads on Android/PC or the Files app/Safari downloads on iOS)."
+  }
+];
 ---
 
 <Layout
@@ -62,7 +80,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <FAQ />
+    <FAQ faqs={instagramFaqs} />
   </main>
   <Footer />
 </Layout>

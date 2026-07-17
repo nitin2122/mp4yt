@@ -4,6 +4,20 @@ import Navbar from '../components/Navbar.astro';
 import PlatformHero from '../components/PlatformHero.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+const soundcloudFaqs = [
+  {
+    q: "How do I download SoundCloud songs to MP3?",
+    a: "Copy the SoundCloud track URL, paste it into our SoundCloud downloader, and click Extract. The downloader fetches the audio and saves it as a high-quality MP3 file."
+  },
+  {
+    q: "What audio quality does the SoundCloud downloader provide?",
+    a: "We extract the highest quality audio stream available directly from SoundCloud's CDN (usually 128kbps or 256kbps depending on uploader settings and track type)."
+  },
+  {
+    q: "Can I download full SoundCloud playlists?",
+    a: "We currently support downloading tracks individually. To save playlist songs, copy and extract each track link separately."
+  }
+];
 ---
 
 <Layout
@@ -62,7 +76,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <FAQ />
+    <FAQ faqs={soundcloudFaqs} />
   </main>
   <Footer />
 </Layout>

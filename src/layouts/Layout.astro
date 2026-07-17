@@ -144,17 +144,22 @@ const {
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer is:inline></script>
 
     <script is:inline>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js')
-            .then(function(reg) {
-              console.log('[mp4yt] Service Worker registered with scope:', reg.scope);
-            })
-            .catch(function(err) {
-              console.error('[mp4yt] Service Worker registration failed:', err);
-            });
-        });
-      }
+      (function() {
+        // Skip SW registration for search engine renderers (Googlebot WRS rejects .register())
+        if (/googlebot|google-inspectiontool|bingbot|yandex/i.test(navigator.userAgent)) return;
+        if (!('serviceWorker' in navigator)) return;
+        try {
+          window.addEventListener('load', function() {
+            try {
+              navigator.serviceWorker.register('/sw.js')
+                .then(function(reg) {
+                  console.log('[mp4yt] SW registered:', reg.scope);
+                })
+                .catch(function() { /* silent — expected in some environments */ });
+            } catch (e) { /* silent */ }
+          });
+        } catch (e) { /* silent */ }
+      })();
     </script>
   </body>
 </html>

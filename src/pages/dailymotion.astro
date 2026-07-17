@@ -4,6 +4,20 @@ import Navbar from '../components/Navbar.astro';
 import PlatformHero from '../components/PlatformHero.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+const dailymotionFaqs = [
+  {
+    q: "How do I download Dailymotion videos in Full HD?",
+    a: "Paste the Dailymotion video URL (or short link dai.ly) into the input box above, click Extract, and select the highest resolution option (such as 1080p) to download the direct MP4 file."
+  },
+  {
+    q: "Is there a limit on the number of Dailymotion video downloads?",
+    a: "No. Our Dailymotion downloader is 100% free and has no restrictions on download counts, file size, or conversion speed."
+  },
+  {
+    q: "Does it work with short links like dai.ly?",
+    a: "Yes, our Dailymotion link downloader supports both full-length desktop links and mobile-shortened dai.ly sharing links."
+  }
+];
 ---
 
 <Layout
@@ -62,7 +76,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <FAQ />
+    <FAQ faqs={dailymotionFaqs} />
   </main>
   <Footer />
 </Layout>

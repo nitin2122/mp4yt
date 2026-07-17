@@ -4,6 +4,24 @@ import Navbar from '../components/Navbar.astro';
 import PlatformHero from '../components/PlatformHero.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
+const facebookFaqs = [
+  {
+    q: "How do I download Facebook videos to MP4?",
+    a: "To download Facebook videos to MP4, copy the video URL from Facebook (click Share > Copy Link), paste it into our free Facebook downloader, and click Extract. Choose your preferred quality and hit Download."
+  },
+  {
+    q: "Can I download Facebook Reels with this tool?",
+    a: "Yes, our FB downloader fully supports Facebook Reels. Simply copy the link to the Reel and paste it here to download the high-quality MP4 video instantly."
+  },
+  {
+    q: "Does the Facebook video downloader work on mobile devices?",
+    a: "Absolutely. Our Facebook link downloader is a web-based app that works flawlessly in Safari on iPhone and Chrome/Firefox on Android. No app installation required."
+  },
+  {
+    q: "Can I download private Facebook videos?",
+    a: "No. To protect user privacy, our Facebook video downloader only supports public videos and Reels. Videos from private groups or profiles cannot be downloaded."
+  }
+];
 ---
 
 <Layout
@@ -62,7 +80,7 @@ import Footer from '../components/Footer.astro';
       </div>
     </section>
 
-    <FAQ />
+    <FAQ faqs={facebookFaqs} />
   </main>
   <Footer />
 </Layout>
