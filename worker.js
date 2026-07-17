@@ -18,6 +18,44 @@ const CORS = {
   'Cache-Control': 'no-store, no-cache, must-revalidate'
 };
 
+// ── Security Response Headers ──────────────────────────────
+const SECURITY_HEADERS = {
+  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'Content-Security-Policy': [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data: blob: https://img.youtube.com https://*.ytimg.com https://*.ggpht.com https://*.cdninstagram.com",
+    "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://stats.g.doubleclick.net",
+    "worker-src 'self'",
+    "frame-ancestors 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "upgrade-insecure-requests",
+  ].join('; '),
+};
+
+/**
+ * Injects security headers into any Response.
+ * Clones the response to make headers mutable.
+ */
+function withSecurityHeaders(response) {
+  const newHeaders = new Headers(response.headers);
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    newHeaders.set(key, value);
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHeaders,
+  });
+}
+
 // ── Community Cobalt instances — verified open (no Turnstile/JWT) ──
 // Only instances that accept unauthenticated POST requests are listed.
 // Source: https://cobalt.directory/ (verified 2026-06-30)
@@ -288,7 +326,6 @@ function buildOgHtml(title, thumbnail, description, videoUrl, siteUrl) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${safeTitle} — mp4yt</title>
   <meta name="description" content="${safeDesc}" />
-  <link rel="canonical" href="${safeOgUrl}" />
   <meta property="og:type" content="video.other" />
   <meta property="og:site_name" content="mp4yt" />
   <meta property="og:url" content="${safeOgUrl}" />
@@ -328,18 +365,18 @@ export default {
 
     // 1. Handle OPTIONS (CORS) for all backend API routes
     if (method === 'OPTIONS' && (pathname.startsWith('/api/') || pathname === '/download-stream')) {
-      return new Response(null, { status: 204, headers: CORS });
+      return withSecurityHeaders(new Response(null, { status: 204, headers: CORS }));
     }
 
     // 2. /api/extract — Multi-instance failover extraction engine
     if (pathname === '/api/extract') {
       if (method !== 'GET') {
-        return new Response(JSON.stringify({ error: 'Method not allowed.' }), { status: 405, headers: CORS });
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Method not allowed.' }), { status: 405, headers: CORS }));
       }
 
       const targetUrl = (url.searchParams.get('url') || '').trim();
       if (!targetUrl || !validateUrl(targetUrl)) {
-        return new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: CORS });
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: CORS }));
       }
 
       try {
@@ -400,7 +437,7 @@ export default {
           const errorMsg = uniqueErrors.length > 0
             ? `Extraction failed: ${uniqueErrors[0]}`
             : 'Could not extract stream link from any instance. Try another URL or try again later.';
-          return new Response(JSON.stringify({ error: errorMsg }), { status: 400, headers: CORS });
+          return withSecurityHeaders(new Response(JSON.stringify({ error: errorMsg }), { status: 400, headers: CORS }));
         }
 
         // Deduplicate formats by URL (Cobalt may return same URL for similar qualities)
@@ -440,10 +477,10 @@ export default {
           formats: uniqueFormats
         };
 
-        return new Response(JSON.stringify(payload), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } });
+        return withSecurityHeaders(new Response(JSON.stringify(payload), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }));
       } catch (e) {
         console.error('[extract] Extraction handler error:', e.message);
-        return new Response(JSON.stringify({ error: `Internal extraction error: ${e.message}` }), { status: 500, headers: CORS });
+        return withSecurityHeaders(new Response(JSON.stringify({ error: `Internal extraction error: ${e.message}` }), { status: 500, headers: CORS }));
       }
     }
 
@@ -454,7 +491,7 @@ export default {
       filename = filename.replace(/[^\w.\-]/g, '_').slice(0, 200) || 'video.mp4';
 
       if (!targetUrl || !validateUrl(targetUrl)) {
-        return new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: CORS });
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: CORS }));
       }
 
       const requestHeaders = new Headers();
@@ -474,14 +511,14 @@ export default {
         responseHeaders.set('Access-Control-Allow-Origin', '*');
         responseHeaders.set('Cache-Control', 'no-store');
 
-        return new Response(upstreamResponse.body, {
+        return withSecurityHeaders(new Response(upstreamResponse.body, {
           status: upstreamResponse.status,
           statusText: upstreamResponse.statusText,
           headers: responseHeaders,
-        });
+        }));
       } catch (err) {
         console.error('[Worker Proxy] Failed to stream download:', err);
-        return new Response(JSON.stringify({ error: 'Failed to stream download from provider CDN.' }), { status: 502, headers: CORS });
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Failed to stream download from provider CDN.' }), { status: 502, headers: CORS }));
       }
     }
 
@@ -498,7 +535,7 @@ export default {
       if (!queryUrl || !validateUrl(queryUrl)) {
         if (isBot) {
           const html = buildOgHtml('mp4yt — Download Any Video Instantly', `${siteUrl}/og-default.png`, 'Download videos from YouTube, TikTok, Instagram and 1000+ platforms instantly.', '', siteUrl);
-          return new Response(html, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'public, max-age=300' } });
+          return withSecurityHeaders(new Response(html, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'public, max-age=300' } }));
         } else {
           return Response.redirect(`${siteUrl}/`, 302);
         }
@@ -549,17 +586,17 @@ export default {
         }
 
         const html = buildOgHtml(title, thumbnail, description, streamUrl || queryUrl, siteUrl);
-        return new Response(html, {
+        return withSecurityHeaders(new Response(html, {
           status: 200,
           headers: {
             'Content-Type': 'text/html',
             'Cache-Control': 'public, max-age=300, s-maxage=300'
           }
-        });
+        }));
       } catch (e) {
         console.error('[seo-handler] Bot path processing failed:', e.message);
         const fallbackHtml = buildOgHtml('mp4yt — Download Any Video Instantly', `${siteUrl}/og-default.png`, 'Download videos from YouTube, TikTok, Instagram and 1000+ platforms instantly.', queryUrl, siteUrl);
-        return new Response(fallbackHtml, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' } });
+        return withSecurityHeaders(new Response(fallbackHtml, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' } }));
       }
     }
 
@@ -571,17 +608,17 @@ export default {
         const notFoundRequest = new Request(new URL('/404.html', request.url));
         const notFoundResponse = await env.ASSETS.fetch(notFoundRequest);
         if (notFoundResponse.status === 200) {
-          return new Response(notFoundResponse.body, {
+          return withSecurityHeaders(new Response(notFoundResponse.body, {
             status: 404,
             headers: notFoundResponse.headers,
-          });
+          }));
         }
       }
 
-      return response;
+      return withSecurityHeaders(response);
     } catch (err) {
       console.error(`[Worker] Error fetching asset from ASSETS binding:`, err);
-      return new Response(`Error loading asset: ${err.message}`, { status: 500 });
+      return withSecurityHeaders(new Response(`Error loading asset: ${err.message}`, { status: 500 }));
     }
   },
 

@@ -16,7 +16,7 @@ const {
   description = 'Free YT video downloader — download YouTube, Instagram, TikTok, Twitter and 1000+ site videos as MP4 instantly. Zero storage, zero tracking.',
   ogImage = '/og-default.png',
   ogTitle = title,
-  canonicalUrl = 'https://mp4yt.com',
+  canonicalUrl = 'https://mp4yt.com/',
   keywords = 'yt downloader, yt video downloader, download yt video, yt to mp4, yt to mp3, video downloader, online video downloader, free video downloader, video downloader online free, mp4 video downloader, download video from any website, download video online, save video from url, best video downloader 2026, video downloader no watermark, video downloader hd, video downloader 4k, video downloader mp3, video downloader for pc, video downloader for iphone, video downloader for android, video downloader app free, fast video downloader, safe video downloader, video downloader no app, social media video downloader, all in one video downloader, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter, video link downloader, paste link download video',
   noindex = false,
 } = Astro.props;
@@ -43,7 +43,7 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
-    <link rel="canonical" href={canonicalUrl} />
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -138,6 +138,10 @@ const {
   </head>
   <body>
     <slot />
+
+    <!-- GSAP + ScrollTrigger — deferred to avoid blocking first paint (~35KB gzip) -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer is:inline></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer is:inline></script>
 
     <script is:inline>
       if ('serviceWorker' in navigator) {

@@ -20,6 +20,9 @@ import PlatformSwitcher from "./PlatformSwitcher.astro";
       — zero waiting.
     </p>
 
+    <!-- Ambient glow — animated by ScrollAnimations.astro -->
+    <div class="hero-ambient-glow" aria-hidden="true"></div>
+
     <!-- Main Terminal Interface -->
     <div class="terminal-container hard-shadow-lg">
       <PlatformSwitcher currentPlatform="General" />
@@ -368,6 +371,36 @@ import PlatformSwitcher from "./PlatformSwitcher.astro";
     align-items: center;
     text-align: center;
     gap: var(--sp-lg);
+  }
+
+  /* Ambient glow — scroll-animated by GSAP */
+  .hero-ambient-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    transform: translate(-50%, -50%) scale(var(--glow-scale, 0.8));
+    background: radial-gradient(
+      circle,
+      var(--glow-color, rgba(0, 0, 0, 0.06)) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--glow-opacity, 0);
+    will-change: transform, opacity;
+    transition: none; /* GSAP handles all transitions */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .hero-ambient-glow {
+      --glow-color: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  :root[data-theme="dark"] .hero-ambient-glow {
+    --glow-color: rgba(255, 255, 255, 0.06);
   }
 
   .hero-headline {

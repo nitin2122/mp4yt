@@ -1,0 +1,337 @@
+---
+/**
+ * ScrollAnimations.astro
+ * ─────────────────────────────────────────────────────────
+ * Centralized GSAP ScrollTrigger controller for mp4yt.
+ * 
+ * All animations are BIDIRECTIONAL — they play forward on
+ * scroll-down and reverse smoothly on scroll-up, giving
+ * a "page-up" entrance effect when returning to sections.
+ *
+ * Orchestrates scroll-driven animations across sections:
+ *   1. Hero → parallax fade-out + terminal scale + ambient glow
+ *   2. SupportedSites → parallax vertical shift
+ *   3. Features → header entrance + bento-card staggered reveal
+ *   4. HowItWorks → step staggering + code mockup slide-in
+ *   5. Mobile fallback → IntersectionObserver for simple fade-ins
+ *
+ * Include once in index.astro AFTER all section components.
+ * This component renders no visible DOM — only <script>.
+ */
+---
+
+<script is:inline>
+  /**
+   * Wait for deferred GSAP to be available, then init animations.
+   * Polls every 100ms (up to 10 attempts = 1s max wait).
+   */
+  (function initScrollAnimations(attempt) {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      bootstrapAnimations();
+      return;
+    }
+    if (attempt < 10) {
+      setTimeout(function() { initScrollAnimations(attempt + 1); }, 100);
+    }
+  })(0);
+
+  function bootstrapAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ─── Responsive split: desktop gets full scrub, mobile gets fade-ins ───
+    ScrollTrigger.matchMedia({
+
+      // ═══════════════════════════════════════════════════════════════
+      // DESKTOP (≥769px) — Full scroll-scrubbed animations
+      // All tweens use scrub so they reverse automatically on scroll-up
+      // ═══════════════════════════════════════════════════════════════
+      "(min-width: 769px)": function() {
+
+        // ── 1. HERO SECTION ──────────────────────────────────────────
+        // Scroll down: hero content fades out & drifts upward
+        // Scroll up:   hero content fades back in & slides down to rest
+        var heroSection = document.getElementById('hero');
+        if (heroSection) {
+          var heroTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: '#hero',
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 1.2,  // 1.2s smooth lag for premium feel
+            }
+          });
+
+          // Headline — drifts up and fades; reverses to full visibility on scroll-up
+          heroTl.fromTo('.hero-headline',
+            { y: 0, opacity: 1 },
+            { y: -80, opacity: 0, ease: 'none' },
+            0
+          );
+
+          // Eyebrow tag
+          heroTl.fromTo('.hero-eyebrow-tag',
+            { y: 0, opacity: 1 },
+            { y: -50, opacity: 0, ease: 'none' },
+            0.05
+          );
+
+          // Subhead — slightly slower parallax rate
+          heroTl.fromTo('.hero-subhead',
+            { y: 0, opacity: 1 },
+            { y: -40, opacity: 0, ease: 'none' },
+            0.1
+          );
+
+          // Terminal container — scales down on scroll, scales back up on scroll-up
+          heroTl.fromTo('.terminal-container',
+            { scale: 1, y: 0, opacity: 1 },
+            { scale: 0.92, y: -30, opacity: 0.6, ease: 'none' },
+            0
+          );
+
+          // Ambient glow — fades in as hero scrolls away, fades out on scroll-up
+          var glowEl = document.querySelector('.hero-ambient-glow');
+          if (glowEl) {
+            heroTl.fromTo(glowEl,
+              { '--glow-opacity': '0', '--glow-scale': '0.8' },
+              { '--glow-opacity': '1', '--glow-scale': '1.4', ease: 'none' },
+              0
+            );
+          }
+
+          // Paste hint + trust chips
+          heroTl.fromTo('.paste-hint, .hero-trust',
+            { opacity: 1, y: 0 },
+            { opacity: 0, y: -20, ease: 'none' },
+            0
+          );
+        }
+
+
+        // ── 2. SUPPORTED SITES — Parallax shift ─────────────────────
+        // Marquee drifts at a different vertical rate than surrounding
+        // content. Fully reversible — resets on scroll-up.
+        var platformsBand = document.querySelector('.platforms-band');
+        if (platformsBand) {
+          gsap.fromTo('.marquee-wrapper',
+            { y: 0 },
+            {
+              y: -40,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.platforms-band',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+              }
+            }
+          );
+
+          gsap.fromTo('.platforms-header',
+            { y: 0 },
+            {
+              y: -20,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.platforms-band',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+              }
+            }
+          );
+        }
+
+
+        // ── 3. FEATURES SECTION ──────────────────────────────────────
+        // Scroll down: header + cards slide up into view
+        // Scroll up:   header + cards slide back down and out (reverse)
+        var featuresHeader = document.querySelector('.features-header');
+        if (featuresHeader) {
+          gsap.fromTo('.features-header',
+            { y: 60, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.features-header',
+                start: 'top 88%',
+                end: 'top 58%',
+                scrub: 1,
+              }
+            }
+          );
+        }
+
+        var bentoCells = document.querySelectorAll('.bento-cell');
+        if (bentoCells.length > 0) {
+          gsap.fromTo('.bento-cell',
+            { y: 70, opacity: 0, scale: 0.95 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              stagger: 0.06,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.features-bento',
+                start: 'top 82%',
+                end: 'top 28%',
+                scrub: 1,
+              }
+            }
+          );
+        }
+
+
+        // ── 4. HOW IT WORKS SECTION ──────────────────────────────────
+        // Scroll down: headline slides up, steps stagger from left,
+        //              code mockup slides from right
+        // Scroll up:   everything reverses back to hidden state
+        var howSection = document.getElementById('how-it-works');
+        if (howSection) {
+          // Section headline + eyebrow
+          gsap.fromTo('.how-copy .display-lg, .how-copy .eyebrow',
+            { y: 50, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#how-it-works',
+                start: 'top 85%',
+                end: 'top 55%',
+                scrub: 1,
+              }
+            }
+          );
+
+          gsap.fromTo('.how-subtitle',
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#how-it-works',
+                start: 'top 82%',
+                end: 'top 52%',
+                scrub: 1,
+              }
+            }
+          );
+
+          // Steps — stagger in from left, reverse on scroll-up
+          var stepItems = document.querySelectorAll('.step-item');
+          if (stepItems.length > 0) {
+            gsap.fromTo('.step-item',
+              { x: -40, opacity: 0 },
+              {
+                x: 0,
+                opacity: 1,
+                stagger: 0.12,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: '.steps-list',
+                  start: 'top 80%',
+                  end: 'bottom 50%',
+                  scrub: 1,
+                }
+              }
+            );
+          }
+
+          // Code mockup — slides in from right, slides back on scroll-up
+          var mockup = document.querySelector('.how-mockup');
+          if (mockup) {
+            gsap.fromTo('.how-mockup',
+              { x: 80, opacity: 0, scale: 0.96 },
+              {
+                x: 0,
+                opacity: 1,
+                scale: 1,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: '.how-mockup',
+                  start: 'top 85%',
+                  end: 'top 45%',
+                  scrub: 1,
+                }
+              }
+            );
+          }
+        }
+
+
+        // ── 5. FAQ + SEO SECTIONS — Subtle entrance ──────────────────
+        // Light fade-in for lower sections to maintain the premium feel
+        var faqSection = document.getElementById('faq');
+        if (faqSection) {
+          gsap.fromTo('#faq .page-container',
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#faq',
+                start: 'top 88%',
+                end: 'top 60%',
+                scrub: 1,
+              }
+            }
+          );
+        }
+      },
+
+
+      // ═══════════════════════════════════════════════════════════════
+      // MOBILE (≤768px) — Lightweight IntersectionObserver fallback
+      // Uses CSS transitions instead of GSAP for performance.
+      // Elements reveal on scroll-down AND re-hide on scroll-up
+      // (bidirectional) thanks to re-observing after leaving viewport.
+      // ═══════════════════════════════════════════════════════════════
+      "(max-width: 768px)": function() {
+        var revealSelectors = [
+          '.features-header',
+          '.bento-cell',
+          '.how-copy .display-lg',
+          '.how-subtitle',
+          '.step-item',
+          '.how-mockup'
+        ];
+
+        var revealElements = [];
+        revealSelectors.forEach(function(sel) {
+          var els = document.querySelectorAll(sel);
+          els.forEach(function(el) {
+            el.classList.add('scroll-reveal-mobile');
+            revealElements.push(el);
+          });
+        });
+
+        // Bidirectional IntersectionObserver — shows on enter, hides on leave
+        if ('IntersectionObserver' in window && revealElements.length > 0) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+              } else {
+                // Remove class when leaving viewport → re-animates on scroll-up
+                entry.target.classList.remove('is-visible');
+              }
+            });
+          }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+          });
+
+          revealElements.forEach(function(el) {
+            observer.observe(el);
+          });
+        }
+      }
+    });
+  }
+</script>
