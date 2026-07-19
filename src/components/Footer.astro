@@ -1,7 +1,7 @@
 ---
 // Footer — Brutalist style with structural borders, mono typography
-import { Image } from 'astro:assets';
-import logoImage from '../assets/logo.png';
+import { Image } from "astro:assets";
+import logoImage from "../assets/logo.png";
 
 const year = new Date().getFullYear();
 ---
@@ -17,8 +17,8 @@ const year = new Date().getFullYear();
         <span class="footer-logo-text">MP4YT</span>
       </a>
       <p class="body-sm footer-tagline">
-        The fastest way to download videos from Instagram, TikTok and 1000+ platforms.
-        Zero storage. Zero tracking.
+        The fastest way to download videos from Instagram, TikTok and 1000+
+        platforms. Zero storage. Zero tracking.
       </p>
       <div class="footer-legal-note" style="margin-top: var(--sp-sm);">
         FOR PERSONAL, NON-COMMERCIAL USE ONLY.
@@ -59,14 +59,19 @@ const year = new Date().getFullYear();
     <div class="footer-col">
       <h3 class="eyebrow footer-col-head">LEGAL</h3>
       <ul class="footer-links" role="list">
-        <li><a href="/privacy-policy/" class="footer-link">Privacy Policy</a></li>
-        <li><a href="/terms-and-conditions/" class="footer-link">Terms & Conditions</a></li>
+        <li>
+          <a href="/privacy-policy/" class="footer-link">Privacy Policy</a>
+        </li>
+        <li>
+          <a href="/terms-and-conditions/" class="footer-link"
+            >Terms & Conditions</a>
+        </li>
         <li><a href="/dmca/" class="footer-link">DMCA</a></li>
         <li><a href="/about-us/" class="footer-link">About Us</a></li>
         <li><a href="/contact-us/" class="footer-link">Contact Us</a></li>
         <li>
           <a
-            href="https://github.com/wukko/cobalt"
+            href="https://github.com/nitin2122/mp4yt"
             class="footer-link"
             target="_blank"
             rel="noopener noreferrer"
@@ -90,7 +95,12 @@ const year = new Date().getFullYear();
         </span>
       </div>
       <div class="footer-bottom-right">
-        <a href="https://github.com/wukko/cobalt" class="footer-link-bottom" target="_blank" rel="noopener">GITHUB</a>
+        <a
+          href="https://github.com/nitin2122/mp4yt"
+          class="footer-link-bottom"
+          target="_blank"
+          rel="noopener">GITHUB</a
+        >
         <a href="/terms-and-conditions/" class="footer-link-bottom">TERMS</a>
         <a href="/privacy-policy/" class="footer-link-bottom">PRIVACY</a>
       </div>
@@ -226,17 +236,14 @@ const year = new Date().getFullYear();
     letter-spacing: 0.05em;
   }
 
-  .status-dot-footer {
-    width: 6px;
-    height: 6px;
-    background-color: #28c840;
-    display: inline-block;
-    animation: statusPulse 2s ease-in-out infinite;
-  }
-
   @keyframes statusPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
   }
 
   .footer-bottom-right {

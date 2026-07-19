@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title?: string;
@@ -25,6 +26,29 @@ const {
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google Consent Mode v2 Setup -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      
+      const storedConsent = localStorage.getItem('cookie-consent');
+      if (storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied'
+        });
+      }
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNH5RT5R2G" is:inline></script>
     <script is:inline>
@@ -138,6 +162,7 @@ const {
   </head>
   <body>
     <slot />
+    <CookieConsent />
 
     <!-- GSAP + ScrollTrigger — deferred to avoid blocking first paint (~35KB gzip) -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer is:inline></script>

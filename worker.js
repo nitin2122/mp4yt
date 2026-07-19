@@ -11,12 +11,41 @@
  * Download Engine: Multi-instance Cobalt failover with 144p–4K support.
  */
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Range',
-  'Cache-Control': 'no-store, no-cache, must-revalidate'
-};
+function getCorsHeaders(request) {
+  const origin = request ? request.headers.get('Origin') : null;
+  const allowedOrigins = [
+    'https://mp4yt.com',
+    'https://www.mp4yt.com'
+  ];
+
+  if (origin) {
+    try {
+      const parsed = new URL(origin);
+      if (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1') {
+        return {
+          'Access-Control-Allow-Origin': origin,
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Range',
+          'Cache-Control': 'no-store, no-cache, must-revalidate'
+        };
+      }
+    } catch (_) {}
+  }
+
+  const headers = {
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Range',
+    'Cache-Control': 'no-store, no-cache, must-revalidate'
+  };
+
+  if (origin && allowedOrigins.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+  } else {
+    headers['Access-Control-Allow-Origin'] = 'https://mp4yt.com';
+  }
+
+  return headers;
+}
 
 // ── Security Response Headers ──────────────────────────────
 const SECURITY_HEADERS = {
@@ -24,11 +53,46 @@ const SECURITY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'SAMEORIGIN',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-  'Content-Security-Policy': [
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
+};
+
+function generateNonce() {
+  const arr = new Uint8Array(16);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+/**
+ * Injects security headers into any Response.
+ * Clones the response to make headers mutable.
+ * Generates and applies a nonce-based CSP for HTML responses.
+ */
+function withSecurityHeaders(response, request = null) {
+  const newHeaders = new Headers(response.headers);
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    newHeaders.set(key, value);
+  }
+
+  const contentType = newHeaders.get('Content-Type') || '';
+  if (!contentType.includes('text/html')) {
+    const baseCsp = [
+      "default-src 'self'",
+      "frame-ancestors 'self'",
+      "upgrade-insecure-requests"
+    ].join('; ');
+    newHeaders.set('Content-Security-Policy', baseCsp);
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders,
+    });
+  }
+
+  const nonce = generateNonce();
+  const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    `script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net`,
+    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob: https://img.youtube.com https://*.ytimg.com https://*.ggpht.com https://*.cdninstagram.com",
     "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://stats.g.doubleclick.net",
@@ -37,23 +101,28 @@ const SECURITY_HEADERS = {
     "base-uri 'self'",
     "form-action 'self'",
     "upgrade-insecure-requests",
-  ].join('; '),
-};
+  ].join('; ');
 
-/**
- * Injects security headers into any Response.
- * Clones the response to make headers mutable.
- */
-function withSecurityHeaders(response) {
-  const newHeaders = new Headers(response.headers);
-  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
-    newHeaders.set(key, value);
-  }
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers: newHeaders,
-  });
+  newHeaders.set('Content-Security-Policy', csp);
+
+  const rewrittenResponse = new HTMLRewriter()
+    .on('script', {
+      element(element) {
+        element.setAttribute('nonce', nonce);
+      }
+    })
+    .on('style', {
+      element(element) {
+        element.setAttribute('nonce', nonce);
+      }
+    })
+    .transform(new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders
+    }));
+
+  return rewrittenResponse;
 }
 
 // ── Community Cobalt instances — verified open (no Turnstile/JWT) ──
@@ -92,11 +161,53 @@ function validateUrl(url) {
     const hostname = parsed.hostname;
     if (!hostname) return false;
 
+    // Strict Port Control
+    const port = parsed.port;
+    if (port && port !== '80' && port !== '443') return false;
+
+    // Block private patterns (IPv4 & IPv6 ranges)
     const privatePatterns = [
-      /^localhost$/i, /^127\./, /^10\./, /^172\.(1[6-9]|2\d|3[01])\./, /^192\.168\./,
-      /^0\.0\.0\.0$/, /^::1$/, /^fd[0-9a-f]{2}:/i, /^fe80:/i
+      /^localhost$/i,
+      /^127\./,
+      /^10\./,
+      /^172\.(1[6-9]|2\d|3[01])\./,
+      /^192\.168\./,
+      /^169\.254\./,        // Link-local address
+      /^0\./,              // Current network
+      /^224\./,            // Multicast
+      /^240\./,            // Reserved
+      /^255\.255\.255\.255$/,
+      /^::1$/,
+      /^fd[0-9a-f]{2}:/i,  // Unique local address
+      /^fe[89ab][0-9a-f]:/i, // Link-local address
+      /^fc00:/i,
     ];
-    return !privatePatterns.some(pattern => pattern.test(hostname));
+
+    if (privatePatterns.some(pattern => pattern.test(hostname))) {
+      return false;
+    }
+
+    // IP address obfuscation protection (e.g. decimal, octal with leading zeros)
+    if (/^[0-9.]+$/.test(hostname)) {
+      const parts = hostname.split('.');
+      if (parts.length !== 4) return false;
+      for (const part of parts) {
+        const num = parseInt(part, 10);
+        if (isNaN(num) || num < 0 || num > 255) return false;
+        if (part.length > 1 && part.startsWith('0')) return false;
+      }
+      
+      const firstByte = parseInt(parts[0], 10);
+      const secondByte = parseInt(parts[1], 10);
+      if (firstByte === 127 || firstByte === 10 || (firstByte === 169 && secondByte === 254) || (firstByte === 192 && secondByte === 168)) {
+        return false;
+      }
+      if (firstByte === 172 && (secondByte >= 16 && secondByte <= 31)) {
+        return false;
+      }
+    }
+
+    return true;
   } catch (e) {
     return false;
   }
@@ -365,18 +476,18 @@ export default {
 
     // 1. Handle OPTIONS (CORS) for all backend API routes
     if (method === 'OPTIONS' && (pathname.startsWith('/api/') || pathname === '/download-stream')) {
-      return withSecurityHeaders(new Response(null, { status: 204, headers: CORS }));
+      return withSecurityHeaders(new Response(null, { status: 204, headers: getCorsHeaders(request) }), request);
     }
 
     // 2. /api/extract — Multi-instance failover extraction engine
     if (pathname === '/api/extract') {
       if (method !== 'GET') {
-        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Method not allowed.' }), { status: 405, headers: CORS }));
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Method not allowed.' }), { status: 405, headers: getCorsHeaders(request) }), request);
       }
 
       const targetUrl = (url.searchParams.get('url') || '').trim();
       if (!targetUrl || !validateUrl(targetUrl)) {
-        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: CORS }));
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: getCorsHeaders(request) }), request);
       }
 
       try {
@@ -437,7 +548,7 @@ export default {
           const errorMsg = uniqueErrors.length > 0
             ? `Extraction failed: ${uniqueErrors[0]}`
             : 'Could not extract stream link from any instance. Try another URL or try again later.';
-          return withSecurityHeaders(new Response(JSON.stringify({ error: errorMsg }), { status: 400, headers: CORS }));
+          return withSecurityHeaders(new Response(JSON.stringify({ error: errorMsg }), { status: 400, headers: getCorsHeaders(request) }), request);
         }
 
         // Deduplicate formats by URL (Cobalt may return same URL for similar qualities)
@@ -477,10 +588,10 @@ export default {
           formats: uniqueFormats
         };
 
-        return withSecurityHeaders(new Response(JSON.stringify(payload), { status: 200, headers: { ...CORS, 'Content-Type': 'application/json' } }));
+        return withSecurityHeaders(new Response(JSON.stringify(payload), { status: 200, headers: { ...getCorsHeaders(request), 'Content-Type': 'application/json' } }), request);
       } catch (e) {
         console.error('[extract] Extraction handler error:', e.message);
-        return withSecurityHeaders(new Response(JSON.stringify({ error: `Internal extraction error: ${e.message}` }), { status: 500, headers: CORS }));
+        return withSecurityHeaders(new Response(JSON.stringify({ error: `Internal extraction error: ${e.message}` }), { status: 500, headers: getCorsHeaders(request) }), request);
       }
     }
 
@@ -491,7 +602,7 @@ export default {
       filename = filename.replace(/[^\w.\-]/g, '_').slice(0, 200) || 'video.mp4';
 
       if (!targetUrl || !validateUrl(targetUrl)) {
-        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: CORS }));
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: getCorsHeaders(request) }), request);
       }
 
       const requestHeaders = new Headers();
@@ -508,17 +619,19 @@ export default {
 
         const responseHeaders = new Headers(upstreamResponse.headers);
         responseHeaders.set('Content-Disposition', `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`);
-        responseHeaders.set('Access-Control-Allow-Origin', '*');
+        
+        const corsHeaders = getCorsHeaders(request);
+        responseHeaders.set('Access-Control-Allow-Origin', corsHeaders['Access-Control-Allow-Origin'] || 'https://mp4yt.com');
         responseHeaders.set('Cache-Control', 'no-store');
 
         return withSecurityHeaders(new Response(upstreamResponse.body, {
           status: upstreamResponse.status,
           statusText: upstreamResponse.statusText,
           headers: responseHeaders,
-        }));
+        }), request);
       } catch (err) {
         console.error('[Worker Proxy] Failed to stream download:', err);
-        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Failed to stream download from provider CDN.' }), { status: 502, headers: CORS }));
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Failed to stream download from provider CDN.' }), { status: 502, headers: getCorsHeaders(request) }), request);
       }
     }
 
@@ -535,7 +648,7 @@ export default {
       if (!queryUrl || !validateUrl(queryUrl)) {
         if (isBot) {
           const html = buildOgHtml('mp4yt — Download Any Video Instantly', `${siteUrl}/og-default.png`, 'Download videos from YouTube, TikTok, Instagram and 1000+ platforms instantly.', '', siteUrl);
-          return withSecurityHeaders(new Response(html, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'public, max-age=300' } }));
+          return withSecurityHeaders(new Response(html, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'public, max-age=300' } }), request);
         } else {
           return Response.redirect(`${siteUrl}/`, 302);
         }
@@ -592,11 +705,11 @@ export default {
             'Content-Type': 'text/html',
             'Cache-Control': 'public, max-age=300, s-maxage=300'
           }
-        }));
+        }), request);
       } catch (e) {
         console.error('[seo-handler] Bot path processing failed:', e.message);
         const fallbackHtml = buildOgHtml('mp4yt — Download Any Video Instantly', `${siteUrl}/og-default.png`, 'Download videos from YouTube, TikTok, Instagram and 1000+ platforms instantly.', queryUrl, siteUrl);
-        return withSecurityHeaders(new Response(fallbackHtml, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' } }));
+        return withSecurityHeaders(new Response(fallbackHtml, { status: 200, headers: { 'Content-Type': 'text/html', 'Cache-Control': 'no-store' } }), request);
       }
     }
 
@@ -611,14 +724,14 @@ export default {
           return withSecurityHeaders(new Response(notFoundResponse.body, {
             status: 404,
             headers: notFoundResponse.headers,
-          }));
+          }), request);
         }
       }
 
-      return withSecurityHeaders(response);
+      return withSecurityHeaders(response, request);
     } catch (err) {
       console.error(`[Worker] Error fetching asset from ASSETS binding:`, err);
-      return withSecurityHeaders(new Response(`Error loading asset: ${err.message}`, { status: 500 }));
+      return withSecurityHeaders(new Response(`Error loading asset: ${err.message}`, { status: 500 }), request);
     }
   },
 
