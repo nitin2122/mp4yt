@@ -1,0 +1,21 @@
+# wrangler.toml
+# Cloudflare Workers configuration for mp4yt.com
+
+name = "mp4yt"
+main = "worker.js"
+compatibility_date = "2024-04-03"
+
+[build]
+command = "npm run build"
+
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = true
+
+[vars]
+COBALT_FALLBACK_INSTANCES = "https://api.cobalt.blackcat.sweeux.org/,https://dog.kittycat.boo/,https://fox.kittycat.boo/,https://cobaltapi.kittycat.boo/,https://api.cobalt.liubquanti.click/,https://rue-cobalt.xenon.zone/,https://cobaltapi.cjs.nz/"
+
+[triggers]
+crons = ["*/5 * * * *"]
