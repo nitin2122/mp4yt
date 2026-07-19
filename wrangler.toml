@@ -1,7 +1,7 @@
 # wrangler.toml
 # Cloudflare Workers configuration for mp4yt.com
 
-name = "mp4ytt"
+name = "mp4yt"
 main = "worker.js"
 compatibility_date = "2024-04-03"
 
