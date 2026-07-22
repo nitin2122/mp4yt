@@ -22,16 +22,41 @@ const facebookFaqs = [
     a: "No. To protect user privacy, our Facebook video downloader only supports public videos and Reels. Videos from private groups or profiles cannot be downloaded."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Facebook Downloader", "item": "https://mp4yt.com/facebook/" }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Download Facebook Videos",
+  "description": "Step-by-step guide to download Facebook videos and Reels using mp4yt.",
+  "totalTime": "PT1M",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Copy the Facebook video URL", "text": "Click Share > Copy Link on the Facebook video or Reel you want to download." },
+    { "@type": "HowToStep", "position": 2, "name": "Paste into mp4yt", "text": "Go to mp4yt.com/facebook and paste the copied URL into the extraction bar." },
+    { "@type": "HowToStep", "position": 3, "name": "Click Extract", "text": "Click Extract and wait a few seconds for mp4yt to fetch the direct download links." },
+    { "@type": "HowToStep", "position": 4, "name": "Download", "text": "Choose your quality and click Download MP4 to save the Facebook video." }
+  ]
+};
 ---
 
 <Layout
   title="Facebook Video Downloader - Save FB Videos MP4 | mp4yt"
   description="Download Facebook videos and Reels in high quality MP4 instantly. Paste the Facebook link — no registration, no storage, no limits."
   canonicalUrl="https://mp4yt.com/facebook/"
-  keywords="facebook video downloader, download facebook videos, fb downloader, save fb video, facebook to mp4, facebook reels downloader, download facebook reels, facebook link downloader, fb video download, download facebook video online, facebook video download hd, download fb reels, facebook video saver, fb video saver, facebook downloader free, download video from facebook, download facebook video on iphone, facebook video downloader android, fb video downloader online, facebook watch downloader, facebook reel download mp4, download facebook video 2026, best facebook video downloader, fb to mp4, facebook group video downloader, facebook page video downloader, download fb video without app, save facebook video to phone, facebook video converter, fb reel downloader"
+  keywords="facebook video downloader, download facebook videos, fb downloader, facebook to mp4, facebook reels downloader, fb video download, best facebook video downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <PlatformHero
       platform="Facebook"
       emoji="👥"

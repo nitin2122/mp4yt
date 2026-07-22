@@ -18,16 +18,26 @@ const vimeoFaqs = [
     a: "Yes, our parser extracts individual videos from Vimeo showcases, portfolios, and hub pages automatically."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Vimeo Downloader", "item": "https://mp4yt.com/vimeo/" }
+  ]
+};
 ---
 
 <Layout
   title="Vimeo Video Downloader - Save as MP4 | mp4yt"
   description="Download Vimeo videos as MP4 instantly. Paste the Vimeo URL and get the direct high-quality stream — no login, no storage."
   canonicalUrl="https://mp4yt.com/vimeo/"
-  keywords="vimeo video downloader, download vimeo videos, vimeo to mp4, save vimeo video, download vimeo 4k, vimeo link downloader, vimeo video download online, vimeo downloader free, download video from vimeo, vimeo video saver, vimeo downloader hd, vimeo mp4 downloader, vimeo downloader online, vimeo to mp4 converter, download vimeo video 1080p, vimeo downloader 4k free, download vimeo video iphone, vimeo downloader android, best vimeo downloader, vimeo video converter, vimeo downloader no login, download vimeo showcase video, vimeo portfolio downloader, save vimeo video offline, vimeo downloader 2026, download vimeo video online free, vimeo video download without app, vimeo stream downloader"
+  keywords="vimeo video downloader, download vimeo videos, vimeo to mp4, vimeo downloader free, vimeo downloader 4k, best vimeo downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <PlatformHero
       platform="Vimeo"
       emoji="🎬"

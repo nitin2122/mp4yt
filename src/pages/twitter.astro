@@ -22,16 +22,41 @@ const twitterFaqs = [
     a: "No, our X video downloader only works on tweets from public profiles. Content from protected or private accounts cannot be accessed."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Twitter/X Downloader", "item": "https://mp4yt.com/twitter/" }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Download Twitter/X Videos",
+  "description": "Step-by-step guide to download Twitter/X videos using mp4yt.",
+  "totalTime": "PT1M",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Copy the tweet URL", "text": "Find the tweet on Twitter.com or X.com and click Share > Copy link to Tweet." },
+    { "@type": "HowToStep", "position": 2, "name": "Paste into mp4yt", "text": "Go to mp4yt.com/twitter and paste the copied URL into the extraction bar." },
+    { "@type": "HowToStep", "position": 3, "name": "Click Extract", "text": "Click Extract and wait a few seconds for mp4yt to fetch the direct download links." },
+    { "@type": "HowToStep", "position": 4, "name": "Download", "text": "Click Download MP4 to save the Twitter/X video to your device." }
+  ]
+};
 ---
 
 <Layout
   title="Twitter/X Video Downloader - MP4 | mp4yt"
   description="Download Twitter/X videos as MP4 instantly. Paste the tweet URL — no login, no watermark, no storage needed."
   canonicalUrl="https://mp4yt.com/twitter/"
-  keywords="twitter video downloader, x video downloader, download twitter videos, download x videos, save twitter video, save x video, twitter to mp4, x to mp4, twitter gif downloader, twitter video download online, download video from twitter, download video from x, twitter video saver, x video saver, twitter downloader free, x downloader free, twitter video download hd, x video download hd, twitter mp4 downloader, download twitter gif as mp4, tweet video downloader, download tweet video, twitter spaces downloader, x spaces downloader, twitter video downloader iphone, twitter video downloader android, twitter link downloader, x link downloader, download x post video, best twitter video downloader 2026, ssstwitter alternative, twitter video converter, save video from tweet"
+  keywords="twitter video downloader, x video downloader, download twitter videos, twitter to mp4, twitter gif downloader, tweet video downloader, best twitter video downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <PlatformHero
       platform="Twitter / X"
       emoji="🐦"

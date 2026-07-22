@@ -91,11 +91,11 @@ function withSecurityHeaders(response, request = null) {
   const nonce = generateNonce();
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net`,
-    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
+    `script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com`,
+    `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob: https://img.youtube.com https://*.ytimg.com https://*.ggpht.com https://*.cdninstagram.com",
-    "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://stats.g.doubleclick.net",
+    "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://stats.g.doubleclick.net https://cloudflareinsights.com",
     "worker-src 'self'",
     "frame-ancestors 'self'",
     "base-uri 'self'",
@@ -150,6 +150,60 @@ const SKIP_ERROR_CODES = new Set([
   'error.api.auth.key.invalid',
   'error.api.auth.key.ip_not_allowed',
 ]);
+
+// ── SSRF Protection: Proxy Domain Allowlist ──────────────────────
+// Only these domains are allowed to be proxied via /api/proxy and
+// /download-stream. All Cobalt CDN domains that serve video/audio
+// files must be listed here. Add new CDN domains as needed.
+const ALLOWED_PROXY_DOMAINS = new Set([
+  // Cobalt tunnel/redirect CDN domains
+  'us10-dl.cobalt.tools',
+  'eu01-dl.cobalt.tools',
+  'eu02-dl.cobalt.tools',
+  'ap01-dl.cobalt.tools',
+  // Cobalt community instance CDN patterns
+  'api.cobalt.blackcat.sweeux.org',
+  'dog.kittycat.boo',
+  'fox.kittycat.boo',
+  'cobaltapi.kittycat.boo',
+  'api.cobalt.liubquanti.click',
+  'rue-cobalt.xenon.zone',
+  'cobaltapi.cjs.nz',
+  // YouTube direct CDN
+  'rr1---sn-a5meknez.googlevideo.com',
+  'rr2---sn-a5meknez.googlevideo.com',
+  // Generic patterns checked at runtime (see isAllowedProxyDomain)
+]);
+
+// Check if a hostname is allowed for proxying
+function isAllowedProxyDomain(hostname) {
+  if (ALLOWED_PROXY_DOMAINS.has(hostname)) return true;
+  // Allow any *.cobalt.tools subdomain
+  if (hostname.endsWith('.cobalt.tools')) return true;
+  // Allow any *.googlevideo.com subdomain (YouTube CDN)
+  if (hostname.endsWith('.googlevideo.com')) return true;
+  // Allow any *.cdninstagram.com (Instagram CDN)
+  if (hostname.endsWith('.cdninstagram.com')) return true;
+  // Allow any *.fbcdn.net (Facebook/Meta CDN)
+  if (hostname.endsWith('.fbcdn.net')) return true;
+  // Allow any *.tiktokcdn.com (TikTok CDN)
+  if (hostname.endsWith('.tiktokcdn.com')) return true;
+  // Allow any *.twimg.com (Twitter/X CDN)
+  if (hostname.endsWith('.twimg.com')) return true;
+  // Allow any *.sndcdn.com (SoundCloud CDN)
+  if (hostname.endsWith('.sndcdn.com')) return true;
+  // Allow any *.redd.it or *.redditmedia.com (Reddit CDN)
+  if (hostname.endsWith('.redd.it') || hostname.endsWith('.redditmedia.com')) return true;
+  // Allow any *.akamaized.net (Dailymotion, Vimeo CDN)
+  if (hostname.endsWith('.akamaized.net')) return true;
+  // Allow any *.vimeocdn.com (Vimeo CDN)
+  if (hostname.endsWith('.vimeocdn.com')) return true;
+  // Allow any *.cloudfront.net (Twitch/general CDN)
+  if (hostname.endsWith('.cloudfront.net')) return true;
+  // Allow any *.pinimg.com (Pinterest CDN)
+  if (hostname.endsWith('.pinimg.com')) return true;
+  return false;
+}
 
 const BOT_USER_AGENT_REGEX = /\b(Twitterbot|facebookexternalhit|Facebook(Catalog|Bot)|Discordbot|WhatsApp|TelegramBot|Slackbot(-LinkExpanding)?|Slack-ImgProxy|LinkedInBot|Pinterest(bot)?|Mastodon|Threads|SnapchatBot|Line(-NewsDigest)?|Googlebot|Google-InspectionTool|Google-Extended|bingbot|msnbot|YahooSeeker|DuckDuckBot|Baiduspider|YandexBot|Sogou(Spider)?|Exabot|AhrefsBot|SemrushBot|MJ12bot|DotBot|GPTBot|Claude-Web|anthropic-ai|PerplexityBot|CCBot|cohere-ai|Embedly|Iframely|unfurl|Rogerbot|UptimeRobot|Pingdom(Bot)?|StatusCake|HeadlessChrome|PhantomJS|Prerender|facebot|ia_archiver|scrapy|python-requests|wget|curl)\b/i;
 
@@ -591,18 +645,45 @@ export default {
         return withSecurityHeaders(new Response(JSON.stringify(payload), { status: 200, headers: { ...getCorsHeaders(request), 'Content-Type': 'application/json' } }), request);
       } catch (e) {
         console.error('[extract] Extraction handler error:', e.message);
-        return withSecurityHeaders(new Response(JSON.stringify({ error: `Internal extraction error: ${e.message}` }), { status: 500, headers: getCorsHeaders(request) }), request);
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Extraction failed. Please try again later.' }), { status: 500, headers: getCorsHeaders(request) }), request);
       }
     }
 
-    // 3. /api/proxy and /download-stream
+    // 3. /api/proxy and /download-stream — SSRF-protected proxy
     if (pathname === '/api/proxy' || pathname === '/download-stream') {
+      // Origin/Referer validation — block abuse from external sites
+      const reqOrigin = request.headers.get('Origin');
+      const reqReferer = request.headers.get('Referer');
+      const allowedOrigins = ['https://mp4yt.com', 'https://www.mp4yt.com'];
+      if (reqOrigin && !allowedOrigins.includes(reqOrigin)) {
+        // Check if localhost for development
+        try {
+          const parsedOrigin = new URL(reqOrigin);
+          if (parsedOrigin.hostname !== 'localhost' && parsedOrigin.hostname !== '127.0.0.1') {
+            return withSecurityHeaders(new Response(JSON.stringify({ error: 'Forbidden.' }), { status: 403, headers: getCorsHeaders(request) }), request);
+          }
+        } catch (_) {
+          return withSecurityHeaders(new Response(JSON.stringify({ error: 'Forbidden.' }), { status: 403, headers: getCorsHeaders(request) }), request);
+        }
+      }
+
       const targetUrl = url.searchParams.get('url');
       let filename = url.searchParams.get('filename') || 'video.mp4';
       filename = filename.replace(/[^\w.\-]/g, '_').slice(0, 200) || 'video.mp4';
 
       if (!targetUrl || !validateUrl(targetUrl)) {
         return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid or unsafe URL.' }), { status: 400, headers: getCorsHeaders(request) }), request);
+      }
+
+      // SSRF protection: only proxy from allowed CDN domains
+      try {
+        const proxyHostname = new URL(targetUrl).hostname;
+        if (!isAllowedProxyDomain(proxyHostname)) {
+          console.warn(`[Proxy] Blocked proxy request to disallowed domain: ${proxyHostname}`);
+          return withSecurityHeaders(new Response(JSON.stringify({ error: 'This domain is not allowed for proxying.' }), { status: 403, headers: getCorsHeaders(request) }), request);
+        }
+      } catch (_) {
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Invalid proxy URL.' }), { status: 400, headers: getCorsHeaders(request) }), request);
       }
 
       const requestHeaders = new Headers();
@@ -630,8 +711,8 @@ export default {
           headers: responseHeaders,
         }), request);
       } catch (err) {
-        console.error('[Worker Proxy] Failed to stream download:', err);
-        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Failed to stream download from provider CDN.' }), { status: 502, headers: getCorsHeaders(request) }), request);
+        console.error('[Worker Proxy] Stream download failed:', err.message);
+        return withSecurityHeaders(new Response(JSON.stringify({ error: 'Download failed. Please try again.' }), { status: 502, headers: getCorsHeaders(request) }), request);
       }
     }
 
@@ -730,8 +811,8 @@ export default {
 
       return withSecurityHeaders(response, request);
     } catch (err) {
-      console.error(`[Worker] Error fetching asset from ASSETS binding:`, err);
-      return withSecurityHeaders(new Response(`Error loading asset: ${err.message}`, { status: 500 }), request);
+      console.error(`[Worker] Error fetching asset:`, err.message);
+      return withSecurityHeaders(new Response('Something went wrong. Please try again.', { status: 500 }), request);
     }
   },
 

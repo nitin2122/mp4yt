@@ -41,4 +41,9 @@ scratch/
 
 # wrangler
 .wrangler/
+wrangler.toml
+
+# internal planning docs (may contain sensitive audit data)
+implementation_plan.md
+bfg.jar
 

@@ -18,16 +18,26 @@ const pinterestFaqs = [
     a: "Yes. While optimized for video pins, our Pinterest downloader also lets you save high-quality images and loopable pin GIFs as MP4 files."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Pinterest Downloader", "item": "https://mp4yt.com/pinterest/" }
+  ]
+};
 ---
 
 <Layout
   title="Pinterest Video Downloader - Save Videos as MP4 | mp4yt"
   description="Download Pinterest videos in high quality MP4 instantly. Paste the Pinterest pin URL — no login, no storage, no limits."
   canonicalUrl="https://mp4yt.com/pinterest/"
-  keywords="pinterest video downloader, download pinterest videos, save pinterest video, pinterest pin downloader, download pinterest mp4, pinterest link downloader, pinterest video download online, pinterest video saver, download video from pinterest, pinterest downloader free, pinterest video downloader hd, pinterest downloader online, pinterest to mp4, download pinterest idea pin, pinterest gif downloader, pinterest image downloader, pinterest downloader iphone, pinterest video downloader android, best pinterest video downloader, download pin video, pinterest video download 2026, save pinterest pin video, pinterest video converter, pinterest reel downloader, download pinterest video without app, pin.it downloader, pinterest short link downloader"
+  keywords="pinterest video downloader, download pinterest videos, pinterest pin downloader, pinterest to mp4, best pinterest video downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <PlatformHero
       platform="Pinterest"
       emoji="📌"

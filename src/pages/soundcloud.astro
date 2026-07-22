@@ -18,16 +18,26 @@ const soundcloudFaqs = [
     a: "We currently support downloading tracks individually. To save playlist songs, copy and extract each track link separately."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "SoundCloud Downloader", "item": "https://mp4yt.com/soundcloud/" }
+  ]
+};
 ---
 
 <Layout
   title="SoundCloud Downloader - MP3 & MP4 Free | mp4yt"
   description="Download SoundCloud tracks and audio files instantly. Paste the SoundCloud URL — no registration, no storage, no limitations."
   canonicalUrl="https://mp4yt.com/soundcloud/"
-  keywords="soundcloud downloader, download soundcloud songs, soundcloud to mp3, save soundcloud track, download soundcloud audio, soundcloud link downloader, soundcloud mp3 downloader, soundcloud download online, download music from soundcloud, soundcloud downloader free, soundcloud song downloader, soundcloud track downloader, soundcloud to mp3 converter, download soundcloud playlist, soundcloud downloader hd, soundcloud audio downloader, download soundcloud music free, soundcloud downloader iphone, soundcloud downloader android, best soundcloud downloader, soundcloud converter, soundcloud downloader no app, soundcloud download 2026, soundcloud to wav, download soundcloud song online free, save soundcloud music, soundcloud offline downloader, soundcloud link to mp3, soundcloud downloader 320kbps, download soundcloud tracks free"
+  keywords="soundcloud downloader, soundcloud to mp3, download soundcloud songs, soundcloud mp3 downloader, best soundcloud downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <PlatformHero
       platform="SoundCloud"
       emoji="🎵"

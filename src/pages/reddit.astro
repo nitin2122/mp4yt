@@ -22,16 +22,41 @@ const redditFaqs = [
     a: "Our downloader supports all Reddit link formats, including short links (redd.it), standard thread URLs (reddit.com/r/...), and direct video domains (v.redd.it)."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Reddit Downloader", "item": "https://mp4yt.com/reddit/" }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Download Reddit Videos with Audio",
+  "description": "Step-by-step guide to download Reddit videos with audio merged using mp4yt.",
+  "totalTime": "PT1M",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Copy the Reddit post URL", "text": "Open the Reddit post, tap Share > Copy Link." },
+    { "@type": "HowToStep", "position": 2, "name": "Paste into mp4yt", "text": "Go to mp4yt.com/reddit and paste the copied URL into the extraction bar." },
+    { "@type": "HowToStep", "position": 3, "name": "Click Extract", "text": "Click Extract and wait for mp4yt to merge video and audio tracks." },
+    { "@type": "HowToStep", "position": 4, "name": "Download", "text": "Click Download MP4 to save the Reddit video with audio." }
+  ]
+};
 ---
 
 <Layout
   title="Reddit Video Downloader - Save as MP4 | mp4yt"
   description="Download Reddit videos and GIFs as MP4 with audio. Paste the Reddit post URL — no login, no storage, instant download."
   canonicalUrl="https://mp4yt.com/reddit/"
-  keywords="reddit video downloader, download reddit videos, reddit to mp4, save reddit video, reddit video downloader with audio, reddit gif downloader, reddit link downloader, reddit video download online, download reddit video with sound, reddit video saver, download video from reddit, reddit downloader free, reddit video downloader hd, reddit mp4 downloader, download reddit gif as mp4, v.redd.it downloader, redd.it downloader, reddit video download iphone, reddit video downloader android, best reddit video downloader, save reddit video with audio, reddit video converter, reddit post downloader, download reddit clip, reddit downloader no app, reddit video download 2026, download reddit video online free, reddit video downloader with sound, save video from reddit app, reddit to mp4 with audio"
+  keywords="reddit video downloader, download reddit videos, reddit to mp4, reddit video downloader with audio, reddit gif downloader, v.redd.it downloader, best reddit video downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <PlatformHero
       platform="Reddit"
       emoji="🤖"

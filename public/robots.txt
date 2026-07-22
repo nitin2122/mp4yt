@@ -1,25 +1,59 @@
 # ──────────────────────────────────────────────────────
 #  robots.txt — mp4yt.com
 #  Controls search engine crawling for better indexing
+#
+#  NOTE: Cloudflare prepends its own managed User-agent:*
+#  block with Content-Signal directives before this file.
+#  Our rules below are additive — they EXTEND the
+#  Cloudflare-managed block, not conflict with it.
 # ──────────────────────────────────────────────────────
 
 # ═══════════════════════════════════════════════════════
-# All well-behaved crawlers
+# Googlebot — explicit full access (overrides any
+# Cloudflare defaults). This is critical for indexing.
+# ═══════════════════════════════════════════════════════
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /download-stream
+Disallow: /watch
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+# ═══════════════════════════════════════════════════════
+# Bingbot — full access for Bing indexing
+# ═══════════════════════════════════════════════════════
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /download-stream
+Disallow: /watch
+
+# ═══════════════════════════════════════════════════════
+# All other well-behaved crawlers
 # ═══════════════════════════════════════════════════════
 User-agent: *
 Allow: /
 
-# Block API endpoints (not for indexing)
+# Block API/streaming endpoints (not indexable content)
 Disallow: /api/
 Disallow: /download-stream
-
-# Block dynamic bot-handler route (makes live API calls, can 5xx)
 Disallow: /watch
 
-# Block error pages
+# Block error pages (noindex is set, but belt-and-suspenders)
 Disallow: /404
 Disallow: /500
 
+# Block 301 redirect stubs (save crawl budget — these
+# redirect to their canonical paths and waste cycles)
+Disallow: /about$
+Disallow: /privacy$
+Disallow: /terms$
+Disallow: /contact$
 
 # ═══════════════════════════════════════════════════════
 # Block AI training crawlers (protect original content)
@@ -37,6 +71,9 @@ User-agent: anthropic-ai
 Disallow: /
 
 User-agent: Claude-Web
+Disallow: /
+
+User-agent: ClaudeBot
 Disallow: /
 
 User-agent: cohere-ai
@@ -64,7 +101,7 @@ User-agent: DotBot
 Disallow: /
 
 # ═══════════════════════════════════════════════════════
-# Crawl-delay for less-known bots (reduce server load)
+# Crawl-delay for regional bots (reduce server load)
 # ═══════════════════════════════════════════════════════
 User-agent: Baiduspider
 Crawl-delay: 5

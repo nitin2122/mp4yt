@@ -22,16 +22,41 @@ const tiktokFaqs = [
     a: "Yes, our downloader extracts photo slideshows as high-quality images or converts them to video format depending on how the post is shared."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "TikTok Downloader", "item": "https://mp4yt.com/tiktok/" }
+  ]
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Download TikTok Videos Without Watermark",
+  "description": "Step-by-step guide to download TikTok videos without watermark using mp4yt.",
+  "totalTime": "PT1M",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Copy the TikTok link", "text": "Open TikTok, find the video, and tap Share > Copy Link." },
+    { "@type": "HowToStep", "position": 2, "name": "Paste into mp4yt", "text": "Go to mp4yt.com/tiktok and paste the copied URL into the extraction bar." },
+    { "@type": "HowToStep", "position": 3, "name": "Click Extract", "text": "Click Extract and wait a few seconds for mp4yt to fetch the direct download links." },
+    { "@type": "HowToStep", "position": 4, "name": "Download", "text": "Click Download MP4 to save the TikTok video without watermark." }
+  ]
+};
 ---
 
 <Layout
   title="TikTok Video Downloader - No Watermark | mp4yt"
   description="Download TikTok videos as MP4 instantly. Paste the TikTok URL and get a clean download — no watermark via Cobalt, no registration needed."
   canonicalUrl="https://mp4yt.com/tiktok/"
-  keywords="tiktok video downloader, download tiktok videos, tiktok downloader no watermark, download tiktok mp4, tiktok mp3, save tiktok video, download tiktok without watermark, tiktok link downloader, tiktok downloader online, tiktok video saver, tiktok to mp4, tiktok downloader free, tiktok downloader hd, download tiktok video online free, tiktok video download without watermark free, snaptik alternative, ssstiktok alternative, download tiktok audio, tiktok sound downloader, tiktok downloader iphone, tiktok downloader android, download tiktok slideshow, tiktok photo downloader, tiktok downloader 2026, best tiktok downloader, tiktok video converter, tiktok repost downloader, download tiktok without app, save tiktok without watermark, tiktok mp4 download hd"
+  keywords="tiktok video downloader, download tiktok videos, tiktok downloader no watermark, tiktok to mp4, tiktok mp3, tiktok downloader free, tiktok downloader hd, tiktok sound downloader, best tiktok downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <PlatformHero
       platform="TikTok"
       emoji="🎵"

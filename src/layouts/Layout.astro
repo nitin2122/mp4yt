@@ -12,21 +12,30 @@ interface Props {
   noindex?: boolean;
 }
 
+const SITE_URL = 'https://mp4yt.com';
+
 const {
   title = 'mp4yt — YT Video Downloader | Download Any Video Instantly',
   description = 'Free YT video downloader — download YouTube, Instagram, TikTok, Twitter and 1000+ site videos as MP4 instantly. Zero storage, zero tracking.',
-  ogImage = '/og-default.png',
+  ogImage: ogImageProp = '/og-default.png',
   ogTitle = title,
-  canonicalUrl = 'https://mp4yt.com/',
-  keywords = 'yt downloader, yt video downloader, download yt video, yt to mp4, yt to mp3, video downloader, online video downloader, free video downloader, video downloader online free, mp4 video downloader, download video from any website, download video online, save video from url, best video downloader 2026, video downloader no watermark, video downloader hd, video downloader 4k, video downloader mp3, video downloader for pc, video downloader for iphone, video downloader for android, video downloader app free, fast video downloader, safe video downloader, video downloader no app, social media video downloader, all in one video downloader, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter, video link downloader, paste link download video',
+  canonicalUrl = `${SITE_URL}/`,
+  keywords = 'yt downloader, yt video downloader, download yt video, yt to mp4, yt to mp3, video downloader, online video downloader, free video downloader, download video online, best video downloader 2026, video downloader 4k, download youtube videos, download tiktok videos, download instagram reels, url to mp4 converter',
   noindex = false,
 } = Astro.props;
+
+// Resolve OG image to an absolute URL for social crawlers
+const ogImage = ogImageProp.startsWith('http') ? ogImageProp : `${SITE_URL}${ogImageProp}`;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google Consent Mode v2 Setup -->
+    <!-- Preconnect to external origins for faster LCP -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <!-- Google Consent Mode v2 Setup (must run before gtag loads) -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -49,15 +58,11 @@ const {
       }
     </script>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNH5RT5R2G" is:inline></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-LNH5RT5R2G');
-    </script>
+    <!--
+      Google tag (gtag.js) — loaded by Cloudflare (Zaraz / Web Analytics).
+      Do NOT add a duplicate gtag script here; Cloudflare injects it automatically.
+      Only the Consent Mode v2 defaults above are needed in source code.
+    -->
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -68,6 +73,8 @@ const {
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     {!noindex && <link rel="canonical" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="en" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={canonicalUrl} />}
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />

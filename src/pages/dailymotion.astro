@@ -18,16 +18,26 @@ const dailymotionFaqs = [
     a: "Yes, our Dailymotion link downloader supports both full-length desktop links and mobile-shortened dai.ly sharing links."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Dailymotion Downloader", "item": "https://mp4yt.com/dailymotion/" }
+  ]
+};
 ---
 
 <Layout
   title="Dailymotion Downloader - Download Videos | mp4yt"
   description="Download Dailymotion videos in high quality MP4 instantly. Paste the Dailymotion URL — no registration, no storage, no limits."
   canonicalUrl="https://mp4yt.com/dailymotion/"
-  keywords="dailymotion video downloader, download dailymotion videos, dailymotion to mp4, save dailymotion video, dailymotion link downloader, dailymotion downloader online, dailymotion video download, download video from dailymotion, dailymotion downloader free, dailymotion video saver, dailymotion mp4 downloader, dailymotion downloader hd, dailymotion to mp4 converter, download dailymotion video online free, dailymotion video download 1080p, dailymotion downloader iphone, dailymotion downloader android, best dailymotion downloader, dailymotion video converter, dailymotion downloader no app, dailymotion download 2026, dai.ly downloader, dailymotion short link downloader, save dailymotion video offline, download dailymotion video to phone, dailymotion stream downloader, dailymotion clip downloader"
+  keywords="dailymotion video downloader, download dailymotion videos, dailymotion to mp4, dailymotion downloader free, best dailymotion downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <PlatformHero
       platform="Dailymotion"
       emoji="📺"

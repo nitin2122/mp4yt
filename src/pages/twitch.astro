@@ -18,16 +18,26 @@ const twitchFaqs = [
     a: "No. Subscriber-only streams or private clips require authentication and are restricted to protect streamer content. Only public Twitch videos can be downloaded."
   }
 ];
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "mp4yt", "item": "https://mp4yt.com" },
+    { "@type": "ListItem", "position": 2, "name": "Twitch Downloader", "item": "https://mp4yt.com/twitch/" }
+  ]
+};
 ---
 
 <Layout
   title="Twitch Video Downloader - VODs & Clips | mp4yt"
   description="Download Twitch clips and VODs as MP4 instantly. Paste the Twitch link — no registration, no storage, no limits."
   canonicalUrl="https://mp4yt.com/twitch/"
-  keywords="twitch video downloader, download twitch clips, twitch clip downloader, download twitch vods, twitch vod downloader, save twitch clips, twitch link downloader, twitch clip download online, download twitch video, twitch stream downloader, twitch downloader free, twitch video saver, download video from twitch, twitch mp4 downloader, twitch to mp4, download twitch highlights, twitch highlight downloader, twitch clip downloader hd, twitch vod download online, download twitch clip iphone, twitch downloader android, best twitch clip downloader, twitch clip converter, twitch downloader no app, twitch clip download 2026, download twitch stream recording, save twitch stream, twitch downloader online free, twitch broadcast downloader, download twitch clip mp4"
+  keywords="twitch video downloader, twitch clip downloader, download twitch vods, twitch vod downloader, twitch to mp4, best twitch clip downloader 2026"
 >
   <Navbar />
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <PlatformHero
       platform="Twitch"
       emoji="🎮"
