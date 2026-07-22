@@ -8,19 +8,21 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "dev:worker": "wrangler dev",
     "dev:full": "npx concurrently \"astro dev\" \"wrangler dev\"",
-    "deploy": "wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.1.4",
     "astro": "^7.1.3"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.1",
     "tailwindcss": "^4.3.1",
-    "wrangler": "^4.15.2"
+    "wrangler": "^4.113.0"
   },
   "overrides": {
     "sharp": "^0.35.0"
