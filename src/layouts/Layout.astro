@@ -39,7 +39,7 @@ const ogImage = ogImageProp.startsWith('http') ? ogImageProp : `${SITE_URL}${ogI
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      
+
       const storedConsent = localStorage.getItem('cookie-consent');
       if (storedConsent === 'granted') {
         gtag('consent', 'default', {
@@ -58,11 +58,14 @@ const ogImage = ogImageProp.startsWith('http') ? ogImageProp : `${SITE_URL}${ogI
       }
     </script>
 
-    <!--
-      Google tag (gtag.js) — loaded by Cloudflare (Zaraz / Web Analytics).
-      Do NOT add a duplicate gtag script here; Cloudflare injects it automatically.
-      Only the Consent Mode v2 defaults above are needed in source code.
-    -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNH5RT5R2G" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LNH5RT5R2G');
+    </script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -186,9 +189,6 @@ const ogImage = ogImageProp.startsWith('http') ? ogImageProp : `${SITE_URL}${ogI
           window.addEventListener('load', function() {
             try {
               navigator.serviceWorker.register('/sw.js')
-                .then(function(reg) {
-                  console.log('[mp4yt] SW registered:', reg.scope);
-                })
                 .catch(function() { /* silent — expected in some environments */ });
             } catch (e) { /* silent */ }
           });

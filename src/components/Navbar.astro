@@ -1,7 +1,5 @@
 ---
 // Navbar component — Vercel-style sticky nav with dark mode toggle
-import { Image } from 'astro:assets';
-import logoImage from '../assets/logo.png';
 ---
 
 <nav id="main-nav" class="navbar" aria-label="Main navigation">
@@ -9,7 +7,7 @@ import logoImage from '../assets/logo.png';
     <!-- Logo -->
     <a href="/" class="navbar-logo" aria-label="mp4yt home">
       <div class="logo-mark">
-        <Image src={logoImage} width={22} height={22} alt="mp4yt logo" loading="eager" fetchpriority="high" />
+        <img src="/logo.png" width="22" height="22" alt="mp4yt logo" loading="eager" fetchpriority="high" />
       </div>
       <span class="logo-text">mp4yt</span>
     </a>

@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "mp4yt",
+	"main": "./worker.js",
+	"compatibility_date": "2026-07-22",
+	"compatibility_flags": ["global_fetch_strictly_public"],
+	"workers_dev": true,
+	"routes": [
+		{ "pattern": "mp4yt.com/*", "zone_name": "mp4yt.com" },
+		{ "pattern": "www.mp4yt.com/*", "zone_name": "mp4yt.com" }
+	],
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	},
+	"triggers": {
+		"crons": ["*/5 * * * *"]
+	},
+	"observability": {
+		"enabled": true
+	}
+}

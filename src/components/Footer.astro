@@ -1,7 +1,5 @@
 ---
 // Footer — Brutalist style with structural borders, mono typography
-import { Image } from "astro:assets";
-import logoImage from "../assets/logo.png";
 
 const year = new Date().getFullYear();
 ---
@@ -12,7 +10,7 @@ const year = new Date().getFullYear();
     <div class="footer-brand">
       <a href="/" class="footer-logo" aria-label="mp4yt home">
         <div class="footer-logo-mark">
-          <Image src={logoImage} width={20} height={20} alt="mp4yt logo" />
+          <img src="/logo.png" width="20" height="20" alt="mp4yt logo" />
         </div>
         <span class="footer-logo-text">MP4YT</span>
       </a>
